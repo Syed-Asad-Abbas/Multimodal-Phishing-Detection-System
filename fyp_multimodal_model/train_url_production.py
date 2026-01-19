@@ -8,7 +8,12 @@ import os
 import json
 import joblib
 import numpy as np
+import joblib
+import numpy as np
+import warnings
 from utils import load_config, load_dataset
+# Suppress the specific sklearn warning about feature names
+warnings.filterwarnings("ignore", category=UserWarning, module="sklearn")
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, roc_auc_score, matthews_corrcoef
 from sklearn.preprocessing import StandardScaler
@@ -21,8 +26,8 @@ COMPUTABLE_URL_FEATURES = [
     "IsDomainIP",         # ✅ regex check
     "URLSimilarityIndex", # ✅ unique_chars / total_chars
     "CharContinuationRate", # ✅ max_consecutive_chars / total
-    # "TLDLegitimateProb",  # ❌ requires abuse database
-    # "URLCharProb",        # ❌ requires n-gram language model
+    "TLDLegitimateProb",  # ✅ NOW INCLUDED (Heuristic approximation)
+    "URLCharProb",        # ✅ NOW INCLUDED (Heuristic approximation)
     "TLDLength",          # ✅ len(tld)
     "NoOfSubDomain",      # ✅ count(domain.split('.')) - 2
     "HasObfuscation",     # ✅ check for @, %, etc.
@@ -48,9 +53,10 @@ def main():
     print("TRAINING PRODUCTION URL MODEL (Computable Features Only)")
     print("="*70)
     print(f"\nDataset size: {len(df)}")
-    print(f"Features used: {len(COMPUTABLE_URL_FEATURES)} (down from 12)")
-    print(f"Removed features: TLDLegitimateProb, URLCharProb")
-    print(f"  Reason: Require external databases/models not available at inference")
+    print(f"\nDataset size: {len(df)}")
+    print(f"Features used: {len(COMPUTABLE_URL_FEATURES)} (Full Feature Set)")
+    print(f"Included Heuristic Features: TLDLegitimateProb, URLCharProb")
+    print(f"  Reason: Enabled by Three Buckets Strategy")
 
     # Select computable features only
     y = df["label"].astype(int).values
@@ -138,7 +144,7 @@ def main():
         "ROC_AUC": float(roc_auc),
         "features_used": used,
         "num_features": len(used),
-        "note": "Production model using only computable features (no external databases required)"
+        "note": "Production model using ALL 12 features (heuristic strategy enabled)"
     }
     
     metrics_path = os.path.join(cfg["models_dir"], "url_metrics_production.json")
@@ -158,7 +164,7 @@ def main():
         research_acc = research_metrics["accuracy"]
         
         print(f"Research Model (12 features):   {research_acc:.4f} ({research_acc*100:.2f}%)")
-        print(f"Production Model (10 features): {acc:.4f} ({acc*100:.2f}%)")
+        print(f"Production Model (12 features): {acc:.4f} ({acc*100:.2f}%)")
         print(f"Accuracy Drop:                  {(research_acc - acc):.4f} ({(research_acc - acc)*100:.2f}%)")
         
         if (research_acc - acc) < 0.02:

@@ -247,6 +247,11 @@ def predict_complete_pipeline(url, models_dir="models", fetch_timeout=10, device
             "dom": float(p_dom) if has_dom else None,
             "visual": float(p_visual) if has_visual else None
         },
+        "modality_verdicts": {
+            "url": ("PHISHING" if p_url > 0.5 else "BENIGN") if has_url else "N/A",
+            "dom": ("PHISHING" if p_dom > 0.5 else "BENIGN") if has_dom else "N/A",
+            "visual": ("PHISHING" if p_visual > 0.5 else "BENIGN") if has_visual else "N/A"
+        },
         "modality_confidence": {
             "url": float(conf_url) if has_url else None,
             "dom": float(conf_dom) if has_dom else None,

@@ -108,8 +108,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Color gradient based on score (low=green, high=red)
                 bar.style.backgroundColor = getColorForScore(score);
                 val.textContent = score.toFixed(4);
-                status.textContent = 'Active';
-                status.className = 'status';
+                // Show Verdict
+                const verdict = data.modality_verdicts ? data.modality_verdicts[mod] : (score > 0.5 ? 'PHISHING' : 'BENIGN');
+                status.textContent = verdict;
+                status.className = `status ${verdict.toLowerCase()}`; // Add class for styling if needed
             } else {
                 bar.style.width = '0%';
                 val.textContent = 'N/A';

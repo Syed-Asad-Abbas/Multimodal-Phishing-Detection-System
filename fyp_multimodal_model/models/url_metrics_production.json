@@ -1,58 +1,60 @@
 {
-  "accuracy": 0.9987277083907632,
+  "accuracy": 0.9982612014673763,
   "report": {
     "0": {
-      "precision": 1.0,
-      "recall": 0.997028084600525,
-      "f1-score": 0.9985118309439952,
+      "precision": 0.9998011434253045,
+      "recall": 0.9961365099806826,
+      "f1-score": 0.9979654624851131,
       "support": 20189.0
     },
     "1": {
-      "precision": 0.9977802441731409,
-      "recall": 1.0,
-      "f1-score": 0.9988888888888889,
+      "precision": 0.9971158112705221,
+      "recall": 0.999851687059696,
+      "f1-score": 0.9984818750694264,
       "support": 26970.0
     },
-    "accuracy": 0.9987277083907632,
+    "accuracy": 0.9982612014673763,
     "macro avg": {
-      "precision": 0.9988901220865705,
-      "recall": 0.9985140423002625,
-      "f1-score": 0.9987003599164421,
+      "precision": 0.9984584773479133,
+      "recall": 0.9979940985201893,
+      "f1-score": 0.9982236687772698,
       "support": 47159.0
     },
     "weighted avg": {
-      "precision": 0.9987305325674761,
-      "recall": 0.9987277083907632,
-      "f1-score": 0.9987274685269335,
+      "precision": 0.9982654151822442,
+      "recall": 0.9982612014673763,
+      "f1-score": 0.998260796300481,
       "support": 47159.0
     }
   },
   "confusion_matrix": [
     [
-      20129,
-      60
+      20111,
+      78
     ],
     [
-      0,
-      26970
+      4,
+      26966
     ]
   ],
-  "FPR": 0.0029719153994748142,
-  "FNR": 0.0,
-  "MCC": 0.9974040934847777,
-  "ROC_AUC": 0.9985631867102085,
+  "FPR": 0.0038634900193172585,
+  "FNR": 0.00014831294030403602,
+  "MCC": 0.9964524676603904,
+  "ROC_AUC": 0.9987022985034656,
   "features_used": [
     "URLLength",
     "DomainLength",
     "IsDomainIP",
     "URLSimilarityIndex",
     "CharContinuationRate",
+    "TLDLegitimateProb",
+    "URLCharProb",
     "TLDLength",
     "NoOfSubDomain",
     "HasObfuscation",
     "NoOfObfuscatedChar",
     "ObfuscationRatio"
   ],
-  "num_features": 10,
+  "num_features": 12,
   "note": "Production model using only computable features (no external databases required)"
 }

@@ -6,6 +6,8 @@ Tests multiple URLs and generates report
 import argparse
 import json
 import time
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning, module="sklearn")
 from inference_complete import predict_complete_pipeline
 
 # Predefined benign URLs for testing
