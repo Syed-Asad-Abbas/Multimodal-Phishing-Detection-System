@@ -1,45 +1,126 @@
+# Multimodal Phishing Detection System - Project Setup Guide
 
-# FYP Multimodal Phishing Models (Prototype)
-
-This repo gives you **three separate, runnable models** matching your modalities:
-
-1) **URL → LightGBM** (`train_url_lightgbm.py`)
-2) **DOM → Doc2Vec + LightGBM** (`train_dom_doc2vec_lgbm.py`)
-3) **Visual → ResNet50 (transfer learning)** (`train_visual_resnet.py`)
-
-All scripts read the provided dataset: `/mnt/data/PhiUSIIL_Phishing_URL_Dataset.csv`.
-
-> **Labels**: assumes `label` column is `1 = phishing`, `0 = benign`.
+This guide explains how to set up, install, and run all components of the system locally. The project is split into four primary components:
+1. **Backend Server** (Node.js/Express/PostgreSQL)
+2. **User Frontend** (React/Vite)
+3. **Admin Frontend** (React/Vite)
+4. **Machine Learning Service** (Python)
 
 ---
 
-## Quickstart
-
-```bash
-cd /mnt/data/fyp_multimodal_model
-python -m pip install -r requirements.txt
-
-# URL model
-python train_url_lightgbm.py --config config.json
-
-# DOM model
-python train_dom_doc2vec_lgbm.py --config config.json --vector_size 64 --epochs 30
-
-# Visual model
-# Put screenshots in: /mnt/data/fyp_multimodal_model/screenshots/<FILENAME>.png
-python train_visual_resnet.py --config config.json --epochs 5
-```
-
-### Where outputs go?
-- Models & metrics: `/mnt/data/fyp_multimodal_model/models`
-  - `url_lgbm.joblib`, `url_metrics.json`
-  - `dom_doc2vec_lgbm.joblib`, `dom_metrics.json`
-  - `visual_resnet50.pt`, `visual_metrics.json`
+## 1. Prerequisites
+Ensure you have the following installed on your local machine:
+- **Node.js** (v18 or higher recommended)
+- **PostgreSQL** (Running instance)
+- **Python** (v3.10 or higher)
+- **Git**
 
 ---
 
-## Notes
+## 2. Backend Server Setup (`backend_new/`)
 
-- **URL model** uses only the lexical/statistical columns available in the CSV (no external WHOIS calls). If you later add WHOIS features (e.g., domain_age_days), the script will automatically pick them if you add the column name to the list.
-- **DOM model** generates a *synthetic DOM text* per row from DOM-related booleans (like `HasPasswordField`) and counts (`NoOfImage`, `NoOfJS`, ...). We then train **Doc2Vec** to get embeddings and classify them via **LightGBM** – matching your requested approach in spirit using the dataset you have.
-- **Visual model** requires screenshots. The CSV includes `FILENAME`; if you export screenshots named `<FILENAME>.png` to `/mnt/data/fyp_multimodal_model/screenshots`, the script will use them. We fine‑tune the **ResNet50 head** for binary phishing classification. If no images are present, the script will tell you.
+The backend is a Node.js API with a PostgreSQL database connected via Prisma ORM.
+
+### Steps:
+1. **Navigate to the backend directory**:
+   ```bash
+   cd backend_new
+   ```
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+3. **Configure Environment Variables**:
+   Create a `.env` file in the `backend_new` directory. You will need variables such as (modify values accordingly):
+   ```env
+   PORT=5000
+   DATABASE_URL="postgresql://user:password@localhost:5432/your_database_name"
+   JWT_SECRET="your_jwt_secret"
+   ```
+4. **Setup Database**:
+   Push the Prisma schema to your PostgreSQL database:
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
+5. **Start the Development Server**:
+   ```bash
+   npm run dev
+   ```
+   *(Server typically runs on `http://localhost:5000` or whatever is defined in your PORT variable)*
+
+---
+
+## 3. Frontend Setup (`Frontend/`)
+
+The frontend is divided into two separate React applications built with Vite: `user-frontend` and `admin-frontend`.
+
+### A. User Frontend
+1. **Navigate to the directory**:
+   ```bash
+   cd Frontend/user-frontend
+   ```
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+3. **Start the application**:
+   ```bash
+   npm run dev
+   ```
+
+### B. Admin Frontend
+1. **Navigate to the directory**:
+   ```bash
+   cd Frontend/admin-frontend
+   ```
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+3. **Start the application**:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 4. Machine Learning Component (`fyp_multimodal_model/`)
+
+The ML pipeline is responsible for multimodal phishing detection using Visual ResNet50 and DOM Doc2Vec features.
+
+### Steps:
+1. **Navigate to the ML directory**:
+   ```bash
+   cd fyp_multimodal_model
+   ```
+2. **Create a Python Virtual Environment**:
+   ```bash
+   python -m venv .venv
+   ```
+3. **Activate the Environment**:
+   - **Windows PowerShell**:
+     ```powershell
+     .\.venv\Scripts\Activate.ps1
+     ```
+   - **Mac/Linux**:
+     ```bash
+     source .venv/bin/activate
+     ```
+4. **Install Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+5. **Environment Configuration**:
+   Create a `.env` file if required by the python scripts (e.g., API keys, model paths).
+6. **Execution**:
+   *(Run the relevant script, e.g., Flask server or background worker, as required by the backend pipeline.)*
+
+---
+
+## 5. Running the Full System Locally
+For a full local development experience, you will need multiple terminal windows running simultaneously to serve all parts of the application:
+1. **Terminal 1**: Database and Backend (`cd backend_new && npm run dev`)
+2. **Terminal 2**: User Dashboard (`cd Frontend/user-frontend && npm run dev`)
+3. **Terminal 3**: Admin Dashboard (`cd Frontend/admin-frontend && npm run dev`)
+4. **Terminal 4**: ML Service (Active `.venv` and Python process running).
