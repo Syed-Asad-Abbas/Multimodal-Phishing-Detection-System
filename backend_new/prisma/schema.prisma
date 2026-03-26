@@ -1,0 +1,291 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["auth", "core", "admin", "analytics", "mlops"]
+}
+
+enum Role {
+  USER
+  ADMIN
+
+  @@schema("auth")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String?
+  email         String    @unique
+  password_hash String
+  role          Role      @default(USER)
+  is_verified   Boolean   @default(false)
+  is_2fa_enabled Boolean  @default(false)
+  last_login    DateTime?
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+
+  sessions              UserSession[]
+  email_tokens          EmailVerificationToken[]
+  two_factor_tokens     TwoFactorToken[]
+  password_reset_tokens PasswordResetToken[]
+  scans                 Scan[]
+  reviews               Review[]
+
+  @@map("users")
+  @@schema("auth")
+}
+
+model UserSession {
+  id                String   @id @default(uuid())
+  user_id           String
+  refresh_token_hash String
+  expires_at        DateTime
+  created_at        DateTime @default(now())
+  ip_address        String?
+  user_agent        String?
+
+  user              User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("user_sessions")
+  @@schema("auth")
+}
+
+model EmailVerificationToken {
+  id          String   @id @default(uuid())
+  user_id     String
+  token_hash  String
+  expires_at  DateTime
+
+  user        User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("email_verification_tokens")
+  @@schema("auth")
+}
+
+model TwoFactorToken {
+  id          String   @id @default(uuid())
+  user_id     String
+  token_hash  String
+  expires_at  DateTime
+
+  user        User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("two_factor_tokens")
+  @@schema("auth")
+}
+
+model PasswordResetToken {
+  id          String   @id @default(uuid())
+  user_id     String
+  token_hash  String
+  expires_at  DateTime
+
+  user        User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("password_reset_tokens")
+  @@schema("auth")
+}
+
+// --- CORE SCHEMA ---
+
+enum ScanStatus {
+  PENDING
+  COMPLETED
+  FAILED
+
+  @@schema("core")
+}
+
+model Scan {
+  id          String   @id @default(uuid())
+  user_id     String?
+  url         String
+  status      ScanStatus @default(PENDING)
+  created_at  DateTime @default(now())
+  
+  is_deleted  Boolean  @default(false)
+  deleted_at  DateTime?
+  deleted_by  String?
+
+  user        User?    @relation(fields: [user_id], references: [id], onDelete: SetNull)
+  results     ScanResult?
+  malicious_ip MaliciousIpObservation?
+
+  @@map("scans")
+  @@schema("core")
+}
+
+model ScanResult {
+  id                   String   @id @default(uuid())
+  scan_id              String   @unique
+  prediction           String
+  confidence_score     Float
+  phishing_probability Float
+
+  scan                 Scan     @relation(fields: [scan_id], references: [id], onDelete: Cascade)
+  shap_values          ScanShapValue[]
+  explanation          ScanExplanation?
+  screenshot           ScanScreenshot?
+
+  @@map("scan_results")
+  @@schema("core")
+}
+
+model ScanShapValue {
+  id              String   @id @default(uuid())
+  scan_result_id  String
+  feature_name    String
+  shap_value      Float
+  modality        String   // URL, DOM, Visual
+
+  scan_result     ScanResult @relation(fields: [scan_result_id], references: [id], onDelete: Cascade)
+
+  @@map("scan_shap_values")
+  @@schema("core")
+}
+
+model ScanExplanation {
+  id              String   @id @default(uuid())
+  scan_result_id  String   @unique
+  llm_text        String   @db.Text
+
+  scan_result     ScanResult @relation(fields: [scan_result_id], references: [id], onDelete: Cascade)
+
+  @@map("scan_explanations")
+  @@schema("core")
+}
+
+model ScanScreenshot {
+  id              String   @id @default(uuid())
+  scan_result_id  String   @unique
+  image_url       String?
+  base64_data     String?  @db.Text
+
+  scan_result     ScanResult @relation(fields: [scan_result_id], references: [id], onDelete: Cascade)
+
+  @@map("scan_screenshots")
+  @@schema("core")
+}
+
+model MaliciousIpObservation {
+  id          String   @id @default(uuid())
+  scan_id     String   @unique
+  ip_address  String
+  geo_lat     Float?
+  geo_long    Float?
+  country     String?
+  timestamp   DateTime @default(now())
+
+  scan        Scan     @relation(fields: [scan_id], references: [id], onDelete: Cascade)
+
+  @@map("malicious_ip_observations")
+  @@schema("core")
+}
+
+// --- REVIEWS & TESTIMONIALS ---
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+
+  @@schema("core")
+}
+
+model Review {
+  id            String    @id @default(uuid())
+  user_id       String
+  rating        Int
+  comment       String?
+  status        ReviewStatus @default(PENDING)
+  created_at    DateTime  @default(now())
+
+  user          User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  testimonial   Testimonial?
+
+  @@map("reviews")
+  @@schema("core")
+}
+
+model Testimonial {
+  id            String    @id @default(uuid())
+  review_id     String    @unique
+  published_at  DateTime  @default(now())
+  display_text  String?   // Allows editing the comment for display
+
+  review        Review    @relation(fields: [review_id], references: [id], onDelete: Cascade)
+
+  @@map("testimonials")
+  @@schema("core")
+}
+
+// --- ADMIN SCHEMA ---
+
+model AuditLog {
+  id          String   @id @default(uuid())
+  admin_id    String
+  action      String
+  entity_type String
+  entity_id   String
+  details     String?  @db.Text
+  created_at  DateTime @default(now())
+
+  @@map("audit_logs")
+  @@schema("admin")
+}
+
+// --- ANALYTICS SCHEMA ---
+
+model DailyScanStat {
+  id             String   @id @default(uuid())
+  date           DateTime @unique
+  total_scans    Int      @default(0)
+  benign_count   Int      @default(0)
+  phishing_count Int      @default(0)
+  unique_users   Int      @default(0)
+
+  @@map("daily_scan_stats")
+  @@schema("analytics")
+}
+
+model ModelMetricsDaily {
+  id                  String   @id @default(uuid())
+  date                DateTime @unique
+  false_positive_rate Float?
+  true_positive_rate  Float?
+  accuracy            Float?
+  total_samples       Int      @default(0)
+
+  @@map("model_metrics_daily")
+  @@schema("analytics")
+}
+
+// --- MLOPS SCHEMA ---
+
+model PipelineHealthLog {
+  id           String   @id @default(uuid())
+  service_name String
+  status       String
+  latency_ms   Int?
+  error_details String? @db.Text
+  timestamp    DateTime @default(now())
+
+  @@map("pipeline_health_logs")
+  @@schema("mlops")
+}
+
+model RetrainingJob {
+  id              String   @id @default(uuid())
+  triggered_by    String
+  start_time      DateTime @default(now())
+  end_time        DateTime?
+  status          String   // running, completed, failed
+  metrics_summary String?  @db.Text
+
+  @@map("retraining_jobs")
+  @@schema("mlops")
+}
