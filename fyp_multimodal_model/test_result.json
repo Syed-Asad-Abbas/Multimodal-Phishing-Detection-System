@@ -1,0 +1,102 @@
+{
+  "url": "https://github.com",
+  "prediction": "BENIGN",
+  "confidence": 0.9997566722179264,
+  "fusion_probability_phishing": 0.00024332778207355218,
+  "modality_scores": {
+    "url": 0.0022898500610901602,
+    "dom": null,
+    "visual": null
+  },
+  "modality_verdicts": {
+    "url": "BENIGN",
+    "dom": "N/A",
+    "visual": "N/A"
+  },
+  "modality_confidence": {
+    "url": 0.9977101499389098,
+    "dom": null,
+    "visual": null
+  },
+  "modality_available": {
+    "url": true,
+    "dom": false,
+    "visual": false
+  },
+  "page_info": {
+    "fetch_success": false,
+    "page_title": null,
+    "final_url": "https://github.com",
+    "screenshot_path": null
+  },
+  "dom_features": {},
+  "explanation": "Note: Gemini API Key not found. Please set GEMINI_API_KEY environment variable for detailed explanations.",
+  "shap_values": {
+    "url": {
+      "NoOfSubDomain": -10.199709800236647,
+      "URLSimilarityIndex": 6.861574336511729,
+      "URLLength": -1.2683423820852573,
+      "DomainLength": 0.6209434545950631,
+      "URLCharProb": 0.5725763088041793
+    },
+    "fusion_contribution": {
+      "url": 0.44171971327499915,
+      "dom": 0.5582802867249972,
+      "visual": 3.802862167160892e-15
+    }
+  },
+  "detailed_explanation": {
+    "shap_url_top": [
+      {
+        "feature": "NoOfSubDomain",
+        "value": 0.0,
+        "shap_impact": -10.199709800236647,
+        "abs_impact": 10.199709800236647
+      },
+      {
+        "feature": "URLSimilarityIndex",
+        "value": 100.0,
+        "shap_impact": 6.861574336511729,
+        "abs_impact": 6.861574336511729
+      },
+      {
+        "feature": "URLLength",
+        "value": 18.0,
+        "shap_impact": -1.2683423820852573,
+        "abs_impact": 1.2683423820852573
+      },
+      {
+        "feature": "DomainLength",
+        "value": 10.0,
+        "shap_impact": 0.6209434545950631,
+        "abs_impact": 0.6209434545950631
+      },
+      {
+        "feature": "URLCharProb",
+        "value": 0.01,
+        "shap_impact": 0.5725763088041793,
+        "abs_impact": 0.5725763088041793
+      }
+    ],
+    "shap_fusion": {
+      "modality_contributions": {
+        "url": -4.409840945023629,
+        "dom": -5.573505535775613,
+        "visual": -3.796529063349041e-14
+      },
+      "modality_weights": {
+        "url": 0.44171971327499915,
+        "dom": 0.5582802867249972,
+        "visual": 3.802862167160892e-15
+      }
+    }
+  },
+  "ip_metadata": {
+    "ip": "20.207.73.82",
+    "geo": {
+      "country": "India",
+      "lat": 18.5144,
+      "long": 73.864235
+    }
+  }
+}

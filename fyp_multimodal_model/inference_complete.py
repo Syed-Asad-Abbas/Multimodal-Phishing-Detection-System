@@ -18,6 +18,10 @@ from webpage_fetcher import SafeWebpageFetcher
 from url_feature_extractor import extract_url_features_from_string
 from utils import load_config, build_dom_tokens
 from url_utils import is_url_alive
+from explain_prediction import get_shap_url_explanations, get_shap_fusion_explanations, generate_llm_explanation
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def load_all_models(models_dir, device):
@@ -271,8 +275,87 @@ def predict_complete_pipeline(url, models_dir="models", fetch_timeout=10, device
         "dom_features": dom_features_dict if has_dom else {}
     }
     
-    # Print final result
-    print("\n" + "="*70)
+    # ---------------------------------------------------------
+    # EXPLAINABILITY (SHAP + Gemini)
+    # ---------------------------------------------------------
+    try:
+        print("\n[EXPLAIN] Generating explanations...")
+        
+        # 1. URL SHAP
+        # We need raw URL features. We already called predict_url_modality but didn't keep features.
+        # Let's re-extract or modify predict_url_modality to return them.
+        # Ideally, we should receive features from predict_url_modality, but for now let's re-extract.
+        url_features_raw = extract_url_features_from_string(url, models["url_features"])
+        shap_url = get_shap_url_explanations(url_features_raw, models, models["url_features"])
+        
+        # 2. Fusion SHAP
+        # We have fusion_features ready
+        shap_fusion = get_shap_fusion_explanations(fusion_features, models)
+        
+        # 3. LLM Explanation
+        llm_explanation = generate_llm_explanation(result, shap_url, shap_fusion)
+        
+        result['explanation'] = llm_explanation
+        result['shap_values'] = {
+            "url": {item['feature']: item['shap_impact'] for item in shap_url},
+            "fusion_contribution": shap_fusion['modality_weights']
+        }
+        
+        # Also keep detailed structure if needed
+        result['detailed_explanation'] = {
+            "shap_url_top": shap_url,
+            "shap_fusion": shap_fusion
+        }
+        
+        print(f"      [OK] Explanation generated")
+        
+    except Exception as e:
+        print(f"      [FAIL] Explanation generation failed: {e}")
+        result['explanation'] = "Explanation unavailable."
+        result['shap_values'] = {}
+
+
+    # ---------------------------------------------------------
+    # IP & GEO METADATA
+    # ---------------------------------------------------------
+    try:
+        from urllib.parse import urlparse
+        import socket
+        import requests 
+
+        domain = urlparse(url).netloc
+        # Extract IP address
+        try:
+            ip_address = socket.gethostbyname(domain)
+        except:
+            ip_address = None
+
+        # Extract Geo Location (using ip-api.com free tier)
+        geo_data = {}
+        if ip_address:
+            try:
+                response = requests.get(f"http://ip-api.com/json/{ip_address}?fields=status,country,lat,lon", timeout=3)
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get('status') == 'success':
+                        geo_data = {
+                            "country": data.get('country'),
+                            "lat": data.get('lat'),
+                            "long": data.get('lon')
+                        }
+            except:
+                pass
+
+        result['ip_metadata'] = {
+            "ip": ip_address,
+            "geo": geo_data if geo_data else None
+        }
+        print(f"      [OK] IP Metadata: {ip_address} ({geo_data.get('country', 'Unknown')})")
+
+    except Exception as e:
+        print(f"      [WARN] IP Metadata extraction failed: {e}")
+        result['ip_metadata'] = None
+
     print("FINAL RESULT")
     print("="*70)
     print(f"Prediction:  {result['prediction']}")

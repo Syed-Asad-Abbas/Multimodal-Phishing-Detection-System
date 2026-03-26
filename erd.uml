@@ -1,0 +1,240 @@
+@startuml
+hide circle
+skinparam linetype ortho
+
+'========================
+' AUTH SCHEMA
+'========================
+package "auth" {
+
+entity "users" as auth_users {
+  + user_id : UUID <<PK>>
+  --
+  email : text <<UNIQUE>>
+  role : USER | ADMIN
+  password_hash : text
+  is_email_verified : boolean
+  is_active : boolean
+  created_at : timestamptz
+  updated_at : timestamptz
+}
+
+entity "user_sessions" {
+  + session_id : UUID <<PK>>
+  --
+  user_id : UUID <<FK>>
+  refresh_token_hash : text
+  ip_address : inet
+  user_agent : text
+  expires_at : timestamptz
+}
+
+entity "email_verification_tokens" {
+  + token_id : UUID <<PK>>
+  --
+  user_id : UUID <<FK>>
+  token_hash : text
+  expires_at : timestamptz
+  used_at : timestamptz
+}
+
+entity "two_factor_tokens" {
+  + twofa_id : UUID <<PK>>
+  --
+  user_id : UUID <<FK>>
+  token_hash : text
+  expires_at : timestamptz
+  used_at : timestamptz
+}
+}
+
+'========================
+' CORE SCHEMA
+'========================
+package "core" {
+
+entity "scans" {
+  + scan_id : UUID <<PK>>
+  --
+  user_id : UUID <<FK>>
+  submitted_url : text
+  status : PENDING | COMPLETED | FAILED
+  request_ip : inet
+  ml_request_id : text
+  created_at : timestamptz
+  updated_at : timestamptz
+}
+
+entity "scan_results" {
+  + result_id : UUID <<PK>>
+  --
+  scan_id : UUID <<FK, UNIQUE>>
+  final_label : PHISHING | BENIGN
+  final_score : float
+  url_model_score : float
+  dom_model_score : float
+  visual_model_score : float
+  fusion_method : text
+}
+
+entity "scan_shap_values" {
+  + shap_id : UUID <<PK>>
+  --
+  scan_id : UUID <<FK>>
+  modality : URL | DOM | VISUAL | FUSION
+  feature_name : text
+  feature_value : text
+  shap_value : float
+}
+
+entity "scan_explanations" {
+  + explain_id : UUID <<PK>>
+  --
+  scan_id : UUID <<FK, UNIQUE>>
+  explanation_text : text
+  model_version : text
+}
+
+entity "scan_screenshots" {
+  + shot_id : UUID <<PK>>
+  --
+  scan_id : UUID <<FK, UNIQUE>>
+  screenshot_url : text
+  screenshot_hash : text
+  width : int
+  height : int
+}
+
+entity "malicious_ip_observations" {
+  + obs_id : UUID <<PK>>
+  --
+  scan_id : UUID <<FK, UNIQUE>>
+  ip_address : inet
+  country : text
+  city : text
+  latitude : float
+  longitude : float
+  isp : text
+}
+
+entity "reviews" {
+  + review_id : UUID <<PK>>
+  --
+  user_id : UUID <<FK>>
+  rating : int
+  review_text : text
+  status : PENDING | APPROVED | REJECTED
+  approved_by : UUID <<FK>>
+  approved_at : timestamptz
+}
+
+entity "testimonials" {
+  + testimonial_id : UUID <<PK>>
+  --
+  review_id : UUID <<FK, UNIQUE>>
+  display_name : text
+  display_rating : int
+  display_text : text
+  is_published : boolean
+  published_by : UUID <<FK>>
+  published_at : timestamptz
+}
+}
+
+'========================
+' ADMIN SCHEMA
+'========================
+package "admin" {
+
+entity "audit_logs" {
+  + audit_id : UUID <<PK>>
+  --
+  admin_id : UUID <<FK>>
+  action : text
+  target_type : text
+  target_id : UUID
+  metadata : jsonb
+}
+}
+
+'========================
+' ANALYTICS SCHEMA
+'========================
+package "analytics" {
+
+entity "daily_scan_stats" {
+  + stat_date : date <<PK>>
+  --
+  total_scans : int
+  phishing_scans : int
+  benign_scans : int
+  unique_users : int
+}
+
+entity "model_metrics_daily" {
+  + metric_id : UUID <<PK>>
+  --
+  metric_date : date
+  model_name : URL | DOM | VISUAL | FUSION
+  tp : int
+  fp : int
+  tn : int
+  fn : int
+  accuracy : float
+  precision : float
+  recall : float
+  f1 : float
+}
+}
+
+'========================
+' MLOPS SCHEMA
+'========================
+package "mlops" {
+
+entity "pipeline_health_logs" {
+  + health_id : UUID <<PK>>
+  --
+  checked_at : timestamptz
+  ml_backend_status : UP | DOWN | DEGRADED
+  latency_ms : int
+  error_rate : float
+  last_successful_scan_at : timestamptz
+}
+
+entity "retraining_jobs" {
+  + job_id : UUID <<PK>>
+  --
+  triggered_by : UUID <<FK>>
+  model_scope : text
+  status : QUEUED | RUNNING | COMPLETED | FAILED
+  started_at : timestamptz
+  completed_at : timestamptz
+  logs : text
+}
+}
+
+'========================
+' RELATIONSHIPS (CROW’S FOOT)
+'========================
+
+auth_users ||--o{ user_sessions
+auth_users ||--o{ email_verification_tokens
+auth_users ||--o{ two_factor_tokens
+auth_users ||--o{ scans
+auth_users ||--o{ reviews
+
+scans ||--|| scan_results
+scans ||--o{ scan_shap_values
+scans ||--o| scan_explanations
+scans ||--o| scan_screenshots
+scans ||--o| malicious_ip_observations
+
+reviews ||--o| testimonials
+
+auth_users ||--o{ audit_logs : admin_actions
+auth_users ||--o{ retraining_jobs : triggers
+auth_users ||--o{ reviews : approves
+auth_users ||--o{ testimonials : publishes
+
+@enduml

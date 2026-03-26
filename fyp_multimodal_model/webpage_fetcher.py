@@ -39,7 +39,7 @@ class SafeWebpageFetcher:
     
     def _create_driver(self):
         """Create a new Chrome driver with safe settings"""
-        options = uc.ChromeOptions()
+        options = webdriver.ChromeOptions()
         
         # Incognito mode (private browsing)
         options.add_argument('--incognito')
@@ -56,9 +56,12 @@ class SafeWebpageFetcher:
         # Set window size for consistent screenshots
         options.add_argument('--window-size=1920,1080')
         
+        if self.headless:
+            options.add_argument('--headless=new')
+            
         try:
-            # undetected-chromedriver handles a lot of the anti-detection stuff automatically
-            driver = uc.Chrome(options=options, headless=self.headless, use_subprocess=True)
+            # Standard webdriver avoids Windows handle crashes
+            driver = webdriver.Chrome(options=options)
             
             # Apply selenium-stealth for extra protection
             stealth(driver,

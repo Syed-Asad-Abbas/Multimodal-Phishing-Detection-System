@@ -4,6 +4,9 @@ import json
 from flask import Flask, render_template, request, jsonify, send_from_directory
 from inference_complete import predict_complete_pipeline
 import torch
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -55,6 +58,6 @@ def serve_screenshot(filename):
     return send_from_directory(TEMP_SCREENSHOT_DIR, filename)
 
 if __name__ == '__main__':
-    print(f"Starting Phishing Detection Web UI on http://localhost:5000")
+    print(f"Starting Phishing Detection Web UI on http://localhost:5001")
     print(f"Using device: {DEVICE}")
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5001)

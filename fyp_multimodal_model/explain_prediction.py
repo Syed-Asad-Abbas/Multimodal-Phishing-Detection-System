@@ -106,63 +106,64 @@ def get_shap_fusion_explanations(fusion_features, models):
         }
 
 
+from google import genai
+
 def generate_llm_explanation(prediction_result, shap_url_features, shap_fusion):
     """
-    Generate natural language explanation using template-based approach
-    In production, replace with actual LLM API call (OpenAI/Ollama)
+    Generate natural language explanation using Google Gemini
     """
-    pred = prediction_result['prediction']
-    conf = prediction_result['confidence']
-    url = prediction_result['url']
-    
-    # Build explanation based on top SHAP features
-    explanation_parts = []
-    
-    # Header
-    if pred == "phishing":
-        explanation_parts.append(f"This URL is classified as **PHISHING** with {conf:.1%} confidence.")
-    else:
-        explanation_parts.append(f"This URL appears to be **BENIGN** with {conf:.1%} confidence.")
-    
-    # URL feature contributions
-    if shap_url_features:
-        explanation_parts.append("\n**Key URL indicators:**")
-        for feat in shap_url_features[:3]:
-            feature_name = feat['feature']
-            value = feat['value']
-            impact = feat['shap_impact']
-            
-            # Interpret common features
-            if feature_name == "URLLength":
-                if value > 100:
-                    explanation_parts.append(f"- URL is unusually long ({int(value)} characters), which is suspicious.")
-                else:
-                    explanation_parts.append(f"- URL length ({int(value)} chars) is normal.")
-            elif feature_name == "NoOfSubDomain":
-                if value >= 3:
-                    explanation_parts.append(f"- Excessive subdomains ({int(value)}), often used in phishing.")
-                elif value == 0:
-                    explanation_parts.append(f"- No subdomains, typical of legitimate sites.")
-            elif feature_name == "HasObfuscation":
-                if value == 1:
-                    explanation_parts.append(f"- URL contains obfuscation characters (e.g., @, %), commonly used to deceive users.")
-            elif feature_name == "TLDLegitimateProb":
-                if value < 0.5:
-                    explanation_parts.append(f"- Domain uses uncommon TLD (legitimacy score: {value:.2f}).")
-    
-    # Modality weights
-    if shap_fusion:
-        weights = shap_fusion['modality_weights']
-        top_modality = max(weights, key=weights.get)
-        explanation_parts.append(f"\n**Decision primarily based on:** {top_modality.upper()} analysis ({weights[top_modality]:.1%} contribution).")
-    
-    # Footer
-    if pred == "phishing":
-        explanation_parts.append("\n⚠️ **Recommendation:** Do not enter sensitive information on this page.")
-    else:
-        explanation_parts.append("\n✅ **Recommendation:** This URL appears safe based on our analysis.")
-    
-    return "\n".join(explanation_parts)
+    try:
+        api_key = os.environ.get("GEMINI_API_KEY")
+        if not api_key:
+            return "Note: Gemini API Key not found. Please set GEMINI_API_KEY environment variable for detailed explanations."
+
+        client = genai.Client(api_key=api_key)
+
+        pred = prediction_result['prediction']
+        conf = prediction_result['confidence']
+        url = prediction_result['url']
+        
+        # Prepare context for LLM
+        context = f"""
+        Analyze this URL scan result and explain why it is {pred} (Confidence: {conf:.1%}).
+        URL: {url}
+        
+        Key Technical Indicators:
+        """
+        
+        if shap_url_features:
+            context += "\nURL Features (SHAP importance):"
+            for feat in shap_url_features[:3]:
+                context += f"\n- {feat['feature']}: {feat['value']} (Impact: {feat['shap_impact']:.4f})"
+                
+        if shap_fusion:
+            weights = shap_fusion['modality_weights']
+            top_modality = max(weights, key=weights.get)
+            context += f"\n\nModality Analysis:\n- Top Factor: {top_modality.upper()} ({weights[top_modality]:.1%} weight)"
+            context += f"\n- Full weights: {weights}"
+
+        prompt = f"""
+        Act as a cybersecurity expert. {context}
+        
+        Provide a concise, non-technical explanation for a regular user. 
+        1. Start with a clear verdict (Safe/Unsafe).
+        2. Explain 2-3 key reasons based on the indicators above.
+        3. Give a safety recommendation.
+        Keep it under 100 words. Do not use markdown bolding too heavily.
+        """
+
+        response = client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=prompt,
+        )
+        return response.text
+    except Exception as e:
+        error_msg = str(e)
+        print(f"[Gemini] Error generating explanation: {error_msg}")
+        with open("gemini_error.log", "a") as f:
+            f.write(f"Gemini API Error: {error_msg}\n")
+        return "explanation currently unavailable due to technical connection."
+
 
 
 def explain_prediction(url_string, screenshot_path=None, models=None, device="cpu"):

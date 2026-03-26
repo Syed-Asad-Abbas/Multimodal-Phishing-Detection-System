@@ -1,0 +1,119 @@
+{
+  "url": "https://github.com",
+  "prediction": "BENIGN",
+  "confidence": 0.9641681817312091,
+  "fusion_probability_phishing": 0.03583181826879084,
+  "modality_scores": {
+    "url": 0.0022898500610901602,
+    "dom": 0.9803740604329357,
+    "visual": 0.6175486445426941
+  },
+  "modality_verdicts": {
+    "url": "BENIGN",
+    "dom": "PHISHING",
+    "visual": "PHISHING"
+  },
+  "modality_confidence": {
+    "url": 0.9977101499389098,
+    "dom": 0.9803740604329357,
+    "visual": 0.6175486445426941
+  },
+  "modality_available": {
+    "url": true,
+    "dom": true,
+    "visual": true
+  },
+  "page_info": {
+    "fetch_success": true,
+    "page_title": "GitHub \u00b7 Change is constant. GitHub keeps you ahead. \u00b7 GitHub",
+    "final_url": "https://github.com/",
+    "screenshot_path": "C:\\Users\\PMYLS\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1772476577652.png"
+  },
+  "dom_features": {
+    "HasForm": 1,
+    "NoOfForm": 5,
+    "HasPasswordField": 0,
+    "NoOfHiddenInputs": 7,
+    "NoOfImage": 24,
+    "NoOfExternalImage": 3,
+    "NoOfJS": 60,
+    "NoOfExternalJS": 53,
+    "NoOfLinks": 152,
+    "NoOfExternalLinks": 97,
+    "HasIframe": 0,
+    "NoOfIframe": 0,
+    "SuspiciousFormAction": 0,
+    "Bank": 0,
+    "Pay": 0,
+    "Crypto": 0
+  },
+  "explanation": "Note: Gemini API Key not found. Please set GEMINI_API_KEY environment variable for detailed explanations.",
+  "shap_values": {
+    "url": {
+      "NoOfSubDomain": -10.199709800236647,
+      "URLSimilarityIndex": 6.861574336511729,
+      "URLLength": -1.2683423820852573,
+      "DomainLength": 0.6209434545950631,
+      "URLCharProb": 0.5725763088041793
+    },
+    "fusion_contribution": {
+      "url": 0.8640559543831124,
+      "dom": 0.13594404561688203,
+      "visual": 5.578897419561406e-15
+    }
+  },
+  "detailed_explanation": {
+    "shap_url_top": [
+      {
+        "feature": "NoOfSubDomain",
+        "value": 0.0,
+        "shap_impact": -10.199709800236647,
+        "abs_impact": 10.199709800236647
+      },
+      {
+        "feature": "URLSimilarityIndex",
+        "value": 100.0,
+        "shap_impact": 6.861574336511729,
+        "abs_impact": 6.861574336511729
+      },
+      {
+        "feature": "URLLength",
+        "value": 18.0,
+        "shap_impact": -1.2683423820852573,
+        "abs_impact": 1.2683423820852573
+      },
+      {
+        "feature": "DomainLength",
+        "value": 10.0,
+        "shap_impact": 0.6209434545950631,
+        "abs_impact": 0.6209434545950631
+      },
+      {
+        "feature": "URLCharProb",
+        "value": 0.01,
+        "shap_impact": 0.5725763088041793,
+        "abs_impact": 0.5725763088041793
+      }
+    ],
+    "shap_fusion": {
+      "modality_contributions": {
+        "url": -5.880039184217829,
+        "dom": 0.9251210075382884,
+        "visual": -3.796529063349041e-14
+      },
+      "modality_weights": {
+        "url": 0.8640559543831124,
+        "dom": 0.13594404561688203,
+        "visual": 5.578897419561406e-15
+      }
+    }
+  },
+  "ip_metadata": {
+    "ip": "20.207.73.82",
+    "geo": {
+      "country": "India",
+      "lat": 18.5144,
+      "long": 73.864235
+    }
+  }
+}
