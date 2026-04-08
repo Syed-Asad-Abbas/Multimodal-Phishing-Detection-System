@@ -84,15 +84,16 @@ export default function ScanHistory() {
               .filter(item => item.url.toLowerCase().includes(searchQuery.toLowerCase()))
               .filter(item => {
                 if (filterMode === "All") return true;
-                const r = item.results && item.results.length > 0 ? item.results[0] : null;
+                const r = item.results;
                 const pred = r?.prediction || item.status;
-                if (filterMode === "Safe" && pred !== 'Phishing') return true;
-                if (filterMode === "Phishing" && pred === 'Phishing') return true;
+                const isPredPhishing = pred.toUpperCase() === 'PHISHING';
+                if (filterMode === "Safe" && !isPredPhishing) return true;
+                if (filterMode === "Phishing" && isPredPhishing) return true;
                 return false;
               })
               .map((item) => {
-                const result = item.results && item.results.length > 0 ? item.results[0] : null;
-                const isPhishing = result?.prediction === 'Phishing';
+                const result = item.results;
+                const isPhishing = result?.prediction?.toUpperCase() === 'PHISHING';
                 let score = 0;
                 if (result) {
                   if (result.phishing_probability !== null && result.phishing_probability !== undefined) {
@@ -115,7 +116,7 @@ export default function ScanHistory() {
                           <CheckCircle className="w-4 h-4 text-emerald-500" />
                         )}
                         <Badge variant={isPhishing ? "danger" : "success"}>
-                          {result?.prediction || item.status}
+                          {result?.prediction ? (isPhishing ? 'Phishing' : 'Safe') : item.status}
                         </Badge>
                       </div>
                     </td>

@@ -78,7 +78,7 @@ export default function ScanPage() {
 
       // Map the returned scan structure to the UI format
       const scanData = response.data;
-      const resData = scanData.results && scanData.results.length > 0 ? scanData.results[0] : null;
+      const resData = scanData.results;
 
       const mappedResult = resData ? {
         prediction: resData.prediction,

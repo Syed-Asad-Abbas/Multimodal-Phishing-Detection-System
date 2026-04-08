@@ -31,6 +31,7 @@ const softAuth = async (req, res, next) => {
 };
 
 router.post('/submit', softAuth, scanController.submitScan);
+router.get('/dashboard', auth(), scanController.getDashboardStats);
 router.get('/history', auth(), scanController.getHistory);
 router.get('/:id', softAuth, scanController.getScanById);
 

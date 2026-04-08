@@ -10,13 +10,14 @@ import {
   FileText, 
   Settings,
   LogOut,
-  Network
+  Network,
+  User
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useNavigate, useLocation } from 'react-router-dom';
 
 // --- Navbar (Landing) ---
-export function Navbar() {
+export function Navbar({ isAuthenticated, onLogout }) {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -39,15 +40,30 @@ export function Navbar() {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               <Button variant="ghost" onClick={() => navigate("/")}>Features</Button>
-              <Button variant="ghost" onClick={() => navigate("/dashboard/working")}>How it Works</Button>
+              <Button variant="ghost" onClick={() => navigate("/working")}>How it Works</Button>
               <Button variant="ghost" onClick={() => navigate("/")}>Pricing</Button>
             </div>
           </div>
 
           <div className="hidden md:block">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" onClick={() => navigate("/login")}>Sign In</Button>
-              <Button onClick={() => navigate("/signup")}>Get Started</Button>
+              {isAuthenticated ? (
+                <>
+                  <Button variant="ghost" onClick={() => navigate("/dashboard")} className="gap-2 text-cyan-400 hover:text-cyan-300 hover:bg-cyan-900/20">
+                     <LayoutDashboard className="h-4 w-4" />
+                     Dashboard
+                  </Button>
+                  <Button variant="outline" onClick={() => { if(onLogout) onLogout(); navigate("/"); }} className="gap-2 border-slate-700 text-slate-300 hover:border-red-500 hover:text-red-400 hover:bg-red-500/10 transition-colors">
+                     <LogOut className="h-4 w-4" />
+                     Sign Out
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="ghost" onClick={() => navigate("/login")}>Sign In</Button>
+                  <Button onClick={() => navigate("/signup")}>Get Started</Button>
+                </>
+              )}
             </div>
           </div>
 
@@ -66,9 +82,22 @@ export function Navbar() {
         <div className="md:hidden bg-slate-900 border-b border-white/5">
           <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
             <Button variant="ghost" className="w-full justify-start" onClick={() => navigate("/")}>Features</Button>
-            <Button variant="ghost" className="w-full justify-start" onClick={() => navigate("/dashboard/working")}>How it Works</Button>
-            <Button variant="ghost" className="w-full justify-start" onClick={() => navigate("/login")}>Sign In</Button>
-            <Button className="w-full" onClick={() => navigate("/signup")}>Get Started</Button>
+            <Button variant="ghost" className="w-full justify-start" onClick={() => navigate("/working")}>How it Works</Button>
+            {isAuthenticated ? (
+              <>
+                <Button variant="outline" className="w-full mt-2 gap-2 text-cyan-400 border-cyan-900 border hover:bg-cyan-900/20" onClick={() => navigate("/dashboard")}>
+                   <LayoutDashboard className="h-4 w-4" /> Dashboard
+                </Button>
+                <Button variant="ghost" className="w-full mt-2 gap-2 text-red-400 hover:text-red-300 hover:bg-red-500/10" onClick={() => { if(onLogout) onLogout(); navigate("/"); }}>
+                   <LogOut className="h-4 w-4" /> Sign Out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="ghost" className="w-full justify-start mt-2" onClick={() => navigate("/login")}>Sign In</Button>
+                <Button className="w-full mt-2" onClick={() => navigate("/signup")}>Get Started</Button>
+              </>
+            )}
           </div>
         </div>
       )}

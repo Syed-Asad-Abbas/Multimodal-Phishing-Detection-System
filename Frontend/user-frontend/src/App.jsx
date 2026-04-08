@@ -17,13 +17,14 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import ProtectedRoute from './components/ProtectedRoute';
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
 
   const handleLogin = () => {
     setIsAuthenticated(true);
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('token');
     setIsAuthenticated(false);
   };
 
@@ -33,9 +34,17 @@ export default function App() {
         <Routes>
           <Route path="/" element={
             <>
-              <Navbar />
+              <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
               <Landing />
             </>
+          } />
+          
+          {/* Public standalone Working page */}
+          <Route path="/working" element={
+            <div className="h-screen w-full flex flex-col relative overflow-hidden bg-slate-950">
+              <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+              <Working />
+            </div>
           } />
           <Route path="/login" element={<Auth initialMode="login" onLogin={handleLogin} />} />
           <Route path="/signup" element={<Auth initialMode="signup" onLogin={handleLogin} />} />
