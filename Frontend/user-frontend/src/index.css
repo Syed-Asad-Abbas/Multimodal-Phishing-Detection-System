@@ -1,1 +1,68 @@
 @import "tailwindcss";
+
+@import url('https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@5.0.3/index.css');
+
+.landing-theme {
+  --background: 260 87% 3%;
+  --foreground: 40 6% 95%;
+  --hero-sub: 40 6% 82%;
+  --accent-cyan: 180 100% 50%;
+
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: 'Geist Sans', sans-serif;
+}
+
+.font-general {
+  font-family: 'General Sans', sans-serif;
+}
+
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.015);
+  background-blend-mode: luminosity;
+  backdrop-filter: blur(8px);
+  border: none;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.2px;
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.1) 20%,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0) 60%,
+      rgba(255, 255, 255, 0.1) 80%,
+      rgba(255, 255, 255, 0.4) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.glow-cyan {
+  box-shadow: 0 0 30px -5px hsl(var(--accent-cyan) / 0.3);
+}
+
+.testimonial-card {
+  width: 85vw;
+}
+
+@media (min-width: 768px) {
+  .testimonial-card {
+    width: 38vw;
+  }
+}
+
+.new-testimonial-card {
+  width: 20vw !important;
+  position: absolute;
+
+}

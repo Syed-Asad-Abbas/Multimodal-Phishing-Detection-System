@@ -11,7 +11,8 @@ import {
   Settings,
   LogOut,
   Network,
-  User
+  User,
+  ChevronDown
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -22,26 +23,32 @@ export function Navbar({ isAuthenticated, onLogout }) {
   const navigate = useNavigate();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-slate-950/80 backdrop-blur-md">
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-[#150a21]/50 backdrop-blur-md landing-theme">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div 
-            className="flex items-center gap-2 cursor-pointer" 
+            className="flex items-center gap-3 group cursor-pointer" 
             onClick={() => navigate("/")}
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-500/10 text-cyan-400">
-              <ShieldCheck className="h-5 w-5" />
+            <div className="w-9 h-9 bg-cyan-500 rounded-lg flex items-center justify-center glow-cyan transition-transform group-hover:scale-105">
+              <ShieldCheck className="text-white w-6 h-6" />
             </div>
-            <span className="text-lg font-bold tracking-tight text-white">
+            <span className="text-xl font-bold text-white tracking-tight font-general">
               Phish<span className="text-cyan-400">Guard</span>
             </span>
           </div>
           
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              <Button variant="ghost" onClick={() => navigate("/")}>Features</Button>
-              <Button variant="ghost" onClick={() => navigate("/working")}>How it Works</Button>
-              <Button variant="ghost" onClick={() => navigate("/")}>Pricing</Button>
+            <div className="ml-10 flex items-center gap-10">
+              <button onClick={() => navigate("/")} className="text-sm font-medium text-white/80 hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer">
+                Features <ChevronDown className="w-4 h-4 opacity-40" />
+              </button>
+              <button onClick={() => navigate("/working")} className="text-sm font-medium text-white/80 hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer">
+                How it Works
+              </button>
+              <button onClick={() => navigate("/")} className="text-sm font-medium text-white/80 hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer">
+                Plans
+              </button>
             </div>
           </div>
 
@@ -49,19 +56,21 @@ export function Navbar({ isAuthenticated, onLogout }) {
             <div className="flex items-center gap-4">
               {isAuthenticated ? (
                 <>
-                  <Button variant="ghost" onClick={() => navigate("/dashboard")} className="gap-2 text-cyan-400 hover:text-cyan-300 hover:bg-cyan-900/20">
+                  <button onClick={() => navigate("/dashboard")} className="liquid-glass rounded-full px-5 py-2 text-sm font-bold text-white hover:bg-white/5 transition-all outline-none flex items-center gap-2 cursor-pointer">
                      <LayoutDashboard className="h-4 w-4" />
                      Dashboard
-                  </Button>
-                  <Button variant="outline" onClick={() => { if(onLogout) onLogout(); navigate("/"); }} className="gap-2 border-slate-700 text-slate-300 hover:border-red-500 hover:text-red-400 hover:bg-red-500/10 transition-colors">
+                  </button>
+                  <button onClick={() => { if(onLogout) onLogout(); navigate("/"); }} className="rounded-full px-5 py-2 text-sm font-bold text-red-400 border border-slate-700 hover:border-red-500 hover:bg-red-500/10 transition-all flex items-center gap-2 cursor-pointer">
                      <LogOut className="h-4 w-4" />
                      Sign Out
-                  </Button>
+                  </button>
                 </>
               ) : (
                 <>
-                  <Button variant="ghost" onClick={() => navigate("/login")}>Sign In</Button>
-                  <Button onClick={() => navigate("/signup")}>Get Started</Button>
+                  <button onClick={() => navigate("/login")} className="text-sm font-medium text-white/70 hover:text-white transition-colors cursor-pointer">Sign In</button>
+                  <button onClick={() => navigate("/signup")} className="liquid-glass rounded-full px-5 py-2 text-sm font-bold text-white hover:bg-white/5 transition-all cursor-pointer">
+                    Get Started
+                  </button>
                 </>
               )}
             </div>
@@ -79,23 +88,23 @@ export function Navbar({ isAuthenticated, onLogout }) {
       </div>
 
       {isOpen && (
-        <div className="md:hidden bg-slate-900 border-b border-white/5">
+        <div className="md:hidden bg-slate-900 border-b border-white/5 pb-4">
           <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-            <Button variant="ghost" className="w-full justify-start" onClick={() => navigate("/")}>Features</Button>
-            <Button variant="ghost" className="w-full justify-start" onClick={() => navigate("/working")}>How it Works</Button>
+            <Button variant="ghost" className="w-full justify-start text-white/80 font-medium" onClick={() => navigate("/")}>Features</Button>
+            <Button variant="ghost" className="w-full justify-start text-white/80 font-medium" onClick={() => navigate("/working")}>How it Works</Button>
             {isAuthenticated ? (
               <>
-                <Button variant="outline" className="w-full mt-2 gap-2 text-cyan-400 border-cyan-900 border hover:bg-cyan-900/20" onClick={() => navigate("/dashboard")}>
+                <button className="w-full mt-4 liquid-glass rounded-full px-5 py-3 text-sm font-bold text-white flex justify-center gap-2 cursor-pointer" onClick={() => navigate("/dashboard")}>
                    <LayoutDashboard className="h-4 w-4" /> Dashboard
-                </Button>
-                <Button variant="ghost" className="w-full mt-2 gap-2 text-red-400 hover:text-red-300 hover:bg-red-500/10" onClick={() => { if(onLogout) onLogout(); navigate("/"); }}>
+                </button>
+                <button className="w-full mt-2 rounded-full px-5 py-3 text-sm font-bold text-red-400 border border-slate-700 hover:border-red-500 hover:bg-red-500/10 flex justify-center gap-2 cursor-pointer" onClick={() => { if(onLogout) onLogout(); navigate("/"); }}>
                    <LogOut className="h-4 w-4" /> Sign Out
-                </Button>
+                </button>
               </>
             ) : (
               <>
-                <Button variant="ghost" className="w-full justify-start mt-2" onClick={() => navigate("/login")}>Sign In</Button>
-                <Button className="w-full mt-2" onClick={() => navigate("/signup")}>Get Started</Button>
+                <button className="w-full mt-4 text-sm font-medium text-white/70 hover:text-white py-3 cursor-pointer" onClick={() => navigate("/login")}>Sign In</button>
+                <button className="w-full mt-2 liquid-glass rounded-full px-5 py-3 text-sm font-bold text-white cursor-pointer" onClick={() => navigate("/signup")}>Get Started</button>
               </>
             )}
           </div>

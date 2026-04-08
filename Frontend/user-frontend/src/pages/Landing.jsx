@@ -1,19 +1,58 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "motion/react";
-
-import { Button, Input, Card, Badge } from "../components/ui/Primitives";
-import { ShieldCheck, Eye, Database, Code, Activity, Zap, Lock, Check, Server, Terminal, User, Star, ChevronLeft, ChevronRight } from "lucide-react";
-import ParticleBackground from "../components/ui/ParticleBackground";
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  ShieldCheck,
+  Search,
+  Globe,
+  Code,
+  Eye,
+  CheckCircle2,
+  Server,
+  Terminal,
+  ChevronLeft,
+  ChevronRight,
+  Star,
+  ArrowRight
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import api from "../services/api";
 
 export default function Landing() {
   const navigate = useNavigate();
-  const [scanUrl, setScanUrl] = React.useState("");
+  const videoRef = useRef(null);
+  const [videoOpacity, setVideoOpacity] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [scanUrl, setScanUrl] = useState("");
   const [testimonials, setTestimonials] = useState([]);
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
 
-  const expoOut = [0.19, 1, 0.22, 1];
+  useEffect(() => {
+    let animationFrame;
+    const updateOpacity = () => {
+      if (!videoRef.current) return;
+      const video = videoRef.current;
+      const time = video.currentTime;
+      const duration = video.duration;
+      const fadeTime = 0.5;
+      let opacity = 1;
+
+      if (time < fadeTime) {
+        opacity = time / fadeTime;
+      } else if (duration > 0 && (duration - time) < fadeTime) {
+        opacity = (duration - time) / fadeTime;
+      }
+
+      setVideoOpacity(opacity);
+      animationFrame = requestAnimationFrame(updateOpacity);
+    };
+    animationFrame = requestAnimationFrame(updateOpacity);
+    return () => cancelAnimationFrame(animationFrame);
+  }, []);
+
+  const handleVideoEnded = () => {
+    if (videoRef.current) {
+      setVideoOpacity(0);
+      setTimeout(() => videoRef.current.play(), 100);
+    }
+  };
 
   useEffect(() => {
     const fetchTestimonials = async () => {
@@ -22,7 +61,7 @@ export default function Landing() {
         if (res.data && res.data.length > 0) {
           setTestimonials(res.data);
         } else {
-          setTestimonials(mockTestimonials); // fallback
+          setTestimonials(mockTestimonials);
         }
       } catch (err) {
         setTestimonials(mockTestimonials); // fallback
@@ -33,13 +72,13 @@ export default function Landing() {
 
   const mockTestimonials = [
     {
-      comment: "The visual SHAP analysis is a game changer. It finally explains WHY a site was flagged, not just that it was.",
-      user_email: "CISO*****",
+      comment: "The visual SHAP analysis is a game changer. Finally, our team can understand WHY the AI flagged a specific element.",
+      user_email: "SecOps*****",
       rating: 5,
     },
     {
       comment: "We reduced our mean time to respond (MTTR) by 60% using PhishGuard's automated triage API.",
-      user_email: "SecOps*****",
+      user_email: "CISO*****",
       rating: 5,
     },
     {
@@ -49,388 +88,310 @@ export default function Landing() {
     }
   ];
 
-  // Ensure we have at least 3 items to show a full carousel layout
   const displayTestimonials = testimonials.length > 0 ? testimonials : mockTestimonials;
   const extendedTestimonials = displayTestimonials.length >= 3
     ? displayTestimonials
     : [...displayTestimonials, ...displayTestimonials, ...displayTestimonials].slice(0, 3);
 
-  const nextTestimonial = () => setActiveTestimonial((prev) => (prev + 1) % extendedTestimonials.length);
-  const prevTestimonial = () => setActiveTestimonial((prev) => (prev - 1 + extendedTestimonials.length) % extendedTestimonials.length);
+  const handleScanSubmit = () => {
+    if (scanUrl) {
+      sessionStorage.setItem('pendingScanUrl', scanUrl);
+      navigate('/dashboard/scan');
+    }
+  };
 
   return (
-    <div className="bg-slate-950 min-h-screen text-slate-100 selection:bg-cyan-500/30 overflow-x-hidden relative">
+    <div className="landing-theme min-h-screen flex flex-col overflow-x-hidden relative pt-16 selection:bg-cyan-500/30">
+      {/* BACKGROUND VIDEO LAYER */}
+      <div className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none z-0 bg-[#07020f]">
+        <video
+          ref={videoRef}
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_065045_c44942da-53c6-4804-b734-f9e07fc22e08.mp4"
+          crossOrigin="anonymous"
+          autoPlay muted playsInline onEnded={handleVideoEnded}
+          className="w-full h-full object-cover mix-blend-screen"
+          style={{ opacity: videoOpacity * 0.25 }}
+        />
+        {/* Soft Depth Shapes */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-indigo-950/20 blur-[120px] rounded-full" />
+      </div>
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-4">
-        <ParticleBackground />
-        {/* Background Gradients */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-cyan-500/10 blur-[120px] rounded-full opacity-60 pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-purple-500/5 blur-[120px] rounded-full opacity-40 pointer-events-none" />
+      {/* CONTENT Z-LAYER */}
+      <div className="relative z-10 flex flex-col flex-1">
 
-        <div className="container mx-auto text-center relative z-10 max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: expoOut }}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, ease: expoOut, delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/50 border border-slate-800 mb-8 backdrop-blur-md"
-            >
-              <span className="flex h-2 w-2 rounded-full bg-cyan-400 animate-pulse"></span>
-              <span className="text-xs font-medium text-slate-300">PhishGuard 2.0 is live</span>
-            </motion.div>
+        {/* HERO SECTION */}
+        <section className="flex-1 flex flex-col items-center justify-center text-center px-6 pt-20 pb-32">
+          {/* Status Badge */}
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-glass mb-10 border border-white/5">
+            <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse" />
+            <span className="text-[10px] font-bold text-white tracking-[0.15em] uppercase opacity-80">PhishGuard 2.0 Live</span>
+          </div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: expoOut, delay: 0.4 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-slate-500 leading-tight"
-            >
-              Detect phishing with <br className="hidden md:block" />
-              <span className="text-cyan-400">Explainable AI</span>
-            </motion.h1>
+          <h1 className="font-general text-[50px] md:text-[110px] lg:text-[140px] font-normal leading-[1.02] tracking-[-0.03em] text-white">
+            Detect phishing with<br />
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-amber-300">Explainable AI</span>
+          </h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: expoOut, delay: 0.6 }}
-              className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed font-light"
-            >
-              The first multimodal detection system that sees the web like a human does.
-              Analyze URLs, DOM structures, and visual patterns in milliseconds.
-            </motion.p>
+          <p className="text-lg md:text-xl leading-relaxed max-w-2xl mt-8 text-[hsl(var(--hero-sub))] opacity-80">
+            The first multimodal detection system that sees the web like a human does.
+            Analyze URLs, DOM structures, and visual patterns in milliseconds.
+          </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-lg mx-auto">
-              <div className="relative w-full">
-                <Input
-                  value={scanUrl}
-                  onChange={(e) => setScanUrl(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      if (scanUrl) sessionStorage.setItem('pendingScanUrl', scanUrl);
-                      navigate('/dashboard/scan');
-                    }
-                  }}
-                  placeholder="scan website (e.g., apple-id-login.com)"
-                  className="w-full h-14 pl-12 bg-slate-900/60 backdrop-blur-xl border-slate-700/50 focus:border-cyan-500/50 rounded-full text-base"
-                />
-                <ShieldCheck className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-              </div>
-              <Button
-                size="lg"
-                className="w-full sm:w-auto h-14 rounded-full px-8 text-base shadow-[0_0_40px_-10px_rgba(6,182,212,0.3)]"
-                onClick={() => {
-                  if (scanUrl) sessionStorage.setItem('pendingScanUrl', scanUrl);
-                  navigate('/dashboard/scan');
+          {/* Scan Input Area */}
+          <div className="mt-12 w-full max-w-2xl relative">
+            <div className="liquid-glass rounded-2xl p-1.5 flex items-center gap-2 border border-white/5 group focus-within:border-cyan-500/30 transition-all">
+              <Search className="ml-4 w-6 h-6 text-white/30" />
+              <input
+                type="text"
+                value={scanUrl}
+                onChange={(e) => setScanUrl(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleScanSubmit();
                 }}
-              >
+                placeholder="scan website (e.g., apple-id-login.com)"
+                className="flex-1 bg-transparent border-none outline-none py-4 px-2 text-white placeholder:text-white/20 font-medium"
+              />
+              <button
+                onClick={handleScanSubmit}
+                className="bg-cyan-500 text-slate-950 px-8 py-4 rounded-xl font-bold hover:bg-cyan-400 transition-all glow-cyan mr-1 active:scale-95 cursor-pointer">
                 Scan Now
-              </Button>
+              </button>
             </div>
 
-            <div className="mt-12 flex flex-wrap justify-center gap-8 text-slate-500 text-sm font-medium">
-              <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-cyan-500" /> 99.9% Accuracy
-              </div>
-              <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-cyan-500" /> Visual SHAP Analysis
-              </div>
-              <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-cyan-500" /> Enterprise API
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Global Threat Map Section */}
-      <section className="py-24 bg-slate-950/50 relative border-t border-white/5">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.2, ease: expoOut }}
-            >
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-tight">Global Threat Intelligence</h2>
-              <p className="text-slate-400 text-lg mb-8 leading-relaxed">
-                Visualize malicious infrastructure in real-time. Our 3D globe tracks phishing campaigns across borders, giving you a god's eye view of the threat landscape.
-              </p>
-
-              <div className="space-y-6">
-                {[
-                  { label: "Real-time Plotting", desc: "Live feed of malicious IPs and domains." },
-                  { label: "Geospatial Analytics", desc: "Identify high-risk regions and hosting providers." },
-                  { label: "Campaign Tracking", desc: "Link disparate attacks to single threat actors." }
-                ].map((item, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, ease: expoOut, delay: 0.2 + (i * 0.1) }}
-                    className="flex gap-4 group"
-                  >
-                    <div className="mt-1 h-8 w-8 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-cyan-400 group-hover:border-cyan-500/50 transition-all duration-300 group-hover:scale-110">
-                      <Activity className="h-4 w-4" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-white group-hover:text-cyan-400 transition-colors">{item.label}</h4>
-                      <p className="text-sm text-slate-500">{item.desc}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1 }}
-              className="relative flex items-center justify-center"
-            >
-              <div className="absolute inset-0 bg-cyan-500/10 blur-[100px] rounded-full" />
-              <div className="w-full max-w-[600px] aspect-square relative z-10 flex items-center justify-center">
-                <div className="text-center">
-                  <ShieldCheck className="w-32 h-32 mx-auto text-cyan-400 mb-4" />
-                  <h3 className="text-2xl font-bold text-white">AI-Powered Protection</h3>
+            {/* Trust Badges under Input */}
+            <div className="flex justify-center gap-8 mt-8 opacity-50 flex-wrap">
+              {['99.9% Accuracy', 'Visual SHAP Analysis', 'Enterprise API'].map(tag => (
+                <div key={tag} className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-white">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400" /> {tag}
                 </div>
-              </div>
-            </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* How It Works */}
-      <section className="py-32 bg-slate-950 relative">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">Multimodal Detection Engine</h2>
-            <p className="text-slate-400 text-lg">
-              PhishGuard combines three distinct AI models to analyze every aspect of a suspicious site, just like a human analyst would.
-            </p>
+        {/* FEATURE: MULTIMODAL ENGINE */}
+        <section className="py-32 px-8 max-w-7xl mx-auto w-full">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+            <div className="max-w-xl">
+              <h2 className="font-general text-5xl font-normal text-white mb-6">Multimodal Detection Engine</h2>
+              <p className="text-lg text-[hsl(var(--hero-sub))]">
+                PhishGuard combines three distinct AI models to analyze every aspect of a suspicious site, just like a human analyst would.
+              </p>
+            </div>
+            <button className="flex items-center gap-2 text-cyan-400 font-bold hover:gap-3 transition-all cursor-pointer">
+              View Technical Specs <ArrowRight className="w-5 h-5" />
+            </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                icon: <Code className="h-6 w-6" />,
-                title: "1. URL Analysis",
-                desc: "Deconstructs the URL for typosquatting, heavy obfuscation, and known malicious patterns using a specialized transformer model.",
-                color: "text-cyan-400"
+                title: 'URL Analysis',
+                icon: Globe,
+                color: 'text-cyan-400',
+                desc: 'Deconstructs the URL for typosquatting, heavy obfuscation, and known malicious patterns using a specialized transformer model.'
               },
               {
-                icon: <Database className="h-6 w-6" />,
-                title: "2. DOM Inspection",
-                desc: "Scans the HTML/JS structure for hidden forms, suspicious scripts, and evasion techniques that traditional scanners miss.",
-                color: "text-purple-400"
+                title: 'DOM Inspection',
+                icon: Code,
+                color: 'text-purple-400',
+                desc: 'Scans the HTML/JS structure for hidden forms, suspicious scripts, and evasion techniques that traditional scanners miss.'
               },
               {
-                icon: <Eye className="h-6 w-6" />,
-                title: "3. Visual Recognition",
-                desc: "Uses computer vision to render the page and compare it against a database of legitimate brand login pages.",
-                color: "text-emerald-400"
-              },
-            ].map((card, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ delay: i * 0.15, duration: 1, ease: expoOut }}
-              >
-                <Card className="h-full bg-slate-900/20 hover:bg-slate-900/40 border-slate-800 hover:border-cyan-500/30 transition-all duration-300 group hover:-translate-y-2">
-                  <div className={`mb-6 p-3 rounded-lg bg-slate-950 border border-slate-800 w-fit ${card.color} group-hover:border-cyan-500/50 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.2)] transition-all duration-300`}>
-                    {card.icon}
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 text-white">{card.title}</h3>
-                  <p className="text-slate-400 leading-relaxed text-sm">
-                    {card.desc}
-                  </p>
-
-                  {/* Decorative faint line */}
-                  <div className="mt-8 h-px w-full bg-gradient-to-r from-slate-800 to-transparent group-hover:from-cyan-500/30 transition-all duration-500" />
-                </Card>
-              </motion.div>
+                title: 'Visual Recognition',
+                icon: Eye,
+                color: 'text-emerald-400',
+                desc: 'Uses computer vision to render the page and compare it against a database of legitimate brand login pages.'
+              }
+            ].map((card) => (
+              <div key={card.title} className="liquid-glass p-10 rounded-[40px] group transition-all duration-500 hover:-translate-y-2 border border-white/5">
+                <div className={`w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center mb-8 group-hover:bg-white/10 transition-colors`}>
+                  <card.icon className={`w-7 h-7 ${card.color}`} />
+                </div>
+                <h3 className="font-general text-2xl font-normal text-white mb-4">{card.title}</h3>
+                <p className="text-sm leading-relaxed text-[hsl(var(--hero-sub))] opacity-70 group-hover:opacity-100 transition-opacity">
+                  {card.desc}
+                </p>
+              </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Testimonials / Social Proof (3D Carousel Redesign) */}
-      <section className="py-24 border-t border-white/5 bg-slate-950/50 relative overflow-hidden">
-        {/* Ambient background glow for the glass effect to be visible */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none" />
+        {/* FEATURE: THREAT INTEL GLOBE */}
+        <section className="py-32 px-8 max-w-7xl mx-auto w-full">
+          <div className="liquid-glass rounded-[48px] p-12 md:p-20 flex flex-col md:flex-row items-center gap-20 overflow-hidden border border-white/5">
+            <div className="flex-1">
+              <h2 className="font-general text-5xl font-normal text-white mb-8">Global Threat Intelligence</h2>
+              <div className="space-y-10">
+                {[
+                  { t: 'Real-time Plotting', d: 'Live feed of malicious IPs and domains visualized on a high-fidelity spatial grid.' },
+                  { t: 'Geospatial Analytics', d: 'Identify high-risk regions and hosting providers across international borders.' },
+                  { t: 'Campaign Tracking', d: 'Link disparate attacks to single threat actors using graph-based link analysis.' }
+                ].map(item => (
+                  <div key={item.t} className="group">
+                    <h4 className="text-lg font-bold text-white mb-2 flex items-center gap-3">
+                      <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full group-hover:scale-150 transition-transform" />
+                      {item.t}
+                    </h4>
+                    <p className="text-sm text-[hsl(var(--hero-sub))] opacity-60 leading-relaxed ml-4">{item.d}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16 space-y-4 relative z-10">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">Don't take our word for it.</h2>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-400">Over 100+ people trust us.</h2>
+            <div className="flex-1 relative w-full aspect-square max-w-[500px]">
+              {/* 3D Mock Globe Graphic */}
+              <div className="absolute inset-0 bg-cyan-500/10 blur-[100px] rounded-full animate-pulse" />
+              <div className="absolute inset-0 border border-white/10 rounded-full scale-110" />
+              <div className="absolute inset-10 border border-cyan-500/20 rounded-full -rotate-12" />
+              <div className="w-full h-full liquid-glass rounded-full flex flex-col items-center justify-center text-center p-10 border border-white/10">
+                <ShieldCheck className="w-24 h-24 text-cyan-400 mb-6 glow-cyan" />
+                <p className="text-xs font-bold text-white/40 tracking-[0.4em] uppercase mb-1">Malicious Infrastructure</p>
+                <p className="text-sm font-bold text-cyan-400 tracking-wider">TRACKING IN REAL-TIME</p>
+              </div>
+            </div>
           </div>
+        </section>
 
-          <div className="relative flex justify-center items-center h-[350px] max-w-6xl mx-auto mt-12 perspective-[1000px]">
-            {extendedTestimonials.map((t, i) => {
-              // Map index to carousel state
-              let zIndex = 0;
-              let scale = 0.8;
-              let opacity = 0;
-              let translateX = 0;
+        {/* TESTIMONIALS CAROUSEL */}
+        <section className="py-32 px-4 md:px-8 overflow-hidden text-center">
+          <h2 className="font-general text-4xl md:text-5xl font-normal text-white mb-20">Relied on by global security experts</h2>
 
-              const isActive = i === activeTestimonial;
-              const isPrev = i === (activeTestimonial - 1 + extendedTestimonials.length) % extendedTestimonials.length;
-              const isNext = i === (activeTestimonial + 1) % extendedTestimonials.length;
+          <div className="parrent-container flex justify-center items-center relative h-[350px] w-full max-w-6xl mx-auto">
+            {[-2, -1, 0, 1, 2].map((offset) => {
+              const absoluteIdx = activeIndex + offset;
+              const len = displayTestimonials.length;
+              // Get real item from circular array (protect negative modulo)
+              const realIdx = ((absoluteIdx % len) + len) % len;
+              const t = displayTestimonials[realIdx];
 
-              if (isActive) {
-                zIndex = 30; scale = 1; opacity = 1; translateX = 0;
-              } else if (isPrev) {
-                zIndex = 20; scale = 0.85; opacity = 0.4; translateX = -65;
-              } else if (isNext) {
-                zIndex = 20; scale = 0.85; opacity = 0.4; translateX = 65;
-              } else {
-                zIndex = 10; scale = 0.7; opacity = 0; translateX = 0;
+              let scaleClass = "scale-50";
+              let opacityClass = "opacity-0";
+              let zIndexClass = "z-0";
+              let translateClass = "";
+              let blurClass = "blur-[8px]";
+
+              if (offset === 0) {
+                scaleClass = "scale-100";
+                opacityClass = "opacity-100";
+                zIndexClass = "z-30 shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-white/[0.03]";
+                translateClass = "translate-x-0";
+                blurClass = "blur-none";
+              } else if (offset === -1) {
+                scaleClass = "scale-[0.85]";
+                opacityClass = "opacity-40";
+                zIndexClass = "z-20";
+                translateClass = "-translate-x-[85%] md:-translate-x-[110%]"; // Mobile peek of ~10%
+                blurClass = "blur-[2px]";
+              } else if (offset === 1) {
+                scaleClass = "scale-[0.85]";
+                opacityClass = "opacity-40";
+                zIndexClass = "z-20";
+                translateClass = "translate-x-[85%] md:translate-x-[110%]";
+                blurClass = "blur-[2px]";
+              } else if (offset === -2) {
+                scaleClass = "scale-75";
+                translateClass = "-translate-x-[150%]";
+              } else if (offset === 2) {
+                scaleClass = "scale-75";
+                translateClass = "translate-x-[150%]";
               }
 
               return (
-                <motion.div
-                  key={i}
-                  initial={false}
-                  animate={{ scale, opacity, x: `${translateX}%`, zIndex }}
-                  transition={{ duration: 0.8, ease: expoOut }}
-                  className="absolute w-full max-w-lg cursor-pointer"
-                  onClick={() => setActiveTestimonial(i)}
-                  style={{ pointerEvents: isActive ? 'auto' : 'none' }}
+                <div
+                  key={absoluteIdx} // Absolute key guarantees smooth unmounting/mounting array injection
+                  className={`new-testimonial-card absolute transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] liquid-glass p-8 md:p-10 rounded-[32px] border border-white/5 w-[92%] max-w-[50vw] ${scaleClass} ${opacityClass} ${zIndexClass} ${translateClass} ${blurClass}`}
+                  style={{ pointerEvents: offset === 0 ? 'auto' : 'none' }}
                 >
-                  <Card className={`p-8 flex flex-col justify-between h-[280px] rounded-2xl transition-all duration-500 backdrop-blur-2xl ${isActive ? 'bg-slate-900/60 border-cyan-500/30 shadow-[0_20px_60px_rgba(0,0,0,0.6)]' : 'bg-slate-900/20 border-white/5 shadow-xl opacity-60'}`}>
-                    <p className="text-slate-300 text-[17px] leading-relaxed line-clamp-4 font-light italic">
-                      "{t.comment || t.display_text}"
-                    </p>
-                    <div className="flex justify-between items-center mt-6">
-                      <div className="flex items-center gap-4">
-                        <img
-                          src={t.avatar || `https://ui-avatars.com/api/?name=${t.user_email}&background=1e293b&color=fff`}
-                          alt="avatar"
-                          className="w-12 h-12 rounded-full object-cover border border-slate-700/50 shadow-md group-hover:border-cyan-500/50 transition-colors"
-                        />
-                        <div>
-                          <div className="font-semibold text-white text-base">{t.user_email}</div>
-                          <div className="text-xs text-slate-400 mt-0.5">Verified Client</div>
-                        </div>
-                      </div>
-                      <div className="flex gap-1 bg-slate-950/60 px-3 py-1.5 rounded-full border border-white/5 backdrop-blur-md">
-                        {[...Array(5)].map((_, idx) => (
-                          <Star key={idx} className={`w-3.5 h-3.5 ${idx < (t.rating || 5) ? 'fill-cyan-500 text-cyan-500' : 'text-slate-700'}`} />
-                        ))}
-                      </div>
+                  <div className="flex gap-1 mb-8">
+                    {[...Array(5)].map((_, i) => <Star key={i} className={`w-4 h-4 ${i < (t.rating || 5) ? 'fill-cyan-400 text-cyan-400' : 'text-slate-700'}`} />)}
+                  </div>
+                  <p className="text-lg text-white mb-10 italic leading-relaxed line-clamp-4 text-left">
+                    "{t.comment || t.display_text}"
+                  </p>
+                  <div className="flex items-center gap-4">
+                    <img
+                      src={t.avatar || `https://ui-avatars.com/api/?name=${t.user_email}&background=1e293b&color=fff`}
+                      alt="avatar"
+                      className="w-10 h-10 rounded-full border border-slate-700 object-cover bg-slate-900"
+                    />
+                    <div className="text-left">
+                      <p className="text-sm font-bold text-white uppercase tracking-tighter">{t.user_email}</p>
+                      <p className="text-xs text-white/40">Verified Client</p>
                     </div>
-                  </Card>
-                </motion.div>
+                  </div>
+                </div>
               );
             })}
           </div>
 
-          <div className="flex justify-center items-center gap-4 mt-8 relative z-20">
-            <button
-              onClick={prevTestimonial}
-              className="w-12 h-12 rounded-full border border-slate-700 bg-[#12161c] hover:bg-[#1e2530] hover:border-slate-500 flex items-center justify-center text-slate-400 hover:text-white transition-all transform hover:scale-105 active:scale-95 shadow-lg"
-            >
-              <ChevronLeft className="w-5 h-5" />
+          <div className="flex justify-center gap-6 mt-16 relative z-30">
+            <button onClick={() => setActiveIndex(activeIndex - 1)} className="w-14 h-14 rounded-full liquid-glass flex items-center justify-center hover:bg-white/10 active:scale-95 transition-all cursor-pointer">
+              <ChevronLeft className="w-6 h-6 text-white" />
             </button>
-            <button
-              onClick={nextTestimonial}
-              className="w-12 h-12 rounded-full border border-slate-700 bg-[#12161c] hover:bg-[#1e2530] hover:border-slate-500 flex items-center justify-center text-slate-400 hover:text-white transition-all transform hover:scale-105 active:scale-95 shadow-lg"
-            >
-              <ChevronRight className="w-5 h-5" />
+            <button onClick={() => setActiveIndex(activeIndex + 1)} className="w-14 h-14 rounded-full liquid-glass flex items-center justify-center hover:bg-white/10 active:scale-95 transition-all cursor-pointer">
+              <ChevronRight className="w-6 h-6 text-white" />
             </button>
           </div>
+        </section>
 
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-cyan-900/5" />
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: expoOut }}
-          className="container mx-auto px-4 text-center relative z-10"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white">Ready to secure your organization?</h2>
-          <p className="text-slate-400 text-lg mb-10 max-w-2xl mx-auto">
+        {/* CTA SECTION */}
+        <section className="py-24 relative overflow-hidden flex flex-col items-center flex-wrap">
+          <div className="absolute inset-0 bg-cyan-900/5 pointer-events-none" />
+          <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white z-10 px-4 text-center">Ready to secure your organization?</h2>
+          <p className="text-slate-400 text-lg mb-10 max-w-2xl mx-auto z-10 px-4 text-center">
             Start scanning URLs immediately or integrate our API into your existing security stack.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" className="h-14 px-8 rounded-full text-base hover:scale-105 active:scale-95 transition-transform" onClick={() => navigate("/dashboard/scan")}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 z-10 w-full px-4">
+            <button onClick={() => navigate("/dashboard/scan")} className="w-full sm:w-auto bg-white text-slate-950 font-bold px-8 py-4 rounded-full hover:scale-105 active:scale-95 transition-transform cursor-pointer">
               Start Free Scan
-            </Button>
-            <Button variant="outline" size="lg" className="h-14 px-8 rounded-full text-base hover:bg-slate-900 transition-colors" onClick={() => navigate("/signup")}>
+            </button>
+            <button onClick={() => navigate("/signup")} className="w-full sm:w-auto text-white border border-white/20 font-bold px-8 py-4 rounded-full hover:bg-white/5 disabled:opacity-50 transition-colors cursor-pointer">
               Create Account
-            </Button>
+            </button>
           </div>
-        </motion.div>
-      </section>
+        </section>
 
-      {/* Footer */}
-      <footer className="py-12 border-t border-white/5 bg-slate-950 text-slate-500 text-sm">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-            <div className="col-span-2 md:col-span-1">
-              <div className="flex items-center gap-2 mb-6">
-                <ShieldCheck className="h-6 w-6 text-cyan-500" />
-                <span className="text-lg font-bold text-white">PhishGuard</span>
+        {/* FOOTER */}
+        <footer className="pt-32 pb-16 px-8 border-t border-white/5">
+          <div className="max-w-7xl mx-auto grid md:grid-cols-5 gap-20 mb-20">
+            <div className="col-span-2">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-8 h-8 bg-cyan-500 rounded flex items-center justify-center glow-cyan">
+                  <ShieldCheck className="text-white w-5 h-5" />
+                </div>
+                <span className="text-xl font-bold text-white font-general">PhishGuard</span>
               </div>
-              <p className="mb-6 max-w-xs">
-                Next-generation phishing detection powered by multimodal AI and computer vision.
+              <p className="text-sm text-[hsl(var(--hero-sub))] leading-relaxed max-w-sm mb-10">
+                Next-generation phishing detection powered by multimodal AI and computer vision. Stay one step ahead of threat actors.
               </p>
               <div className="flex gap-4">
-                {/* Mock Social Icons */}
-                <div className="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center hover:bg-slate-800 transition-colors cursor-pointer"><Server className="w-4 h-4" /></div>
-                <div className="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center hover:bg-slate-800 transition-colors cursor-pointer"><Terminal className="w-4 h-4" /></div>
+                <div className="w-10 h-10 rounded-full liquid-glass flex items-center justify-center cursor-pointer hover:bg-white/10"><Server className="w-4 h-4 text-white" /></div>
+                <div className="w-10 h-10 rounded-full liquid-glass flex items-center justify-center cursor-pointer hover:bg-white/10"><Terminal className="w-4 h-4 text-white" /></div>
               </div>
             </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">Platform</h4>
-              <ul className="space-y-3">
-                <li><a href="#" className="hover:text-cyan-400 transition-colors">Scanning Engine</a></li>
-                <li><a href="#" className="hover:text-cyan-400 transition-colors">Threat Map</a></li>
-                <li><a href="#" className="hover:text-cyan-400 transition-colors">API Docs</a></li>
-                <li><a href="#" className="hover:text-cyan-400 transition-colors">Integrations</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">Company</h4>
-              <ul className="space-y-3">
-                <li><a href="#" className="hover:text-cyan-400 transition-colors">About Us</a></li>
-                <li><a href="#" className="hover:text-cyan-400 transition-colors">Careers</a></li>
-                <li><a href="#" className="hover:text-cyan-400 transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-cyan-400 transition-colors">Security</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">Legal</h4>
-              <ul className="space-y-3">
-                <li><a href="#" className="hover:text-cyan-400 transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-cyan-400 transition-colors">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-cyan-400 transition-colors">Cookie Settings</a></li>
-              </ul>
+
+            {['Platform', 'Company', 'Legal'].map(cat => (
+              <div key={cat}>
+                <h5 className="text-white font-bold mb-8 text-sm uppercase tracking-widest">{cat}</h5>
+                <ul className="space-y-5 text-sm">
+                  {['Overview', 'Solutions', 'Pricing', 'Documentation'].map(link => (
+                    <li key={link} className="text-[hsl(var(--hero-sub))] hover:text-white transition-colors cursor-pointer">{link}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center border-t border-white/5 pt-12 opacity-50">
+            <p className="text-xs text-white">© 2026 PhishGuard Inc. All rights reserved.</p>
+            <div className="flex items-center gap-2 mt-6 md:mt-0">
+              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+              <span className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest">All Systems Operational</span>
             </div>
           </div>
-          <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div>© 2026 PhishGuard Inc. All rights reserved.</div>
-            <div className="flex items-center gap-2 text-xs">
-              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-              All Systems Operational
-            </div>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
   );
 }
