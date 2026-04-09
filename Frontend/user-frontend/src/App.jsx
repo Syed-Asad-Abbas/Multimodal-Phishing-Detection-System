@@ -35,7 +35,7 @@ export default function App() {
           <Route path="/" element={
             <>
               <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
-              <Landing />
+              <Landing isAuthenticated={isAuthenticated} onLogout={handleLogout} />
             </>
           } />
           
