@@ -36,6 +36,9 @@ export default function Auth() {
       // If the backend has 2FA enabled, it might return a specific status or flag
       // For now, assuming direct login without 2FA step if not implemented yet
       login(response.data.accessToken || response.data.token);
+      if (response.data?.user?.name) {
+          localStorage.setItem("adminName", response.data.user.name);
+      }
       navigate("/dashboard");
 
     } catch (err) {
