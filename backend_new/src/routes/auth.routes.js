@@ -12,6 +12,7 @@ router.post('/forgot-password', authController.forgotPassword);
 router.post('/reset-password', authController.resetPassword);
 router.post('/refresh-token', authController.refreshToken);
 router.post('/logout', authController.logout);
+router.post('/google', authController.googleAuth);
 router.post('/2fa/toggle', auth(), authController.toggle2FA);
 
 module.exports = router;

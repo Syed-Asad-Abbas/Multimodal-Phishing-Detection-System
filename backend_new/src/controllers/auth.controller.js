@@ -4,6 +4,9 @@ const { generateAccessToken, generateRefreshToken } = require('../utils/jwt');
 const validation = require('../validations/auth.validation');
 const logger = require('../config/logger');
 const crypto = require('crypto');
+const { OAuth2Client } = require('google-auth-library');
+
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 exports.register = async (req, res, next) => {
     try {
@@ -67,6 +70,11 @@ exports.login = async (req, res, next) => {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
 
+        // Block Google-only users from password login
+        if (user.provider === 'google' && !user.password_hash) {
+            return res.status(400).json({ message: 'This account uses Google Sign-In. Please log in with Google.' });
+        }
+
         const validPassword = await verifyPassword(password, user.password_hash);
         if (!validPassword) {
             return res.status(401).json({ message: 'Invalid credentials' });
@@ -88,10 +96,21 @@ exports.login = async (req, res, next) => {
                 },
             });
 
-            logger.info(`[2FA OTP] User: ${email}, Code: ${otp}`);
+            await prisma.queuedJob.create({
+                data: {
+                    job_type: 'send_2fa_otp_email',
+                    payload: JSON.stringify({
+                        email: user.email,
+                        code: otp,
+                        subject: 'Your 2FA Login OTP'
+                    })
+                }
+            });
+
+            logger.info(`[2FA OTP] User: ${email}, Code queued for email`);
 
             return res.json({
-                message: '2FA required',
+                message: '2FA required. OTP sent to email.',
                 requires2FA: true,
                 userId: user.id,
                 debugOTP: process.env.NODE_ENV === 'development' ? otp : undefined
@@ -139,7 +158,8 @@ const completeLogin = async (user, req, res) => {
             name: user.name,
             role: user.role,
             is_verified: user.is_verified,
-            is_2fa_enabled: user.is_2fa_enabled
+            is_2fa_enabled: user.is_2fa_enabled,
+            provider: user.provider
         },
     });
 };
@@ -231,9 +251,13 @@ exports.forgotPassword = async (req, res, next) => {
             return res.json({ message: 'If account exists, password reset email executed.' });
         }
 
-        const token = crypto.randomBytes(32).toString('hex');
-        const tokenHash = hashToken(token);
-        const apiBaseUrl = process.env.API_BASE_URL || 'http://localhost:5000';
+        // Block Google-only users from password reset
+        if (user.provider === 'google' && !user.password_hash) {
+            return res.status(400).json({ message: 'This account uses Google Sign-In. Password reset is not available.' });
+        }
+
+        const otp = crypto.randomInt(100000, 999999).toString();
+        const tokenHash = hashToken(otp);
 
         await prisma.passwordResetToken.deleteMany({ where: { user_id: user.id } });
 
@@ -245,11 +269,22 @@ exports.forgotPassword = async (req, res, next) => {
             }
         });
 
-        logger.info(`[Reset Password] User: ${email}, Link: ${apiBaseUrl}/api/auth/reset-password?token=${token}`);
+        await prisma.queuedJob.create({
+            data: {
+                job_type: 'send_forgot_pass_otp_email',
+                payload: JSON.stringify({
+                    email: user.email,
+                    code: otp,
+                    subject: 'Reset your password'
+                })
+            }
+        });
+
+        logger.info(`[Reset Password] User: ${email}, OTP generated and queued for email`);
 
         res.json({
             message: 'If account exists, password reset email executed.',
-            debugToken: process.env.NODE_ENV === 'development' ? token : undefined
+            debugToken: process.env.NODE_ENV === 'development' ? otp : undefined
         });
 
     } catch (error) {
@@ -356,6 +391,70 @@ exports.toggle2FA = async (req, res, next) => {
             is_2fa_enabled: user.is_2fa_enabled
         });
     } catch (error) {
+        next(error);
+    }
+};
+
+exports.googleAuth = async (req, res, next) => {
+    try {
+        const { error } = validation.googleAuth.validate(req.body);
+        if (error) {
+            return res.status(400).json({ message: error.details[0].message });
+        }
+
+        const { idToken } = req.body;
+
+        // Verify the Google ID token
+        const ticket = await googleClient.verifyIdToken({
+            idToken,
+            audience: process.env.GOOGLE_CLIENT_ID,
+        });
+
+        const payload = ticket.getPayload();
+        const { sub: googleId, email, name, email_verified } = payload;
+
+        if (!email) {
+            return res.status(400).json({ message: 'Google account does not have an email.' });
+        }
+
+        // Check if user already exists by email
+        let user = await prisma.user.findUnique({ where: { email } });
+
+        if (user) {
+            // User exists — link Google ID if not already linked
+            if (!user.google_id) {
+                user = await prisma.user.update({
+                    where: { id: user.id },
+                    data: {
+                        google_id: googleId,
+                        provider: user.provider === 'local' ? 'local+google' : user.provider,
+                        is_verified: true,
+                    }
+                });
+            }
+        } else {
+            // New user — create account with Google
+            user = await prisma.user.create({
+                data: {
+                    email,
+                    name: name || null,
+                    google_id: googleId,
+                    provider: 'google',
+                    is_verified: true,
+                    // No password for Google-only users
+                }
+            });
+            logger.info(`[Google Auth] New user created: ${email}`);
+        }
+
+        // Complete login (issue JWT tokens)
+        await completeLogin(user, req, res);
+
+    } catch (error) {
+        logger.error(`[Google Auth] Error: ${error.message}`);
+        if (error.message.includes('Token used too late') || error.message.includes('Invalid token')) {
+            return res.status(401).json({ message: 'Invalid or expired Google token. Please try again.' });
+        }
         next(error);
     }
 };

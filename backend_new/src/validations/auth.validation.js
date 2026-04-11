@@ -29,8 +29,12 @@ const forgotPassword = Joi.object({
 });
 
 const resetPassword = Joi.object({
-    token: Joi.string().required(),
+    token: Joi.string().length(6).required(),
     newPassword: Joi.string().min(8).required(),
+});
+
+const googleAuth = Joi.object({
+    idToken: Joi.string().required(),
 });
 
 module.exports = {
@@ -41,4 +45,5 @@ module.exports = {
     verify2FA,
     forgotPassword,
     resetPassword,
+    googleAuth,
 };

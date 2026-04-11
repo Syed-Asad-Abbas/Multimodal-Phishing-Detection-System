@@ -25,7 +25,7 @@ const Box = ({ x, y, w, h, text, color = 'cyan', glow = true, icon = null }) => 
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent working-animate-scan pointer-events-none" />
             <div className="z-10 px-6 w-full flex flex-col items-center">
                 {icon && <span className="mb-3 text-[40px]">{icon}</span>}
-                <span className="font-bold text-[24px] leading-relaxed drop-shadow-md working-box-text">{text}</span>
+                <span className="font-bold text-[21px] leading-snug drop-shadow-md working-box-text">{text}</span>
             </div>
         </div>
     );
@@ -83,7 +83,7 @@ export default function Working() {
     }, []);
 
     return (
-        <div className="working-canvas-wrapper working-cyber-bg" ref={containerRef}>
+        <div className="working-canvas-wrapper working-cyber-bg mt-10" ref={containerRef}>
             <div className="working-canvas-content" style={{ transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})` }}>
                 
                 {/* Title Section */}
@@ -236,21 +236,21 @@ export default function Working() {
                 <Box x={100} y={800} w={200} h={100} text="User URL Input" color="white" glow={false} />
 
                 {/* URL Branch */}
-                <Box x={500} y={500} w={300} h={120} text={"URL Branch\nRaw URL String"} color="cyan" />
-                <Box x={1000} y={500} w={360} h={120} text={"Feature Extraction\n(lexical + statistical + embeddings)"} color="cyan" />
-                <Box x={1500} y={500} w={260} h={120} text={"Base model:\nLightGBM_URL"} color="cyan" />
-                <Box x={1900} y={500} w={260} h={120} text={"Output: P_url\n(phishing probability)"} color="cyan" />
+                <Box x={500} y={500} w={300} h={140} text={"URL Branch\nRaw URL String"} color="cyan" />
+                <Box x={1000} y={500} w={380} h={140} text={"Feature Extraction\n(lexical + statistical + embeddings)"} color="cyan" />
+                <Box x={1500} y={500} w={280} h={140} text={"Base model:\nLightGBM_URL"} color="cyan" />
+                <Box x={1900} y={500} w={280} h={140} text={"Output: P_url\n(phishing probability)"} color="cyan" />
 
                 {/* DOM Branch */}
-                <Box x={500} y={800} w={300} h={120} text={"DOM Branch\nHTML/DOM from Selenium\n(live page)"} color="emerald" />
-                <Box x={1000} y={800} w={360} h={120} text={"DOM Parsing &\nDoc2Vec Embedding\n(forms, links, scripts, text)"} color="emerald" />
-                <Box x={1500} y={800} w={260} h={120} text={"Base model:\nLightGBM_DOM"} color="emerald" />
-                <Box x={1900} y={800} w={260} h={120} text={"Output: P_dom\n(phishing probability)"} color="emerald" />
+                <Box x={500} y={800} w={300} h={140} text={"DOM Branch\nHTML/DOM from Selenium\n(live page)"} color="emerald" />
+                <Box x={1000} y={800} w={380} h={140} text={"DOM Parsing &\nDoc2Vec Embedding\n(forms, links, scripts, text)"} color="emerald" />
+                <Box x={1500} y={800} w={280} h={140} text={"Base model:\nLightGBM_DOM"} color="emerald" />
+                <Box x={1900} y={800} w={280} h={140} text={"Output: P_dom\n(phishing probability)"} color="emerald" />
 
                 {/* Visual Branch */}
-                <Box x={500} y={1100} w={300} h={120} text={"Visual Branch\nScreenshot\n(rendered page)"} color="fuchsia" />
-                <Box x={1000} y={1100} w={760} h={120} text={"CNN backbone: ResNetSD\n(transfer learning)"} color="fuchsia" />
-                <Box x={1900} y={1100} w={260} h={120} text={"Output: P_vis\n(phishing probability)"} color="fuchsia" />
+                <Box x={500} y={1100} w={300} h={140} text={"Visual Branch\nScreenshot\n(rendered page)"} color="fuchsia" />
+                <Box x={1000} y={1100} w={760} h={140} text={"CNN backbone: ResNetSD\n(transfer learning)"} color="fuchsia" />
+                <Box x={1900} y={1100} w={280} h={140} text={"Output: P_vis\n(phishing probability)"} color="fuchsia" />
 
                 {/* K-Fold Section */}
                 <Box x={500} y={1480} w={160} h={280} text="Folds" color="slate" glow={false} />
@@ -259,36 +259,36 @@ export default function Working() {
                 <Box x={1400} y={1570} w={300} h={100} text="OOF Predictions" color="slate" />
 
                 {/* Fusion Layer */}
-                <Box x={2400} y={750} w={360} h={300} 
+                <Box x={2400} y={750} w={400} h={350} 
                     text={"Fusion Layer\n(Meta Learner)\n[P_url  P_dom  P_vis]\n+ aux features\n\nFusion LightGBM\n(meta-classifier)"} 
                     color="orange" glow={true} 
                 />
 
                 {/* Final Evaluation Section */}
-                <Box x={3050} y={500} w={360} h={120} text={"FINAL_TEST_SET\n(20%) untouched\nuntil final evaluation"} color="blue" glow={false} />
-                <Box x={3050} y={700} w={360} h={120} text={"Retrain Base Models\non FULL TRAIN_SET"} color="blue" glow={false} />
-                <Box x={3050} y={900} w={360} h={120} text={"Generate\nFINAL_TEST_SET\nPredictions"} color="blue" glow={false} />
-                <Box x={3050} y={1100} w={360} h={140} text={"Fusion Test Features"} color="blue" glow={false} />
+                <Box x={3050} y={500} w={360} h={140} text={"FINAL_TEST_SET\n(20%) untouched\nuntil final evaluation"} color="blue" glow={false} />
+                <Box x={3050} y={700} w={360} h={140} text={"Retrain Base Models\non FULL TRAIN_SET"} color="blue" glow={false} />
+                <Box x={3050} y={900} w={360} h={140} text={"Generate\nFINAL_TEST_SET\nPredictions"} color="blue" glow={false} />
+                <Box x={3050} y={1100} w={360} h={160} text={"Fusion Test Features"} color="blue" glow={false} />
                 
                 {/* Locked Eval */}
-                <Box x={3050} y={1300} w={360} h={140} 
+                <Box x={3050} y={1300} w={360} h={160} 
                      text={"Final Evaluation\non LOCKED\nFINAL_TEST_SET"} 
                      color="blue" glow={true} 
                      icon={<svg className="w-10 h-10 text-blue-200" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd"></path></svg>} 
                 />
                 
-                <Box x={3050} y={1550} w={360} h={120} text={"Final Probability\n+ Label"} color="blue" glow={true} />
+                <Box x={3050} y={1550} w={360} h={140} text={"Final Probability\n+ Label"} color="blue" glow={true} />
 
                 {/* Deployment Layer Stack */}
-                <Box x={3650} y={480} w={300} h={100} text={"React Frontend\n(URL submit, result, plot)"} color="slate" glow={false} />
-                <Box x={3650} y={620} w={300} h={100} text={"Node/Express Backend\n(auth, history, admin)"} color="slate" glow={false} />
-                <Box x={3650} y={760} w={300} h={100} text={"Flask ML API\n(feature extraction,\nmodel inference)"} color="slate" glow={false} />
-                <Box x={3650} y={900} w={300} h={100} text={"Data storage\n(scans, preds, metadata)"} color="slate" glow={false} />
+                <Box x={3650} y={480} w={340} h={120} text={"React Frontend\n(URL submit, result, plot)"} color="slate" glow={false} />
+                <Box x={3650} y={620} w={340} h={120} text={"Node/Express Backend\n(auth, history, admin)"} color="slate" glow={false} />
+                <Box x={3650} y={760} w={340} h={120} text={"Flask ML API\n(feature extraction,\nmodel inference)"} color="slate" glow={false} />
+                <Box x={3650} y={900} w={340} h={120} text={"Data storage\n(scans, preds, metadata)"} color="slate" glow={false} />
 
                 {/* Explainability Section */}
-                <Box x={3650} y={1280} w={300} h={120} text={"SHAP on Fusion\nLightGBM\n(global + per sample)"} color="yellow" />
-                <Box x={3650} y={1480} w={300} h={120} text={"NLG explanation\ngenerator\n(Gemini/Ollama)"} color="yellow" />
-                <Box x={3650} y={1680} w={300} h={100} text={"Human-friendly\nreason text"} color="yellow" glow={true} />
+                <Box x={3650} y={1280} w={340} h={150} text={"SHAP on Fusion\nLightGBM\n(global + per sample)"} color="yellow" />
+                <Box x={3650} y={1480} w={340} h={150} text={"NLG explanation\ngenerator\n(Gemini/Ollama)"} color="yellow" />
+                <Box x={3650} y={1680} w={340} h={120} text={"Human-friendly\nreason text"} color="yellow" glow={true} />
                 
             </div>
         </div>

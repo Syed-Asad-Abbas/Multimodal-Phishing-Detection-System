@@ -8,6 +8,9 @@ const PORT = process.env.PORT || 5000;
 // Connect to Database
 connectDB();
 
+// Initialize Cron Jobs
+require('./services/cron.service');
+
 const server = app.listen(PORT, '0.0.0.0', () => {
     logger.info(`Server running on port ${PORT}`);
 });

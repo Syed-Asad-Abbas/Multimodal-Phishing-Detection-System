@@ -9,7 +9,6 @@ import {
   Mail,
   Lock,
   ArrowRight,
-  Github,
   ChevronLeft,
 } from "lucide-react";
 import api from "../services/api";
@@ -159,12 +158,6 @@ export default function Auth() {
                       <label className="text-xs font-medium text-slate-400 uppercase tracking-wider">
                         Password
                       </label>
-                      <a
-                        href="#"
-                        className="text-xs text-cyan-400 hover:text-cyan-300 transition-colors"
-                      >
-                        Forgot password?
-                      </a>
                     </div>
                     <Input
                       type="password"
@@ -190,29 +183,7 @@ export default function Auth() {
               )}
             </AnimatePresence>
 
-            {!show2FA && (
-              <>
-                <div className="relative my-6">
-                  <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t border-slate-800" />
-                  </div>
-                  <div className="relative flex justify-center text-xs uppercase tracking-wider">
-                    <span className="bg-[#0b1221] px-2 text-slate-500">
-                      Or continue with
-                    </span>
-                  </div>
-                </div>
 
-                <Button
-                  variant="outline"
-                  type="button"
-                  className="w-full h-12 border-slate-800 hover:bg-slate-800 hover:text-white transition-all text-slate-400 bg-transparent"
-                >
-                  <Github className="mr-2 w-4 h-4" />
-                  GitHub Organization SSO
-                </Button>
-              </>
-            )}
           </form>
         </Card>
 

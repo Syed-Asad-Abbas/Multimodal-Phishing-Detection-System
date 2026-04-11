@@ -20,10 +20,12 @@ model User {
   id            String    @id @default(uuid())
   name          String?
   email         String    @unique
-  password_hash String
+  password_hash String?
   role          Role      @default(USER)
   is_verified   Boolean   @default(false)
   is_2fa_enabled Boolean  @default(false)
+  provider      String    @default("local")
+  google_id     String?   @unique
   last_login    DateTime?
   created_at    DateTime  @default(now())
   updated_at    DateTime  @updatedAt
@@ -288,4 +290,16 @@ model RetrainingJob {
 
   @@map("retraining_jobs")
   @@schema("mlops")
+}
+
+model QueuedJob {
+  id         String   @id @default(uuid())
+  job_type   String
+  payload    Json
+  status     String   @default("PENDING")
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("queued_jobs")
+  @@schema("core")
 }

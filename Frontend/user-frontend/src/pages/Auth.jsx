@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Button, Input, Card } from "../components/ui/Primitives";
-import { ShieldCheck, Mail, Lock, ArrowRight, Github, ChevronLeft, KeyRound } from "lucide-react";
+import { ShieldCheck, Mail, Lock, ArrowRight, Github, ChevronLeft, KeyRound, CheckCircle } from "lucide-react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import api from "../services/api";
 
@@ -13,23 +13,68 @@ export default function Auth({ initialMode = "login", onLogin }) {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState(null);
+  const [successMsg, setSuccessMsg] = useState(null);
   const [twoFactorCode, setTwoFactorCode] = useState("");
   const [userId, setUserId] = useState(null);
+  const [resetToken, setResetToken] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const googleButtonRef = useRef(null);
 
   useEffect(() => {
     if (location.pathname === '/login') setMode('login');
-    if (location.pathname === '/signup') setMode('register'); // Changed 'signup' to 'register'
+    if (location.pathname === '/signup') setMode('register');
   }, [location.pathname]);
+
+  useEffect(() => {
+    // Initialize Google Sign-In
+    if (window.google && (mode === "login" || mode === "register") && googleButtonRef.current) {
+      window.google.accounts.id.initialize({
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        callback: handleGoogleLogin,
+      });
+      window.google.accounts.id.renderButton(googleButtonRef.current, {
+        theme: "outline",
+        size: "large",
+        width: googleButtonRef.current.offsetWidth,
+        text: mode === "login" ? "signin_with" : "signup_with",
+      });
+    }
+  }, [mode]);
+
+  const handleGoogleLogin = async (response) => {
+    const idToken = response.credential;
+    setError(null);
+    setLoading(true);
+    try {
+      const res = await api.post('/auth/google', { idToken });
+      const token = res.data.accessToken || res.data.token;
+      if (token) localStorage.setItem('token', token);
+      if (res.data.user) localStorage.setItem('user', JSON.stringify(res.data.user));
+      onLogin();
+      navigate('/dashboard', { replace: true });
+    } catch (err) {
+      setError(err.response?.data?.message || "Google Authentication failed");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleModeSwitch = (newMode) => {
     setMode(newMode);
-    navigate(`/${newMode}`);
-    setError(null); // Clear error on mode switch
+    if (newMode === 'login' || newMode === 'signup') {
+      navigate(`/${newMode}`);
+    }
+    setError(null);
+    setSuccessMsg(null);
   };
 
-  const handleSubmit = async (e) => { // Made async
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null); // Clear previous errors
+    setError(null);
+    setSuccessMsg(null);
+    setLoading(true);
     try {
       if (mode === "login") {
         const response = await api.post('/auth/login', { email, password });
@@ -37,26 +82,24 @@ export default function Auth({ initialMode = "login", onLogin }) {
         if (response.data.requires2FA) {
           setMode("2fa");
           setUserId(response.data.userId);
+          setLoading(false);
           return;
         }
 
         const token = response.data.accessToken || response.data.token;
         if (token) localStorage.setItem('token', token);
         if (response.data.user) localStorage.setItem('user', JSON.stringify(response.data.user));
-        onLogin(); // Call the passed onLogin function
-        navigate('/dashboard', { replace: true }); // Navigate to dashboard after login
-      } else if (mode === "register") { // Changed "signup" to "register"
+        onLogin();
+        navigate('/dashboard', { replace: true });
+      } else if (mode === "register") {
         const response = await api.post('/auth/register', { email, password, name });
-        // Automatically login after successful registration -> depends on backend logic, often yes.
-        // Wait for email verification if required, but assuming immediate login for demo
         const token = response.data.accessToken || response.data.token;
         if (token) {
           localStorage.setItem('token', token);
           if (response.data.user) localStorage.setItem('user', JSON.stringify(response.data.user));
           onLogin();
-          navigate('/dashboard', { replace: true }); // Navigate to dashboard after registration
+          navigate('/dashboard', { replace: true });
         } else {
-          // Registration success, switch to login to enter credentials or check email
           handleModeSwitch("login");
         }
       } else if (mode === "2fa") {
@@ -66,10 +109,31 @@ export default function Auth({ initialMode = "login", onLogin }) {
         if (response.data.user) localStorage.setItem('user', JSON.stringify(response.data.user));
         onLogin();
         navigate('/dashboard', { replace: true });
+      } else if (mode === "forgot-password") {
+        await api.post('/auth/forgot-password', { email });
+        setSuccessMsg("If your account exists, a 6-digit OTP has been sent to your email.");
+        setMode("reset-password");
+      } else if (mode === "reset-password") {
+        if (newPassword !== confirmPassword) {
+          setError("Passwords do not match.");
+          setLoading(false);
+          return;
+        }
+        await api.post('/auth/reset-password', { token: resetToken, newPassword });
+        setSuccessMsg("Password reset successfully! You can now log in.");
+        setResetToken("");
+        setNewPassword("");
+        setConfirmPassword("");
+        setTimeout(() => {
+          setMode("login");
+          setSuccessMsg(null);
+        }, 2500);
       }
     } catch (err) {
-      setError(err.response?.data?.message || `Failed to ${mode}. Please try again.`);
+      setError(err.response?.data?.message || `Something went wrong. Please try again.`);
       console.error(`${mode} failed:`, err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -119,13 +183,17 @@ export default function Auth({ initialMode = "login", onLogin }) {
             >
               <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">
                 {mode === "login" && "Welcome back"}
-                {mode === "register" && "Create account"} {/* Changed "signup" to "register" */}
+                {mode === "register" && "Create account"}
                 {mode === "2fa" && "Check your email"}
+                {mode === "forgot-password" && "Forgot password?"}
+                {mode === "reset-password" && "Reset password"}
               </h1>
               <p className="text-slate-400 text-sm">
                 {mode === "login" && "Enter your credentials to access the platform."}
-                {mode === "register" && "Start protecting your infrastructure today."} {/* Changed "signup" to "register" */}
+                {mode === "register" && "Start protecting your infrastructure today."}
                 {mode === "2fa" && `We've sent a temporary code to ${email || "your email"}.`}
+                {mode === "forgot-password" && "Enter your email and we'll send you a reset code."}
+                {mode === "reset-password" && `Enter the 6-digit OTP sent to ${email || "your email"} and your new password.`}
               </p>
             </motion.div>
           </AnimatePresence>
@@ -146,16 +214,16 @@ export default function Auth({ initialMode = "login", onLogin }) {
                     <label className="text-xs font-medium text-slate-400 uppercase tracking-wider">Verification Code</label>
                     <Input
                       type="text"
-                      placeholder="000-000"
+                      placeholder="000000"
                       value={twoFactorCode}
-                      onChange={(e) => setTwoFactorCode(e.target.value)}
+                      onChange={(e) => setTwoFactorCode(e.target.value.replace(/\D/g, ''))}
                       className="text-center text-2xl tracking-[0.5em] font-mono h-14 bg-slate-950/50 border-slate-800 focus:border-cyan-500/50"
                       maxLength={6}
                       autoFocus
                     />
                   </div>
-                  <Button className="w-full h-12 text-base shadow-[0_0_20px_rgba(34,211,238,0.2)]" type="submit">
-                    Verify & Sign In
+                  <Button className="w-full h-12 text-base shadow-[0_0_20px_rgba(34,211,238,0.2)]" type="submit" disabled={loading}>
+                    {loading ? "Verifying..." : "Verify & Sign In"}
                   </Button>
                   <Button
                     variant="ghost"
@@ -166,6 +234,100 @@ export default function Auth({ initialMode = "login", onLogin }) {
                     <ChevronLeft className="w-3 h-3 mr-1" /> Back to login
                   </Button>
                 </motion.div>
+              ) : mode === "forgot-password" ? (
+                <motion.div
+                  key="forgot-input"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="space-y-4"
+                >
+                  <div className="space-y-2">
+                    <label className="text-xs font-medium text-slate-400 uppercase tracking-wider">Email Address</label>
+                    <Input
+                      type="email"
+                      placeholder="name@company.com"
+                      icon={<Mail className="w-4 h-4" />}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="bg-slate-950/50 border-slate-800 focus:border-cyan-500/50"
+                      autoFocus
+                    />
+                  </div>
+                  <Button className="w-full h-12 text-base shadow-[0_0_20px_rgba(34,211,238,0.2)]" type="submit" disabled={loading}>
+                    {loading ? "Sending..." : "Send Reset Code"}
+                    {!loading && <ArrowRight className="ml-2 w-4 h-4" />}
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    type="button"
+                    className="w-full text-xs text-slate-500 hover:text-slate-300"
+                    onClick={() => handleModeSwitch("login")}
+                  >
+                    <ChevronLeft className="w-3 h-3 mr-1" /> Back to login
+                  </Button>
+                </motion.div>
+              ) : mode === "reset-password" ? (
+                <motion.div
+                  key="reset-input"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="space-y-4"
+                >
+                  <div className="space-y-2">
+                    <label className="text-xs font-medium text-slate-400 uppercase tracking-wider">OTP Code</label>
+                    <Input
+                      type="text"
+                      placeholder="000000"
+                      value={resetToken}
+                      onChange={(e) => setResetToken(e.target.value.replace(/\D/g, ''))}
+                      className="text-center text-2xl tracking-[0.5em] font-mono h-14 bg-slate-950/50 border-slate-800 focus:border-cyan-500/50"
+                      maxLength={6}
+                      required
+                      autoFocus
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-medium text-slate-400 uppercase tracking-wider">New Password</label>
+                    <Input
+                      type="password"
+                      placeholder="••••••••••••"
+                      icon={<Lock className="w-4 h-4" />}
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      required
+                      minLength={8}
+                      className="bg-slate-950/50 border-slate-800 focus:border-cyan-500/50"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-medium text-slate-400 uppercase tracking-wider">Confirm Password</label>
+                    <Input
+                      type="password"
+                      placeholder="••••••••••••"
+                      icon={<Lock className="w-4 h-4" />}
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required
+                      minLength={8}
+                      className="bg-slate-950/50 border-slate-800 focus:border-cyan-500/50"
+                    />
+                  </div>
+                  <Button className="w-full h-12 text-base shadow-[0_0_20px_rgba(34,211,238,0.2)]" type="submit" disabled={loading}>
+                    {loading ? "Resetting..." : "Reset Password"}
+                    {!loading && <ArrowRight className="ml-2 w-4 h-4" />}
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    type="button"
+                    className="w-full text-xs text-slate-500 hover:text-slate-300"
+                    onClick={() => { setMode("forgot-password"); setError(null); setSuccessMsg(null); }}
+                  >
+                    <ChevronLeft className="w-3 h-3 mr-1" /> Didn't get the code? Resend
+                  </Button>
+                </motion.div>
               ) : (
                 <motion.div
                   key="auth-inputs"
@@ -174,7 +336,7 @@ export default function Auth({ initialMode = "login", onLogin }) {
                   exit={{ opacity: 0, x: 20 }}
                   className="space-y-4"
                 >
-                  {mode === "register" && ( // New input for name
+                  {mode === "register" && (
                     <div className="space-y-2">
                       <label className="text-xs font-medium text-slate-400 uppercase tracking-wider">Name</label>
                       <Input
@@ -203,7 +365,15 @@ export default function Auth({ initialMode = "login", onLogin }) {
                   <div className="space-y-2">
                     <div className="flex justify-between">
                       <label className="text-xs font-medium text-slate-400 uppercase tracking-wider">Password</label>
-                      {mode === "login" && <a href="#" className="text-xs text-cyan-400 hover:text-cyan-300">Forgot?</a>}
+                      {mode === "login" && (
+                        <button
+                          type="button"
+                          onClick={() => { setMode("forgot-password"); setError(null); setSuccessMsg(null); }}
+                          className="text-xs text-cyan-400 hover:text-cyan-300 transition-colors"
+                        >
+                          Forgot?
+                        </button>
+                      )}
                     </div>
                     <Input
                       type="password"
@@ -216,16 +386,22 @@ export default function Auth({ initialMode = "login", onLogin }) {
                     />
                   </div>
 
-                  <Button className="w-full h-12 text-base shadow-[0_0_20px_rgba(34,211,238,0.2)]" type="submit">
-                    {mode === "login" ? "Sign In" : "Create Account"}
-                    <ArrowRight className="ml-2 w-4 h-4" />
+                  <Button className="w-full h-12 text-base shadow-[0_0_20px_rgba(34,211,238,0.2)]" type="submit" disabled={loading}>
+                    {loading ? "Please wait..." : (mode === "login" ? "Sign In" : "Create Account")}
+                    {!loading && <ArrowRight className="ml-2 w-4 h-4" />}
                   </Button>
                 </motion.div>
               )}
             </AnimatePresence>
-            {error && <div className="text-xs text-red-500 mt-4 text-center">{error}</div>} {/* Error display */}
+            {successMsg && (
+              <div className="flex items-center gap-2 text-xs text-emerald-400 mt-4 text-center justify-center">
+                <CheckCircle className="w-4 h-4" />
+                {successMsg}
+              </div>
+            )}
+            {error && <div className="text-xs text-red-500 mt-4 text-center">{error}</div>}
 
-            {mode !== "2fa" && ( // Conditional rendering for social login
+            {(mode === "login" || mode === "register") && (
               <>
                 <div className="relative my-6"> {/* Changed my-8 to my-6 */}
                   <div className="absolute inset-0 flex items-center">
@@ -236,10 +412,7 @@ export default function Auth({ initialMode = "login", onLogin }) {
                   </div>
                 </div>
 
-                <Button variant="outline" type="button" className="w-full h-12 border-slate-800 hover:bg-slate-800 hover:text-white transition-all">
-                  <Github className="mr-2 w-4 h-4" />
-                  GitHub
-                </Button>
+                <div ref={googleButtonRef} className="w-full flex justify-center" />
 
                 <div className="mt-6 text-center text-sm">
                   <span className="text-slate-400">
