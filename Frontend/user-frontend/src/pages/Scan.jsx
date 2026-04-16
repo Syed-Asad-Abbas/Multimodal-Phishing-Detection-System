@@ -42,35 +42,24 @@ export default function ScanPage() {
     setProgress(0);
     setResult(null);
 
-    // Fake progress bar animation for UI
-    const progressInterval = setInterval(() => {
-      setProgress(p => Math.min(p + 5, 90)); // Cap at 90% until backend returns
-    }, 200);
-
     try {
       // Create a local variable for the URL to avoid stale state issues in closures
       const scanTarget = url || sessionStorage.getItem('pendingScanUrl');
       if (!scanTarget) return;
 
       const response = await api.post('/scan/submit', { url: scanTarget });
-      clearInterval(progressInterval);
-      setProgress(100);
-
-      setTimeout(() => {
-        setStatus("complete");
-        setResult(response.data.result);
-      }, 500);
-
+      
+      setResult(response.data.result);
+      setStatus("finishing");
     } catch (error) {
       console.error("Scan failed:", error);
-      clearInterval(progressInterval);
       setStatus("idle");
       alert(error.response?.data?.message || "Scan failed. Please try again.");
     }
   };
 
   const fetchExistingScan = async (id) => {
-    setStatus("scanning");
+    setStatus("fetching");
     setProgress(50);
     try {
       const response = await api.get(`/scan/${id}`);
@@ -107,18 +96,38 @@ export default function ScanPage() {
 
   useEffect(() => {
     if (status === "scanning") {
+      const startTime = Date.now();
       const interval = setInterval(() => {
+        const elapsed = (Date.now() - startTime) / 1000;
         setProgress((prev) => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            setStatus("complete");
-            return 100;
+          if (elapsed <= 15) {
+             return Math.min(15, elapsed * (15/15));
+          } else if (elapsed <= 40) {
+             return Math.min(35, 15 + ((elapsed - 15) / 25) * 20);
+          } else if (elapsed <= 60) {
+             return Math.min(75, 35 + ((elapsed - 40) / 20) * 40);
+          } else {
+             return 75;
           }
-          return prev + 1.5; // slow progress
         });
+      }, 100);
+      return () => clearInterval(interval);
+    } else if (status === "finishing") {
+      const startTime = Date.now();
+      const initialProgress = progress;
+      const interval = setInterval(() => {
+        const elapsed = (Date.now() - startTime) / 1000;
+        if (elapsed >= 3) {
+           setProgress(100);
+           clearInterval(interval);
+           setStatus("complete");
+        } else {
+           setProgress(initialProgress + (100 - initialProgress) * (elapsed / 3));
+        }
       }, 50);
       return () => clearInterval(interval);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   // Autostart scan if url is provided in query params or session storage
@@ -169,9 +178,9 @@ export default function ScanPage() {
             size="lg"
             className="h-14 px-8 text-base w-full md:w-auto min-w-[160px] bg-cyan-600 hover:bg-cyan-500 text-white border-0"
             onClick={startScan}
-            disabled={status === "scanning"}
+            disabled={status === "scanning" || status === "finishing" || status === "fetching"}
           >
-            {status === "scanning" ? (
+            {status === "scanning" || status === "finishing" || status === "fetching" ? (
               <>Scanning...</>
             ) : (
               <>Scan Website <ArrowRight className="ml-2 w-4 h-4" /></>
@@ -181,7 +190,7 @@ export default function ScanPage() {
 
         {/* Progress Bar */}
         <AnimatePresence>
-          {status === "scanning" && (
+          {(status === "scanning" || status === "finishing" || status === "fetching") && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}

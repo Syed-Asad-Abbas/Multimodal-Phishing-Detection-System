@@ -51,7 +51,6 @@ export default function ScanHistory() {
             <option value="Phishing">Phishing</option>
             <option value="Safe">Safe</option>
           </select>
-          <Button variant="outline">Export CSV</Button>
         </div>
       </div>
 

@@ -114,16 +114,17 @@ const Landing = ({ isAuthenticated, onLogout }) => {
   const handleScanSubmit = () => {
     if (scanUrl) {
       sessionStorage.setItem('pendingScanUrl', scanUrl);
-      navigate('/dashboard/scan');
+      if (isAuthenticated) {
+        navigate('/dashboard/scan');
+      } else {
+        navigate('/signup');
+      }
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col relative selection:bg-cyan-500/30 overflow-x-hidden pt-16">
       <style>{`
-        @import url('https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap');
-        @import url('https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@5.0.3/index.css');
-
         :root {
           --background: 260 87% 3%;
           --foreground: 40 6% 95%;
@@ -308,22 +309,22 @@ const Landing = ({ isAuthenticated, onLogout }) => {
             return (
               <div
                 key={index}
-                className={`absolute transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] liquid-glass p-8 md:p-16 rounded-[32px] md:rounded-[64px] border border-white/10 w-[92%] md:w-[500px] md:max-w-[50vw] text-left ${translateClass} ${scaleClass} ${opacityClass} ${zIndexClass} ${blurClass}`}
+                className={`absolute transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] liquid-glass flex flex-col p-8 md:p-12 rounded-[32px] md:rounded-[48px] border border-white/10 w-[92%] md:w-[400px] min-h-[380px] md:min-h-[440px] bg-gradient-to-br from-indigo-500/5 to-purple-500/5 text-left ${translateClass} ${scaleClass} ${opacityClass} ${zIndexClass} ${blurClass}`}
                 style={{ pointerEvents: offset === 0 ? 'auto' : 'none' }}
               >
-                <div className="flex gap-1 mb-6 md:mb-10">
-                  {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 md:w-5 md:h-5 fill-cyan-400 text-cyan-400" />)}
+                <div className="flex gap-1.5 mb-6 md:mb-8">
+                  {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 md:w-5 md:h-5 fill-[#06b6d4] text-[#06b6d4]" />)}
                 </div>
-                <p className="text-lg md:text-2xl text-white mb-8 md:mb-14 italic leading-relaxed font-light line-clamp-4">
+                <p className="text-lg md:text-[20px] text-white/90 mb-8 md:mb-10 italic leading-[1.7] font-light line-clamp-5 flex-1">
                   "{item.text || item.comment}"
                 </p>
-                <div className="flex items-center gap-4 md:gap-6">
-                  <div className="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-slate-900 border border-white/10 flex items-center justify-center text-xs md:text-sm font-bold text-cyan-400">
+                <div className="flex items-center gap-4 mt-auto">
+                  <div className="w-12 h-12 md:w-12 md:h-12 rounded-[14px] bg-[#0b1021] border border-white/5 flex items-center justify-center text-sm font-bold text-cyan-400">
                     {(item.name || "U").substring(0, 2)}
                   </div>
                   <div>
-                    <p className="text-sm md:text-lg font-bold text-white tracking-tighter uppercase">{item.name}</p>
-                    <p className="text-[10px] md:text-xs text-white/40 uppercase tracking-widest">{item.role}</p>
+                    <p className="text-sm md:text-[15px] font-bold text-white tracking-widest uppercase mb-0.5">{item.name}</p>
+                    <p className="text-[10px] md:text-[10px] text-white/40 uppercase tracking-widest">{item.role}</p>
                   </div>
                 </div>
               </div>

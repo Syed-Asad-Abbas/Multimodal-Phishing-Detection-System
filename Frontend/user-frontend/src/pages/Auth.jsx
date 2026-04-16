@@ -43,6 +43,15 @@ export default function Auth({ initialMode = "login", onLogin }) {
     }
   }, [mode]);
 
+  const handleSuccessRedirect = () => {
+    onLogin();
+    if (sessionStorage.getItem('pendingScanUrl')) {
+      navigate('/dashboard/scan', { replace: true });
+    } else {
+      navigate('/dashboard', { replace: true });
+    }
+  };
+
   const handleGoogleLogin = async (response) => {
     const idToken = response.credential;
     setError(null);
@@ -52,8 +61,7 @@ export default function Auth({ initialMode = "login", onLogin }) {
       const token = res.data.accessToken || res.data.token;
       if (token) localStorage.setItem('token', token);
       if (res.data.user) localStorage.setItem('user', JSON.stringify(res.data.user));
-      onLogin();
-      navigate('/dashboard', { replace: true });
+      handleSuccessRedirect();
     } catch (err) {
       setError(err.response?.data?.message || "Google Authentication failed");
     } finally {
@@ -85,20 +93,17 @@ export default function Auth({ initialMode = "login", onLogin }) {
           setLoading(false);
           return;
         }
-
         const token = response.data.accessToken || response.data.token;
         if (token) localStorage.setItem('token', token);
         if (response.data.user) localStorage.setItem('user', JSON.stringify(response.data.user));
-        onLogin();
-        navigate('/dashboard', { replace: true });
+        handleSuccessRedirect();
       } else if (mode === "register") {
         const response = await api.post('/auth/register', { email, password, name });
         const token = response.data.accessToken || response.data.token;
         if (token) {
           localStorage.setItem('token', token);
           if (response.data.user) localStorage.setItem('user', JSON.stringify(response.data.user));
-          onLogin();
-          navigate('/dashboard', { replace: true });
+          handleSuccessRedirect();
         } else {
           handleModeSwitch("login");
         }
@@ -107,8 +112,7 @@ export default function Auth({ initialMode = "login", onLogin }) {
         const token = response.data.accessToken || response.data.token;
         if (token) localStorage.setItem('token', token);
         if (response.data.user) localStorage.setItem('user', JSON.stringify(response.data.user));
-        onLogin();
-        navigate('/dashboard', { replace: true });
+        handleSuccessRedirect();
       } else if (mode === "forgot-password") {
         await api.post('/auth/forgot-password', { email });
         setSuccessMsg("If your account exists, a 6-digit OTP has been sent to your email.");
