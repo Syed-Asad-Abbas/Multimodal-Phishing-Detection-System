@@ -1,0 +1,5 @@
+{
+    "https://www.dawn.com": {
+        "error": "HTTPConnectionPool(host='localhost', port=5001): Read timed out. (read timeout=60)"
+    }
+}

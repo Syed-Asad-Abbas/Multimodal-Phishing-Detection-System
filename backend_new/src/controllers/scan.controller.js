@@ -5,6 +5,13 @@ const logger = require('../config/logger');
 
 exports.submitScan = async (req, res, next) => {
     try {
+        // Auto-prepend http:// if user just typed 'example.com' to pass Joi URI validation
+        if (req.body && req.body.url && typeof req.body.url === 'string') {
+            if (!req.body.url.startsWith('http://') && !req.body.url.startsWith('https://')) {
+                req.body.url = 'http://' + req.body.url;
+            }
+        }
+
         const { error } = validation.submitScan.validate(req.body);
         if (error) {
             return res.status(400).json({ message: error.details[0].message });
@@ -22,7 +29,7 @@ exports.submitScan = async (req, res, next) => {
             },
         });
 
-        // 2. Trigger ML Service (Async or Await? Real-time means await usually)
+        // 2. Trigger ML Service
         let mlResponse;
         try {
             mlResponse = await mlService.predictUrl(url);
@@ -34,6 +41,22 @@ exports.submitScan = async (req, res, next) => {
             });
             throw mlError;
         }
+
+        // Bug #4/#5 fix: detect the SERVICE_UNAVAILABLE sentinel returned by
+        // getMockSentinel() when the Python ML service is unreachable.
+        // Return HTTP 503 immediately — do NOT persist a fake/null result to the DB.
+        if (mlResponse._is_mock) {
+            logger.error(`[Scan] ML service sentinel received for scan ${scan.id}. Marking FAILED, returning 503.`);
+            await prisma.scan.update({
+                where: { id: scan.id },
+                data: { status: 'FAILED' }
+            });
+            return res.status(503).json({
+                message: 'The ML analysis service is currently unavailable. Please try again in a few minutes.',
+                scanId: scan.id,
+            });
+        }
+
 
         // 3. Persist Results
         // Prediction might be "Phishing" or "Benign"

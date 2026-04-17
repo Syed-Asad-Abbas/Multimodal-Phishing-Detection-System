@@ -108,34 +108,83 @@ def get_shap_fusion_explanations(fusion_features, models):
 
 from google import genai
 
+def _generate_fallback_explanation(prediction_result, shap_url_features, shap_fusion):
+    """
+    Generate a rule-based explanation from SHAP data when LLM is unavailable.
+    This always returns a meaningful, data-driven explanation.
+    """
+    pred = prediction_result.get('prediction', 'UNKNOWN')
+    conf = prediction_result.get('confidence', 0)
+    modality_scores = prediction_result.get('modality_scores', {})
+
+    is_phishing = pred.upper() == 'PHISHING'
+    verdict = "Unsafe" if is_phishing else "Safe"
+    conf_pct = f"{conf:.0%}"
+
+    reasons = []
+
+    # Reason 1: top SHAP URL feature
+    if shap_url_features:
+        top = shap_url_features[0]
+        feat_name = top['feature'].replace('_', ' ').title()
+        impact = top['shap_impact']
+        direction = "suspicious" if impact > 0 else "characteristic of a legitimate site"
+        reasons.append(f"The URL's {feat_name} appears {direction}")
+
+    # Reason 2: strongest modality signal
+    if shap_fusion and shap_fusion.get('modality_weights'):
+        weights = shap_fusion['modality_weights']
+        top_mod = max(weights, key=weights.get)
+        top_score = modality_scores.get(top_mod)
+        if top_score is not None:
+            score_pct = f"{top_score:.0%}"
+            reasons.append(f"The {top_mod.upper()} analysis was the strongest signal ({score_pct} phishing probability)")
+
+    # Reason 3: confidence context
+    if conf >= 0.85:
+        reasons.append(f"The model is highly confident ({conf_pct}) in this assessment")
+    elif conf >= 0.65:
+        reasons.append(f"The model is moderately confident ({conf_pct}) in this assessment")
+    else:
+        reasons.append(f"The model shows lower certainty ({conf_pct}); exercise caution regardless")
+
+    reason_text = ". ".join(reasons) + "." if reasons else ""
+    recommendation = (
+        "Do not enter any personal information or credentials on this site."
+        if is_phishing else
+        "This site appears legitimate, but always verify the URL before sharing sensitive data."
+    )
+    return f"Verdict: {verdict}. {reason_text} {recommendation}"
+
+
 def generate_llm_explanation(prediction_result, shap_url_features, shap_fusion):
     """
-    Generate natural language explanation using Google Gemini
+    Generate natural language explanation using Google Gemini.
+    Falls back to rule-based explanation if API fails or quota exceeded.
     """
-    try:
-        api_key = os.environ.get("GEMINI_API_KEY")
-        if not api_key:
-            return "Note: Gemini API Key not found. Please set GEMINI_API_KEY environment variable for detailed explanations."
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        return _generate_fallback_explanation(prediction_result, shap_url_features, shap_fusion)
 
+    try:
         client = genai.Client(api_key=api_key)
 
         pred = prediction_result['prediction']
         conf = prediction_result['confidence']
         url = prediction_result['url']
-        
-        # Prepare context for LLM
+
         context = f"""
         Analyze this URL scan result and explain why it is {pred} (Confidence: {conf:.1%}).
         URL: {url}
-        
+
         Key Technical Indicators:
         """
-        
+
         if shap_url_features:
             context += "\nURL Features (SHAP importance):"
             for feat in shap_url_features[:3]:
                 context += f"\n- {feat['feature']}: {feat['value']} (Impact: {feat['shap_impact']:.4f})"
-                
+
         if shap_fusion:
             weights = shap_fusion['modality_weights']
             top_modality = max(weights, key=weights.get)
@@ -144,25 +193,42 @@ def generate_llm_explanation(prediction_result, shap_url_features, shap_fusion):
 
         prompt = f"""
         Act as a cybersecurity expert. {context}
-        
-        Provide a concise, non-technical explanation for a regular user. 
+
+        Provide a concise, non-technical explanation for a regular user.
         1. Start with a clear verdict (Safe/Unsafe).
         2. Explain 2-3 key reasons based on the indicators above.
         3. Give a safety recommendation.
         Keep it under 100 words. Do not use markdown bolding too heavily.
         """
 
-        response = client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=prompt,
-        )
-        return response.text
+        # Try models in order of preference
+        models_to_try = ['gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-1.5-pro']
+        last_error = None
+
+        for model_name in models_to_try:
+            try:
+                response = client.models.generate_content(
+                    model=model_name,
+                    contents=prompt,
+                )
+                return response.text
+            except Exception as model_err:
+                last_error = model_err
+                err_str = str(model_err)
+                if '403' in err_str or 'PERMISSION_DENIED' in err_str:
+                    break  # Key is invalid, no point trying other models
+                print(f"[Gemini] Model {model_name} failed, trying next... ({err_str[:80]})")
+                continue
+
+        raise last_error
+
     except Exception as e:
         error_msg = str(e)
-        print(f"[Gemini] Error generating explanation: {error_msg}")
+        print(f"[Gemini] All models failed: {error_msg[:120]}")
         with open("gemini_error.log", "a") as f:
             f.write(f"Gemini API Error: {error_msg}\n")
-        return "explanation currently unavailable due to technical connection."
+        # Always return a meaningful fallback, never an empty/useless string
+        return _generate_fallback_explanation(prediction_result, shap_url_features, shap_fusion)
 
 
 

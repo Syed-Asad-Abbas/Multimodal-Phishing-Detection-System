@@ -18,40 +18,63 @@ const predictUrl = async (url) => {
             screenshot: mlData.page_info?.screenshot_url
                 ? `${ML_API_URL}${mlData.page_info.screenshot_url}`
                 : null,
-            // Ensure ip_metadata is null if missing (Python currently doesn't return it)
+            // Ensure ip_metadata is null if missing
             ip_metadata: mlData.ip_metadata || null
         };
     } catch (error) {
-        logger.error(`ML Service Error: ${error.message}`);
-        // If ML service is down, maybe return a mock for now or throw error?
-        // While developing Node without running Python, throwing is annoying.
-        // I will return a Mock Response if connection refused, marked clearly.
+        // Bug #4 fix: log at ERROR level so a misconfigured production deployment
+        // is immediately visible in logs rather than silently degrading.
+        logger.error(`[ML Service] Request failed: ${error.message}`);
+
         if (error.code === 'ECONNREFUSED') {
-            logger.warn('ML Service unreachable. Returning MOCK data.');
-            return getMockPrediction(url);
+            logger.error(
+                '[ML Service] CRITICAL: Python ML service is unreachable (ECONNREFUSED). ' +
+                'Returning SERVICE_UNAVAILABLE sentinel — scan will be rejected with HTTP 503.'
+            );
+            return getMockSentinel();
         }
         throw error;
     }
 };
 
-const getMockPrediction = (url) => {
-    const isPhish = url.includes('phish');
+// Bug #4 fix: Never return a Benign/Phishing verdict when the ML service is down.
+// A bypass exists in the original code: any URL without the word 'phish' would
+// always receive a 'Benign' verdict, even against a completely fake result.
+//
+// Bug #5 fix: All field names and value ranges now exactly match the real Python
+// ML response so scan.controller.js never writes undefined/null to the DB:
+//   - confidence         → float 0.0–1.0  (was: confidence_score)
+//   - fusion_probability_phishing → float 0.0–1.0 (was: phishing_probability 0–100)
+//   - _is_mock: true     → sentinel flag for the controller to detect and reject
+const getMockSentinel = () => {
     return {
-        prediction: isPhish ? 'Phishing' : 'Benign',
-        confidence_score: 0.95,
-        phishing_probability: isPhish ? 95.0 : 5.0,
-        shap_values: {
-            url: { 'len_url': 0.5, 'has_https': -0.2 },
-            dom: { 'iframe_count': 0.1 },
-            visual: { 'logo_match': 0 }
-        },
-        explanation: "This is a mock LLM explanation. The URL looks suspicious due to length.",
-        screenshot: "https://via.placeholder.com/800x600?text=Screenshot+Mock",
-        ip_metadata: isPhish ? {
-            ip: "192.168.1.1",
-            geo: { lat: 33.6, long: 73.0, country: "Pakistan" } // Example
-        } : null
+        // --- Core result fields (match real Python ML field names exactly) ---
+        prediction: 'UNCERTAIN',
+        confidence: 0.0,                          // real field: confidence (float 0-1)
+        fusion_probability_phishing: 0.0,         // real field: fusion_probability_phishing (float 0-1)
+        safety_net_triggered: false,
+
+        // --- Modality fields ---
+        modality_scores:     { url: null, dom: null, visual: null },
+        modality_verdicts:   { url: 'N/A', dom: 'N/A', visual: 'N/A' },
+        modality_confidence: { url: null, dom: null, visual: null },
+        modality_available:  { url: false, dom: false, visual: false },
+
+        // --- Explainability ---
+        shap_values: {},
+        explanation: 'ML service is currently unavailable. This scan result is not reliable.',
+
+        // --- Page / screenshot ---
+        page_info: { fetch_success: false, screenshot_path: null },
+        screenshot: null,
+
+        // --- IP / Geo ---
+        ip_metadata: null,
+
+        // --- Sentinel flag: controller must detect this and return HTTP 503 ---
+        _is_mock: true,
     };
 };
 
 module.exports = { predictUrl };
+

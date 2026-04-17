@@ -1,0 +1,865 @@
+{
+    "https://www.olx.com.pk": {
+        "url": "https://www.olx.com.pk",
+        "prediction": "BENIGN",
+        "confidence": 0.9996562744931717,
+        "fusion_probability_phishing": 0.00034372550682822725,
+        "safety_net_triggered": false,
+        "modality_scores": {
+            "url": 6.039096530062086e-05,
+            "dom": null,
+            "visual": null
+        },
+        "modality_verdicts": {
+            "url": "BENIGN",
+            "dom": "N/A",
+            "visual": "N/A"
+        },
+        "modality_confidence": {
+            "url": 0.9999396090346994,
+            "dom": null,
+            "visual": null
+        },
+        "modality_available": {
+            "url": true,
+            "dom": false,
+            "visual": false
+        },
+        "page_info": {
+            "fetch_success": false,
+            "page_title": null,
+            "final_url": "https://www.olx.com.pk",
+            "screenshot_path": null
+        },
+        "dom_features": {},
+        "shap_values": {
+            "url": {
+                "URLLength": -11.807415003251487,
+                "URLSimilarityIndex": 6.4828237690374495,
+                "DomainLength": -3.342791611948778,
+                "URLCharProb": 1.3124784113888803,
+                "TLDLegitimateProb": -0.46957243528341214
+            },
+            "fusion_contribution": {
+                "url": 0.4405122739541154,
+                "dom": 0.5594877260458808,
+                "visual": 3.939202203957979e-15
+            }
+        },
+        "detailed_explanation": {
+            "shap_url_top": [
+                {
+                    "feature": "URLLength",
+                    "value": 11.0,
+                    "shap_impact": -11.807415003251487,
+                    "abs_impact": 11.807415003251487
+                },
+                {
+                    "feature": "URLSimilarityIndex",
+                    "value": 100.0,
+                    "shap_impact": 6.4828237690374495,
+                    "abs_impact": 6.4828237690374495
+                },
+                {
+                    "feature": "DomainLength",
+                    "value": 14.0,
+                    "shap_impact": -3.342791611948778,
+                    "abs_impact": 3.342791611948778
+                },
+                {
+                    "feature": "URLCharProb",
+                    "value": 0.01,
+                    "shap_impact": 1.3124784113888803,
+                    "abs_impact": 1.3124784113888803
+                },
+                {
+                    "feature": "TLDLegitimateProb",
+                    "value": 0.52,
+                    "shap_impact": -0.46957243528341214,
+                    "abs_impact": 0.46957243528341214
+                }
+            ],
+            "shap_fusion": {
+                "modality_contributions": {
+                    "url": -4.245574520516831,
+                    "dom": -5.392237571318417,
+                    "visual": -3.796529063349041e-14
+                },
+                "modality_weights": {
+                    "url": 0.4405122739541154,
+                    "dom": 0.5594877260458808,
+                    "visual": 3.939202203957979e-15
+                }
+            }
+        },
+        "ip_metadata": {
+            "ip": "172.64.153.143",
+            "geo": {
+                "country": "Canada",
+                "lat": 43.6532,
+                "long": -79.3832
+            }
+        }
+    },
+    "https://www.pakwheels.com": {
+        "url": "https://www.pakwheels.com",
+        "prediction": "BENIGN",
+        "confidence": 0.999974591105509,
+        "fusion_probability_phishing": 2.54088944910047e-05,
+        "safety_net_triggered": false,
+        "modality_scores": {
+            "url": 3.045868820179165e-08,
+            "dom": null,
+            "visual": null
+        },
+        "modality_verdicts": {
+            "url": "BENIGN",
+            "dom": "N/A",
+            "visual": "N/A"
+        },
+        "modality_confidence": {
+            "url": 0.9999999695413118,
+            "dom": null,
+            "visual": null
+        },
+        "modality_available": {
+            "url": true,
+            "dom": false,
+            "visual": false
+        },
+        "page_info": {
+            "fetch_success": false,
+            "page_title": null,
+            "final_url": "https://www.pakwheels.com",
+            "screenshot_path": null
+        },
+        "dom_features": {},
+        "shap_values": {
+            "url": {
+                "URLLength": -9.248097240713577,
+                "NoOfSubDomain": -7.499190704932541,
+                "URLSimilarityIndex": 4.846670530124092,
+                "DomainLength": -4.0428732546886925,
+                "URLCharProb": 1.1438575259104253
+            },
+            "fusion_contribution": {
+                "url": 0.6715647769616008,
+                "dom": 0.3284352230383835,
+                "visual": 1.5655860879032557e-14
+            }
+        },
+        "detailed_explanation": {
+            "shap_url_top": [
+                {
+                    "feature": "URLLength",
+                    "value": 12.5,
+                    "shap_impact": -9.248097240713577,
+                    "abs_impact": 9.248097240713577
+                },
+                {
+                    "feature": "NoOfSubDomain",
+                    "value": 0.0,
+                    "shap_impact": -7.499190704932541,
+                    "abs_impact": 7.499190704932541
+                },
+                {
+                    "feature": "URLSimilarityIndex",
+                    "value": 100.0,
+                    "shap_impact": 4.846670530124092,
+                    "abs_impact": 4.846670530124092
+                },
+                {
+                    "feature": "DomainLength",
+                    "value": 17.0,
+                    "shap_impact": -4.0428732546886925,
+                    "abs_impact": 4.0428732546886925
+                },
+                {
+                    "feature": "URLCharProb",
+                    "value": 0.01,
+                    "shap_impact": 1.1438575259104253,
+                    "abs_impact": 1.1438575259104253
+                }
+            ],
+            "shap_fusion": {
+                "modality_contributions": {
+                    "url": -8.221883330812172,
+                    "dom": -4.020991240440334,
+                    "visual": -1.9167274104697762e-13
+                },
+                "modality_weights": {
+                    "url": 0.6715647769616008,
+                    "dom": 0.3284352230383835,
+                    "visual": 1.5655860879032557e-14
+                }
+            }
+        },
+        "ip_metadata": {
+            "ip": "104.26.6.233",
+            "geo": {
+                "country": "Canada",
+                "lat": 43.6532,
+                "long": -79.3832
+            }
+        }
+    },
+    "https://www.zameen.com": {
+        "url": "https://www.zameen.com",
+        "prediction": "BENIGN",
+        "confidence": 0.999974623557423,
+        "fusion_probability_phishing": 2.5376442577011276e-05,
+        "safety_net_triggered": false,
+        "modality_scores": {
+            "url": 8.396097908883632e-08,
+            "dom": 0.9899153012428339,
+            "visual": 0.974717378616333
+        },
+        "modality_verdicts": {
+            "url": "BENIGN",
+            "dom": "PHISHING",
+            "visual": "PHISHING"
+        },
+        "modality_confidence": {
+            "url": 0.9999999160390209,
+            "dom": 0.9899153012428339,
+            "visual": 0.974717378616333
+        },
+        "modality_available": {
+            "url": true,
+            "dom": true,
+            "visual": true
+        },
+        "page_info": {
+            "fetch_success": true,
+            "page_title": "Pakistan Property Real Estate - Sell Buy Rent Homes & Properties In Pakistan Real Estate - Zameen.com",
+            "final_url": "https://www.zameen.com/",
+            "screenshot_path": "C:\\Users\\PMYLS\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1776362047060.png"
+        },
+        "dom_features": {
+            "HasForm": 1,
+            "NoOfForm": 1,
+            "HasPasswordField": 0,
+            "NoOfHiddenInputs": 0,
+            "NoOfImage": 89,
+            "NoOfExternalImage": 68,
+            "NoOfJS": 38,
+            "NoOfExternalJS": 21,
+            "NoOfLinks": 526,
+            "NoOfExternalLinks": 283,
+            "HasIframe": 1,
+            "NoOfIframe": 10,
+            "SuspiciousFormAction": 0,
+            "Bank": 1,
+            "Pay": 1,
+            "Crypto": 0
+        },
+        "shap_values": {
+            "url": {
+                "URLLength": -9.06424017916279,
+                "NoOfSubDomain": -7.853248147321386,
+                "URLSimilarityIndex": 5.062330281380141,
+                "DomainLength": -3.0420053640200777,
+                "URLCharProb": 1.127548377257186
+            },
+            "fusion_contribution": {
+                "url": 0.9205529644423824,
+                "dom": 0.07944703555720363,
+                "visual": 4.138886424903175e-13
+            }
+        },
+        "detailed_explanation": {
+            "shap_url_top": [
+                {
+                    "feature": "URLLength",
+                    "value": 11.0,
+                    "shap_impact": -9.06424017916279,
+                    "abs_impact": 9.06424017916279
+                },
+                {
+                    "feature": "NoOfSubDomain",
+                    "value": 0.0,
+                    "shap_impact": -7.853248147321386,
+                    "abs_impact": 7.853248147321386
+                },
+                {
+                    "feature": "URLSimilarityIndex",
+                    "value": 100.0,
+                    "shap_impact": 5.062330281380141,
+                    "abs_impact": 5.062330281380141
+                },
+                {
+                    "feature": "DomainLength",
+                    "value": 14.0,
+                    "shap_impact": -3.0420053640200777,
+                    "abs_impact": 3.0420053640200777
+                },
+                {
+                    "feature": "URLCharProb",
+                    "value": 0.01,
+                    "shap_impact": 1.127548377257186,
+                    "abs_impact": 1.127548377257186
+                }
+            ],
+            "shap_fusion": {
+                "modality_contributions": {
+                    "url": -13.400679501287044,
+                    "dom": 1.1565268941090654,
+                    "visual": 6.025062393444358e-12
+                },
+                "modality_weights": {
+                    "url": 0.9205529644423824,
+                    "dom": 0.07944703555720363,
+                    "visual": 4.138886424903175e-13
+                }
+            }
+        },
+        "ip_metadata": {
+            "ip": "104.17.74.53",
+            "geo": {
+                "country": "Canada",
+                "lat": 43.6532,
+                "long": -79.3832
+            }
+        }
+    },
+    "https://www.siasat.pk": {
+        "url": "https://www.siasat.pk",
+        "prediction": "BENIGN",
+        "confidence": 0.9997040534288044,
+        "fusion_probability_phishing": 0.000295946571195578,
+        "safety_net_triggered": false,
+        "modality_scores": {
+            "url": 0.0010501482641135855,
+            "dom": null,
+            "visual": null
+        },
+        "modality_verdicts": {
+            "url": "BENIGN",
+            "dom": "N/A",
+            "visual": "N/A"
+        },
+        "modality_confidence": {
+            "url": 0.9989498517358865,
+            "dom": null,
+            "visual": null
+        },
+        "modality_available": {
+            "url": true,
+            "dom": false,
+            "visual": false
+        },
+        "page_info": {
+            "fetch_success": false,
+            "page_title": null,
+            "final_url": "https://www.siasat.pk",
+            "screenshot_path": null
+        },
+        "dom_features": {},
+        "shap_values": {
+            "url": {
+                "NoOfSubDomain": -10.606947315380745,
+                "URLSimilarityIndex": 6.558992773469847,
+                "URLLength": -1.682863659188613,
+                "URLCharProb": 1.1263817927232653,
+                "TLDLegitimateProb": -0.37379305354857945
+            },
+            "fusion_contribution": {
+                "url": 0.44141175820487155,
+                "dom": 0.5585882417951246,
+                "visual": 3.878947249363846e-15
+            }
+        },
+        "detailed_explanation": {
+            "shap_url_top": [
+                {
+                    "feature": "NoOfSubDomain",
+                    "value": 0.0,
+                    "shap_impact": -10.606947315380745,
+                    "abs_impact": 10.606947315380745
+                },
+                {
+                    "feature": "URLSimilarityIndex",
+                    "value": 100.0,
+                    "shap_impact": 6.558992773469847,
+                    "abs_impact": 6.558992773469847
+                },
+                {
+                    "feature": "URLLength",
+                    "value": 21.0,
+                    "shap_impact": -1.682863659188613,
+                    "abs_impact": 1.682863659188613
+                },
+                {
+                    "feature": "URLCharProb",
+                    "value": 0.01,
+                    "shap_impact": 1.1263817927232653,
+                    "abs_impact": 1.1263817927232653
+                },
+                {
+                    "feature": "TLDLegitimateProb",
+                    "value": 0.52,
+                    "shap_impact": -0.37379305354857945,
+                    "abs_impact": 0.37379305354857945
+                }
+            ],
+            "shap_fusion": {
+                "modality_contributions": {
+                    "url": -4.32032832930026,
+                    "dom": -5.467196015021936,
+                    "visual": -3.796529063349041e-14
+                },
+                "modality_weights": {
+                    "url": 0.44141175820487155,
+                    "dom": 0.5585882417951246,
+                    "visual": 3.878947249363846e-15
+                }
+            }
+        },
+        "ip_metadata": {
+            "ip": null,
+            "geo": null
+        }
+    },
+    "https://defence.pk": {
+        "url": "https://defence.pk",
+        "prediction": "BENIGN",
+        "confidence": 0.966295887432983,
+        "fusion_probability_phishing": 0.033704112567017025,
+        "safety_net_triggered": false,
+        "modality_scores": {
+            "url": 1.6621253099059582e-06,
+            "dom": 0.9835025102245304,
+            "visual": 0.9689139723777771
+        },
+        "modality_verdicts": {
+            "url": "BENIGN",
+            "dom": "PHISHING",
+            "visual": "PHISHING"
+        },
+        "modality_confidence": {
+            "url": 0.9999983378746901,
+            "dom": 0.9835025102245304,
+            "visual": 0.9689139723777771
+        },
+        "modality_available": {
+            "url": true,
+            "dom": true,
+            "visual": true
+        },
+        "page_info": {
+            "fetch_success": true,
+            "page_title": "Pakistan Defence",
+            "final_url": "https://defence.pk/",
+            "screenshot_path": "C:\\Users\\PMYLS\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1776362095477.png"
+        },
+        "dom_features": {
+            "HasForm": 1,
+            "NoOfForm": 3,
+            "HasPasswordField": 0,
+            "NoOfHiddenInputs": 2,
+            "NoOfImage": 55,
+            "NoOfExternalImage": 0,
+            "NoOfJS": 24,
+            "NoOfExternalJS": 7,
+            "NoOfLinks": 547,
+            "NoOfExternalLinks": 15,
+            "HasIframe": 1,
+            "NoOfIframe": 5,
+            "SuspiciousFormAction": 0,
+            "Bank": 1,
+            "Pay": 0,
+            "Crypto": 0
+        },
+        "shap_values": {
+            "url": {
+                "NoOfSubDomain": -8.27161775243714,
+                "URLLength": -7.836751449152499,
+                "URLSimilarityIndex": 5.464630197084719,
+                "DomainLength": -1.2049125504728795,
+                "URLCharProb": 0.9296232127745844
+            },
+            "fusion_contribution": {
+                "url": 0.7368692452674009,
+                "dom": 0.2631307547325965,
+                "visual": 2.687057698287457e-15
+            }
+        },
+        "detailed_explanation": {
+            "shap_url_top": [
+                {
+                    "feature": "NoOfSubDomain",
+                    "value": 0.0,
+                    "shap_impact": -8.27161775243714,
+                    "abs_impact": 8.27161775243714
+                },
+                {
+                    "feature": "URLLength",
+                    "value": 9.0,
+                    "shap_impact": -7.836751449152499,
+                    "abs_impact": 7.836751449152499
+                },
+                {
+                    "feature": "URLSimilarityIndex",
+                    "value": 100.0,
+                    "shap_impact": 5.464630197084719,
+                    "abs_impact": 5.464630197084719
+                },
+                {
+                    "feature": "DomainLength",
+                    "value": 10.0,
+                    "shap_impact": -1.2049125504728795,
+                    "abs_impact": 1.2049125504728795
+                },
+                {
+                    "feature": "URLCharProb",
+                    "value": 0.01,
+                    "shap_impact": 0.9296232127745844,
+                    "abs_impact": 0.9296232127745844
+                }
+            ],
+            "shap_fusion": {
+                "modality_contributions": {
+                    "url": -7.805698077145854,
+                    "dom": 2.787359140642141,
+                    "visual": -2.8464155945456815e-14
+                },
+                "modality_weights": {
+                    "url": 0.7368692452674009,
+                    "dom": 0.2631307547325965,
+                    "visual": 2.687057698287457e-15
+                }
+            }
+        },
+        "ip_metadata": {
+            "ip": "104.21.34.120",
+            "geo": {
+                "country": "Canada",
+                "lat": 43.6532,
+                "long": -79.3832
+            }
+        }
+    },
+    "https://propakistani.pk": {
+        "url": "https://propakistani.pk",
+        "prediction": "BENIGN",
+        "confidence": 0.9999745911055121,
+        "fusion_probability_phishing": 2.540889448792109e-05,
+        "safety_net_triggered": false,
+        "modality_scores": {
+            "url": 7.595688192502617e-08,
+            "dom": null,
+            "visual": null
+        },
+        "modality_verdicts": {
+            "url": "BENIGN",
+            "dom": "N/A",
+            "visual": "N/A"
+        },
+        "modality_confidence": {
+            "url": 0.9999999240431181,
+            "dom": null,
+            "visual": null
+        },
+        "modality_available": {
+            "url": true,
+            "dom": false,
+            "visual": false
+        },
+        "page_info": {
+            "fetch_success": false,
+            "page_title": null,
+            "final_url": "https://propakistani.pk",
+            "screenshot_path": null
+        },
+        "dom_features": {},
+        "shap_values": {
+            "url": {
+                "URLLength": -9.024640741001805,
+                "NoOfSubDomain": -7.893524070579621,
+                "URLSimilarityIndex": 5.038604792786082,
+                "DomainLength": -3.1954881993853346,
+                "URLCharProb": 1.1742929025558266
+            },
+            "fusion_contribution": {
+                "url": 0.6715647769648496,
+                "dom": 0.3284352230351346,
+                "visual": 1.5655860878877366e-14
+            }
+        },
+        "detailed_explanation": {
+            "shap_url_top": [
+                {
+                    "feature": "URLLength",
+                    "value": 11.5,
+                    "shap_impact": -9.024640741001805,
+                    "abs_impact": 9.024640741001805
+                },
+                {
+                    "feature": "NoOfSubDomain",
+                    "value": 0.0,
+                    "shap_impact": -7.893524070579621,
+                    "abs_impact": 7.893524070579621
+                },
+                {
+                    "feature": "URLSimilarityIndex",
+                    "value": 100.0,
+                    "shap_impact": 5.038604792786082,
+                    "abs_impact": 5.038604792786082
+                },
+                {
+                    "feature": "DomainLength",
+                    "value": 15.0,
+                    "shap_impact": -3.1954881993853346,
+                    "abs_impact": 3.1954881993853346
+                },
+                {
+                    "feature": "URLCharProb",
+                    "value": 0.01,
+                    "shap_impact": 1.1742929025558266,
+                    "abs_impact": 1.1742929025558266
+                }
+            ],
+            "shap_fusion": {
+                "modality_contributions": {
+                    "url": -8.22188333093345,
+                    "dom": -4.020991240440417,
+                    "visual": -1.9167274104697762e-13
+                },
+                "modality_weights": {
+                    "url": 0.6715647769648496,
+                    "dom": 0.3284352230351346,
+                    "visual": 1.5655860878877366e-14
+                }
+            }
+        },
+        "ip_metadata": {
+            "ip": "104.26.13.229",
+            "geo": {
+                "country": "Canada",
+                "lat": 43.6532,
+                "long": -79.3832
+            }
+        }
+    },
+    "https://techjuice.pk": {
+        "url": "https://techjuice.pk",
+        "prediction": "BENIGN",
+        "confidence": 0.9999745911448298,
+        "fusion_probability_phishing": 2.5408855170212586e-05,
+        "safety_net_triggered": false,
+        "modality_scores": {
+            "url": 7.090672806748655e-07,
+            "dom": 0.8346137595394137,
+            "visual": 0.5347906947135925
+        },
+        "modality_verdicts": {
+            "url": "BENIGN",
+            "dom": "PHISHING",
+            "visual": "PHISHING"
+        },
+        "modality_confidence": {
+            "url": 0.9999992909327193,
+            "dom": 0.8346137595394137,
+            "visual": 0.5347906947135925
+        },
+        "modality_available": {
+            "url": true,
+            "dom": true,
+            "visual": true
+        },
+        "page_info": {
+            "fetch_success": true,
+            "page_title": "www.techjuice.pk",
+            "final_url": "https://www.techjuice.pk/",
+            "screenshot_path": "C:\\Users\\PMYLS\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1776362174978.png"
+        },
+        "dom_features": {
+            "HasForm": 0,
+            "NoOfForm": 0,
+            "HasPasswordField": 0,
+            "NoOfHiddenInputs": 0,
+            "NoOfImage": 2,
+            "NoOfExternalImage": 0,
+            "NoOfJS": 2,
+            "NoOfExternalJS": 0,
+            "NoOfLinks": 0,
+            "NoOfExternalLinks": 0,
+            "HasIframe": 0,
+            "NoOfIframe": 0,
+            "SuspiciousFormAction": 0,
+            "Bank": 0,
+            "Pay": 0,
+            "Crypto": 0
+        },
+        "shap_values": {
+            "url": {
+                "NoOfSubDomain": -8.195595114307281,
+                "URLLength": -8.129647174829259,
+                "URLSimilarityIndex": 5.33553416036812,
+                "DomainLength": -1.919684739233307,
+                "URLCharProb": 1.0780931007422856
+            },
+            "fusion_contribution": {
+                "url": 0.999627501298086,
+                "dom": 0.0003724987018984087,
+                "visual": 1.5655858900052782e-14
+            }
+        },
+        "detailed_explanation": {
+            "shap_url_top": [
+                {
+                    "feature": "NoOfSubDomain",
+                    "value": 0.0,
+                    "shap_impact": -8.195595114307281,
+                    "abs_impact": 8.195595114307281
+                },
+                {
+                    "feature": "URLLength",
+                    "value": 10.0,
+                    "shap_impact": -8.129647174829259,
+                    "abs_impact": 8.129647174829259
+                },
+                {
+                    "feature": "URLSimilarityIndex",
+                    "value": 100.0,
+                    "shap_impact": 5.33553416036812,
+                    "abs_impact": 5.33553416036812
+                },
+                {
+                    "feature": "DomainLength",
+                    "value": 12.0,
+                    "shap_impact": -1.919684739233307,
+                    "abs_impact": 1.919684739233307
+                },
+                {
+                    "feature": "URLCharProb",
+                    "value": 0.01,
+                    "shap_impact": 1.0780931007422856,
+                    "abs_impact": 1.0780931007422856
+                }
+            ],
+            "shap_fusion": {
+                "modality_contributions": {
+                    "url": -12.238315663352035,
+                    "dom": -0.004560455461761238,
+                    "visual": -1.9167274104697762e-13
+                },
+                "modality_weights": {
+                    "url": 0.999627501298086,
+                    "dom": 0.0003724987018984087,
+                    "visual": 1.5655858900052782e-14
+                }
+            }
+        },
+        "ip_metadata": {
+            "ip": "173.208.55.142",
+            "geo": {
+                "country": "United Kingdom",
+                "lat": 51.5177,
+                "long": -0.6215
+            }
+        }
+    },
+    "https://phoneworld.com.pk": {
+        "url": "https://phoneworld.com.pk",
+        "prediction": "BENIGN",
+        "confidence": 0.9996468054013719,
+        "fusion_probability_phishing": 0.000353194598628093,
+        "safety_net_triggered": false,
+        "modality_scores": {
+            "url": 9.942252105916156e-06,
+            "dom": null,
+            "visual": null
+        },
+        "modality_verdicts": {
+            "url": "BENIGN",
+            "dom": "N/A",
+            "visual": "N/A"
+        },
+        "modality_confidence": {
+            "url": 0.9999900577478941,
+            "dom": null,
+            "visual": null
+        },
+        "modality_available": {
+            "url": true,
+            "dom": false,
+            "visual": false
+        },
+        "page_info": {
+            "fetch_success": false,
+            "page_title": null,
+            "final_url": "https://phoneworld.com.pk",
+            "screenshot_path": null
+        },
+        "dom_features": {},
+        "shap_values": {
+            "url": {
+                "URLLength": -11.984430794743446,
+                "URLSimilarityIndex": 6.184627696222284,
+                "DomainLength": -4.699772801005762,
+                "URLCharProb": 1.34956731735166,
+                "TLDLegitimateProb": -0.47201056627067195
+            },
+            "fusion_contribution": {
+                "url": 0.4398359625962595,
+                "dom": 0.5601640374037365,
+                "visual": 3.9503448918656475e-15
+            }
+        },
+        "detailed_explanation": {
+            "shap_url_top": [
+                {
+                    "feature": "URLLength",
+                    "value": 12.5,
+                    "shap_impact": -11.984430794743446,
+                    "abs_impact": 11.984430794743446
+                },
+                {
+                    "feature": "URLSimilarityIndex",
+                    "value": 100.0,
+                    "shap_impact": 6.184627696222284,
+                    "abs_impact": 6.184627696222284
+                },
+                {
+                    "feature": "DomainLength",
+                    "value": 17.0,
+                    "shap_impact": -4.699772801005762,
+                    "abs_impact": 4.699772801005762
+                },
+                {
+                    "feature": "URLCharProb",
+                    "value": 0.01,
+                    "shap_impact": 1.34956731735166,
+                    "abs_impact": 1.34956731735166
+                },
+                {
+                    "feature": "TLDLegitimateProb",
+                    "value": 0.52,
+                    "shap_impact": -0.47201056627067195,
+                    "abs_impact": 0.47201056627067195
+                }
+            ],
+            "shap_fusion": {
+                "modality_contributions": {
+                    "url": -4.227099306041031,
+                    "dom": -5.383527531040078,
+                    "visual": -3.796529063349041e-14
+                },
+                "modality_weights": {
+                    "url": 0.4398359625962595,
+                    "dom": 0.5601640374037365,
+                    "visual": 3.9503448918656475e-15
+                }
+            }
+        },
+        "ip_metadata": {
+            "ip": "172.67.75.82",
+            "geo": {
+                "country": "Canada",
+                "lat": 43.6532,
+                "long": -79.3832
+            }
+        }
+    }
+}

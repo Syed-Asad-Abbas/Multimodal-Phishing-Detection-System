@@ -15,9 +15,33 @@ const limiter = rateLimit({
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
 
+// ─── CORS ────────────────────────────────────────────────────────────────────
+// Dev: allow Vite (5173) and CRA-style (3000) frontends.
+// Prod: allow only the production origin defined in CORS_ORIGIN env var.
+// NOTE: Access-Control-Allow-Origin: * is intentionally disabled to prevent
+//       cross-site leaks of scan results.
+const ALLOWED_ORIGINS = process.env.CORS_ORIGIN
+    ? process.env.CORS_ORIGIN.split(',').map((o) => o.trim())
+    : ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:5174'];
+
+const corsOptions = {
+    origin: (origin, callback) => {
+        // Allow server-to-server requests (no origin header) in development
+        if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+            callback(null, true);
+        } else {
+            logger.warn(`CORS: Blocked request from disallowed origin: ${origin}`);
+            callback(new Error(`CORS policy: origin '${origin}' not allowed`));
+        }
+    },
+    credentials: true,       // Allow cookies / Authorization headers
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
 // Middlewares
 app.use(helmet());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Apply Rate Limiter

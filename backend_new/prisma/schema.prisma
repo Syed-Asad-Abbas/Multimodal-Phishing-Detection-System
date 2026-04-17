@@ -115,6 +115,7 @@ model Scan {
 
   user        User?    @relation(fields: [user_id], references: [id], onDelete: SetNull)
   results     ScanResult?
+
   malicious_ip MaliciousIpObservation?
 
   @@map("scans")

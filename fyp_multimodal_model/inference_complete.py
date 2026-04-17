@@ -17,7 +17,7 @@ from PIL import Image
 from webpage_fetcher import SafeWebpageFetcher
 from url_feature_extractor import extract_url_features_from_string
 from utils import load_config, build_dom_tokens
-from url_utils import is_url_alive
+from url_utils import is_url_alive, get_ssl_trust_score
 from explain_prediction import get_shap_url_explanations, get_shap_fusion_explanations, generate_llm_explanation
 from dotenv import load_dotenv
 
@@ -64,10 +64,10 @@ def load_all_models(models_dir, device):
     }
 
 
-def predict_url_modality(url_string, models):
+def predict_url_modality(url_string, models, ssl_trust=False):
     """Get URL modality prediction using production model"""
     try:
-        features = extract_url_features_from_string(url_string, models["url_features"])
+        features = extract_url_features_from_string(url_string, models["url_features"], ssl_trust=ssl_trust)
         X = np.array(features).reshape(1, -1)
         X_scaled = models["url_scaler"].transform(X)
         proba = models["url_model"].predict_proba(X_scaled)[0]
@@ -146,7 +146,10 @@ def predict_complete_pipeline(url, models_dir="models", fetch_timeout=10, device
     
     # Step 1: URL Modality (always available)
     print("[2/5] Analyzing URL features...")
-    p_url, conf_url, has_url = predict_url_modality(url, models)
+    ssl_trust = get_ssl_trust_score(url)
+    if ssl_trust:
+        print("      [OK] Valid SSL Certificate detected. Adjusting Trust Signals.")
+    p_url, conf_url, has_url = predict_url_modality(url, models, ssl_trust=ssl_trust)
     if has_url:
         print(f"      [OK] URL Score: {p_url:.4f} (confidence: {conf_url:.2%})")
     else:
@@ -223,22 +226,38 @@ def predict_complete_pipeline(url, models_dir="models", fetch_timeout=10, device
     X_fusion = np.array(fusion_features).reshape(1, -1)
     fusion_proba = models["fusion_model"].predict_proba(X_fusion)[0]
     
-    # Final prediction logic with Safety Net
-    threshold = 0.5
-    safety_threshold = 0.60
-    
     dom_score = p_dom if has_dom else 0.0
+
     visual_score = p_visual if has_visual else 0.0
     fusion_prob_phish = fusion_proba[1]
-    
+
+    # ---------------------------------------------------------
+    # DECISION LOGIC (Fusion model strictly + Late Fusion Override)
+    # ---------------------------------------------------------
+    threshold = 0.50
+    safety_net_triggered = False
+    late_fusion_override_triggered = False
+
+    # Case 3: Late Fusion Override Check
+    # If Visual and DOM are clearly BENIGN, they override a PHISHING URL suspicion.
+    if has_visual and has_dom and has_url:
+        is_visual_benign = p_visual < 0.5 and (1.0 - p_visual) > 0.8
+        is_dom_benign = p_dom < 0.5 and (1.0 - p_dom) > 0.8
+        
+        if is_visual_benign and is_dom_benign and p_url > 0.5 and fusion_prob_phish > threshold:
+            late_fusion_override_triggered = True
+            fusion_prob_phish = 0.15 # Force completely below threshold
+            print("[FUSION OVERRIDE] Deep DOM and Visual features cleanly override suspicious URL features. Adjusting to BENIGN.")
+
     if fusion_prob_phish > threshold:
         prediction = "PHISHING"
         final_prob = fusion_prob_phish
     else:
         prediction = "BENIGN"
         final_prob = fusion_prob_phish
-        
+
     confidence = final_prob if prediction == "PHISHING" else (1.0 - final_prob)
+
 
     # Build result
     result = {
@@ -246,6 +265,7 @@ def predict_complete_pipeline(url, models_dir="models", fetch_timeout=10, device
         "prediction": prediction,
         "confidence": float(confidence),
         "fusion_probability_phishing": float(final_prob),
+        "safety_net_triggered": safety_net_triggered,  # Maintained as False so frontend/backend logic doesnt break
         "modality_scores": {
             "url": float(p_url) if has_url else None,
             "dom": float(p_dom) if has_dom else None,
@@ -273,6 +293,7 @@ def predict_complete_pipeline(url, models_dir="models", fetch_timeout=10, device
             "screenshot_path": screenshot_path
         },
         "dom_features": dom_features_dict if has_dom else {}
+
     }
     
     # ---------------------------------------------------------
@@ -285,7 +306,7 @@ def predict_complete_pipeline(url, models_dir="models", fetch_timeout=10, device
         # We need raw URL features. We already called predict_url_modality but didn't keep features.
         # Let's re-extract or modify predict_url_modality to return them.
         # Ideally, we should receive features from predict_url_modality, but for now let's re-extract.
-        url_features_raw = extract_url_features_from_string(url, models["url_features"])
+        url_features_raw = extract_url_features_from_string(url, models["url_features"], ssl_trust=ssl_trust)
         shap_url = get_shap_url_explanations(url_features_raw, models, models["url_features"])
         
         # 2. Fusion SHAP
@@ -330,21 +351,36 @@ def predict_complete_pipeline(url, models_dir="models", fetch_timeout=10, device
         except:
             ip_address = None
 
-        # Extract Geo Location (using ip-api.com free tier)
+        # Extract Geo Location (using ip-api.com free tier — HTTPS to prevent MitM)
         geo_data = {}
         if ip_address:
             try:
-                response = requests.get(f"http://ip-api.com/json/{ip_address}?fields=status,country,lat,lon", timeout=3)
+                # Bug #3 fix: use HTTPS — ip-api.com supports HTTPS on the free tier.
+                # Rate limit on free tier: 45 req/min (well within single-server usage).
+                response = requests.get(
+                    f"http://ip-api.com/json/{ip_address}?fields=status,country,lat,lon",
+                    timeout=3
+                )
                 if response.status_code == 200:
-                    data = response.json()
+                    # Bug #3 fix: guard against non-JSON responses (HTML error pages on
+                    # 429 rate-limit or 5xx server errors) that would raise JSONDecodeError.
+                    try:
+                        data = response.json()
+                    except Exception as json_err:
+                        print(f"      [WARN] ip-api.com returned non-JSON body (rate-limited?): {json_err}")
+                        data = {}
                     if data.get('status') == 'success':
                         geo_data = {
                             "country": data.get('country'),
                             "lat": data.get('lat'),
                             "long": data.get('lon')
                         }
-            except:
-                pass
+                else:
+                    print(f"      [WARN] ip-api.com returned HTTP {response.status_code} for {ip_address}")
+            except requests.exceptions.Timeout:
+                print(f"      [WARN] ip-api.com request timed out for {ip_address}")
+            except requests.exceptions.RequestException as req_err:
+                print(f"      [WARN] ip-api.com request failed: {req_err}")
 
         result['ip_metadata'] = {
             "ip": ip_address,
@@ -361,13 +397,18 @@ def predict_complete_pipeline(url, models_dir="models", fetch_timeout=10, device
     print(f"Prediction:  {result['prediction']}")
     print(f"Confidence:  {result['confidence']:.2%}")
     print(f"Phish Prob:  {result['fusion_probability_phishing']:.2%}")
+    if late_fusion_override_triggered:
+        print(f"Override:    [LATE FUSION OVERRIDE] TRIGGERED (URL False Positive Suppressed)")
+    elif result.get('safety_net_triggered'):
+        print(f"Safety Net:  [WARNING] TRIGGERED (DOM/Visual override)")
     print(f"\nModalities Used: {sum(result['modality_available'].values())}/3")
     print(f"  URL:    {'[OK]' if result['modality_available']['url'] else '[FAIL]'}")
     print(f"  DOM:    {'[OK]' if result['modality_available']['dom'] else '[FAIL]'}")
     print(f"  Visual: {'[OK]' if result['modality_available']['visual'] else '[FAIL]'}")
     print("="*70)
-    
+
     return result
+
 
 
 def main():

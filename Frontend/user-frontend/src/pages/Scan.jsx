@@ -42,24 +42,40 @@ export default function ScanPage() {
     setProgress(0);
     setResult(null);
 
+    // Smooth progress bar animation curve for UI mapping to ML phases
+    const progressInterval = setInterval(() => {
+      setProgress(p => {
+        if (p < 30) return p + 2.5; // URL Analysis phase (fast)
+        if (p < 60) return p + 1.0; // DOM Extraction phase (medium)
+        if (p < 95) return p + 0.3; // Visual ResNet inference (slow, gets stuck near 95)
+        return p; // Hold at 95% until backend completely returns
+      });
+    }, 100);
+
     try {
       // Create a local variable for the URL to avoid stale state issues in closures
       const scanTarget = url || sessionStorage.getItem('pendingScanUrl');
       if (!scanTarget) return;
 
       const response = await api.post('/scan/submit', { url: scanTarget });
-      
-      setResult(response.data.result);
-      setStatus("finishing");
+      clearInterval(progressInterval);
+      setProgress(100);
+
+      setTimeout(() => {
+        setStatus("complete");
+        setResult(response.data.result);
+      }, 500);
+
     } catch (error) {
       console.error("Scan failed:", error);
+      clearInterval(progressInterval);
       setStatus("idle");
       alert(error.response?.data?.message || "Scan failed. Please try again.");
     }
   };
 
   const fetchExistingScan = async (id) => {
-    setStatus("fetching");
+    setStatus("scanning");
     setProgress(50);
     try {
       const response = await api.get(`/scan/${id}`);
@@ -94,41 +110,7 @@ export default function ScanPage() {
     }
   };
 
-  useEffect(() => {
-    if (status === "scanning") {
-      const startTime = Date.now();
-      const interval = setInterval(() => {
-        const elapsed = (Date.now() - startTime) / 1000;
-        setProgress((prev) => {
-          if (elapsed <= 15) {
-             return Math.min(15, elapsed * (15/15));
-          } else if (elapsed <= 40) {
-             return Math.min(35, 15 + ((elapsed - 15) / 25) * 20);
-          } else if (elapsed <= 60) {
-             return Math.min(75, 35 + ((elapsed - 40) / 20) * 40);
-          } else {
-             return 75;
-          }
-        });
-      }, 100);
-      return () => clearInterval(interval);
-    } else if (status === "finishing") {
-      const startTime = Date.now();
-      const initialProgress = progress;
-      const interval = setInterval(() => {
-        const elapsed = (Date.now() - startTime) / 1000;
-        if (elapsed >= 3) {
-           setProgress(100);
-           clearInterval(interval);
-           setStatus("complete");
-        } else {
-           setProgress(initialProgress + (100 - initialProgress) * (elapsed / 3));
-        }
-      }, 50);
-      return () => clearInterval(interval);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status]);
+  // Removed the conflicting side-effect interval to prevent the 92-100% loop loop
 
   // Autostart scan if url is provided in query params or session storage
   useEffect(() => {
@@ -178,9 +160,9 @@ export default function ScanPage() {
             size="lg"
             className="h-14 px-8 text-base w-full md:w-auto min-w-[160px] bg-cyan-600 hover:bg-cyan-500 text-white border-0"
             onClick={startScan}
-            disabled={status === "scanning" || status === "finishing" || status === "fetching"}
+            disabled={status === "scanning"}
           >
-            {status === "scanning" || status === "finishing" || status === "fetching" ? (
+            {status === "scanning" ? (
               <>Scanning...</>
             ) : (
               <>Scan Website <ArrowRight className="ml-2 w-4 h-4" /></>
@@ -190,7 +172,7 @@ export default function ScanPage() {
 
         {/* Progress Bar */}
         <AnimatePresence>
-          {(status === "scanning" || status === "finishing" || status === "fetching") && (
+          {status === "scanning" && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
@@ -198,7 +180,7 @@ export default function ScanPage() {
               className="mt-8"
             >
               <div className="flex justify-between text-sm text-slate-400 mb-2 font-medium">
-                <span>Analyzing target parameters...</span>
+                <span>Extracting Multimodal Features...</span>
                 <span>{Math.round(progress)}%</span>
               </div>
               <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
@@ -210,7 +192,11 @@ export default function ScanPage() {
                 </motion.div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                {["URL Structure Analysis", "DOM Content Inspection", "Visual Brand Matching"].map((step, i) => (
+                {[
+                  "URL Lexical & Heuristics", 
+                  "DOM Structure Inspection", 
+                  "Visual/ResNet50 Embeddings"
+                ].map((step, i) => (
                   <div key={i} className={`flex items-center gap-3 p-3 rounded-lg border transition-colors ${progress > (i + 1) * 30 ? "bg-emerald-500/5 border-emerald-500/20 text-emerald-400" : "bg-slate-900/50 border-slate-800 text-slate-500"}`}>
                     {progress > (i + 1) * 30 ? (
                       <CheckCircle className="w-5 h-5 flex-shrink-0" />

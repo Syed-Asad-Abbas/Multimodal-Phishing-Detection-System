@@ -18,6 +18,12 @@ NGRAM_FILE = os.path.join(BASE_DIR, "data", "ngram_frequency.json")
 TLD_DATA = None
 NGRAM_DATA = None
 
+# Case 1: Known Legit Domains (Top-1M Whitelist Mock)
+KNOWN_LEGIT_DOMAINS = {
+    'google.com', 'microsoft.com', 'apple.com', 'github.com', 
+    'paypal.com', 'amazon.com', 'facebook.com', 'linkedin.com'
+}
+
 def load_data():
     global TLD_DATA, NGRAM_DATA
     if TLD_DATA is None and os.path.exists(TLD_FILE):
@@ -49,6 +55,10 @@ def get_tld_legitimate_prob(domain):
     if '.' not in domain: return 0.26 # Mean
     tld = domain.split('.')[-1].lower()
     
+    # Case 2: Institutional Trust Check
+    if tld in ['edu', 'gov', 'mil'] or domain.lower().endswith(('.edu.pk', '.gov.uk', '.edu.au', '.gov.au', '.ac.uk', '.ac.in')):
+        return 0.52 # Maximum Trust
+    
     # 1. Blacklist Check (Spamhaus) - PRIORITY
     if TLD_DATA and tld in TLD_DATA["blacklist"]:
         # Dataset correlation: 0.0 matches High Phishing Rate (Low Legitimacy)
@@ -73,7 +83,7 @@ def get_url_char_prob(url_string):
     """
     return 0.057 # Feature Neutralized
 
-def extract_url_features_from_string(url_string, feature_names):
+def extract_url_features_from_string(url_string, feature_names, ssl_trust=False):
     """
     Extract URL features matching the PhiUSIIL dataset format
     """
@@ -101,8 +111,13 @@ def extract_url_features_from_string(url_string, feature_names):
         
         # 4. URLSimilarityIndex
         # FORCE 100.0 for all standard domains to eliminate noise
+        base_domain = '.'.join(domain.split('.')[-2:]) if domain.count('.') >= 1 else domain
+        
         if is_ip:
              features["URLSimilarityIndex"] = 100.0 # IPs are 'perfectly' self-similar in this context
+        elif base_domain.lower() in KNOWN_LEGIT_DOMAINS:
+             # Case 1: Identity Paradox Fix (Neutralize brand itself)
+             features["URLSimilarityIndex"] = 0.0 
         elif len(full_url) > 0:
             raw_sim = (len(set(full_url)) / len(full_url)) * 100.0
             # If it's a normal looking URL (>40% unique), force to max to match dataset bias
@@ -153,8 +168,18 @@ def extract_url_features_from_string(url_string, feature_names):
         cleaned_domain = domain
         if cleaned_domain.startswith("www."):
             cleaned_domain = cleaned_domain[4:]
-        domain_parts = cleaned_domain.split('.')
-        features["NoOfSubDomain"] = max(0, len(domain_parts) - 2)
+            
+        # Case 2: Institutional Subdomains
+        is_institutional = False
+        tld_part = domain.split('.')[-1].lower() if '.' in domain else ''
+        if tld_part in ['edu', 'gov', 'mil'] or domain.lower().endswith(('.edu.pk', '.gov.uk', '.edu.au', '.gov.au', '.ac.uk', '.ac.in')):
+            is_institutional = True
+            
+        if is_institutional:
+            features["NoOfSubDomain"] = 0 # Inherited trust
+        else:
+            domain_parts = cleaned_domain.split('.')
+            features["NoOfSubDomain"] = max(0, len(domain_parts) - 2)
         
         # NEUTRALIZE LENGTH FEATURES (Overfitting Prevention)
         # The model overfits on short/specific lengths. 
@@ -177,6 +202,14 @@ def extract_url_features_from_string(url_string, feature_names):
         else:
             features["ObfuscationRatio"] = 0.0
         
+        # Case 3: Balancing Path Length
+        if ssl_trust:
+            # Reduce weight of path-based features to avoid penalizing legitimate long admin paths
+            if "URLLength" in features:
+                features["URLLength"] = features["URLLength"] * 0.5
+            if "URLCharProb" in features:
+                features["URLCharProb"] = 0.01 # Revert to high trust value
+        
         # Return ordered list
         return [features.get(fn, 0) for fn in feature_names]
         
@@ -192,7 +225,7 @@ def extract_url_features_dict(url_string):
         "CharContinuationRate", "TLDLegitimateProb", "URLCharProb", "TLDLength",
         "NoOfSubDomain", "HasObfuscation", "NoOfObfuscatedChar", "ObfuscationRatio"
     ]
-    values = extract_url_features_from_string(url_string, feature_names)
+    values = extract_url_features_from_string(url_string, feature_names, ssl_trust=False)
     return dict(zip(feature_names, values))
 
 if __name__ == "__main__":

@@ -60,10 +60,12 @@ class SafeWebpageFetcher:
             options.add_argument('--headless=new')
             
         try:
-            # Standard webdriver avoids Windows handle crashes
-            driver = webdriver.Chrome(options=options)
+            # Use undetected_chromedriver to bypass Cloudflare/Akamai bot detection.
+            # Standard webdriver.Chrome() would be fingerprinted and blocked by WAFs
+            # when scanning real phishing sites during the FYP demo.
+            driver = uc.Chrome(options=options)
             
-            # Apply selenium-stealth for extra protection
+            # Apply selenium-stealth on top for additional browser fingerprint masking
             stealth(driver,
                 languages=["en-US", "en"],
                 vendor="Google Inc.",
@@ -77,6 +79,7 @@ class SafeWebpageFetcher:
             return driver
         except Exception as e:
             raise RuntimeError(f"Failed to create Chrome driver: {e}\nMake sure Chrome is installed.")
+
     
     def _is_cloudflare_challenge(self):
         """Check if the current page is a Cloudflare challenge"""
@@ -303,10 +306,14 @@ class SafeWebpageFetcher:
                 "error": f"Unexpected error: {str(e)}"
             }
         finally:
-            # Always close driver
-            if self.driver:
-                self.driver.quit()
-                self.driver = None
+            # Always close driver securely
+            if getattr(self, 'driver', None):
+                try:
+                    self.driver.quit()
+                except Exception as cleanup_err:
+                    print(f"[Fetcher] Warning: Error during strict driver cleanup: {cleanup_err}")
+                finally:
+                    self.driver = None
     
     def _capture_screenshot(self):
         """

@@ -65,3 +65,4 @@ cron.schedule('* * * * *', async () => {
 });
 
 logger.info('[Cron Service] Initialized to run every minute.');
+

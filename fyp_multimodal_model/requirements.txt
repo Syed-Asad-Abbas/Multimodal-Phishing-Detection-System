@@ -10,6 +10,8 @@ torchvision
 Pillow
 joblib
 selenium
+undetected-chromedriver
+selenium-stealth
 beautifulsoup4
 webdriver-manager
 flask
