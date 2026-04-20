@@ -1,7 +1,7 @@
 /* d:\FYP-integration\Frontend\user-frontend\src\pages\Working.css */
 /* Ambient Cyber Background - Scaled for massive canvas */
 .working-cyber-bg {
-    background-image: 
+    background-image:
         radial-gradient(circle at 50% 50%, rgba(14, 23, 42, 0.9) 0%, rgba(3, 7, 18, 1) 100%),
         linear-gradient(rgba(30, 41, 59, 0.4) 1px, transparent 1px),
         linear-gradient(90deg, rgba(30, 41, 59, 0.4) 1px, transparent 1px);
@@ -12,25 +12,47 @@
 
 /* Animations */
 @keyframes working-scanline {
-    0% { transform: translateY(-100%); opacity: 0; }
-    50% { opacity: 0.3; }
-    100% { transform: translateY(100%); opacity: 0; }
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
 }
+
 .working-animate-scan {
     animation: working-scanline 3s ease-in-out infinite;
 }
 
 @keyframes working-breathe-glow {
-    0%, 100% { box-shadow: 0 0 20px var(--glow-color, rgba(255,255,255,0.2)), inset 0 0 15px rgba(255,255,255,0.05); }
-    50% { box-shadow: 0 0 50px var(--glow-color, rgba(255,255,255,0.6)), inset 0 0 30px rgba(255,255,255,0.15); }
+
+    0%,
+    100% {
+        box-shadow: 0 0 20px var(--glow-color, rgba(255, 255, 255, 0.2)), inset 0 0 15px rgba(255, 255, 255, 0.05);
+    }
+
+    50% {
+        box-shadow: 0 0 50px var(--glow-color, rgba(255, 255, 255, 0.6)), inset 0 0 30px rgba(255, 255, 255, 0.15);
+    }
 }
+
 .working-node-breathe {
     animation: working-breathe-glow 3s infinite alternate;
 }
 
 @keyframes working-flow-dash {
-    to { stroke-dashoffset: -80; }
+    to {
+        stroke-dashoffset: -80;
+    }
 }
+
 .working-path-flow {
     animation: working-flow-dash 1.5s linear infinite;
 }
@@ -42,13 +64,15 @@
     position: relative;
     overflow: hidden;
 }
+
 .working-canvas-content {
-    width: 4400px; 
+    width: 4400px;
     height: 2475px;
     position: absolute;
     top: 0;
-    left: 0;
+    left: -95px;
     transform-origin: 0 0;
+    zoom: 1.2;
 }
 
 .working-box-text {
