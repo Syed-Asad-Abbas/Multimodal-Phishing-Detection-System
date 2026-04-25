@@ -64,6 +64,35 @@ def load_all_models(models_dir, device):
 from url_feature_extractor import extract_url_features_from_string
 
 
+CAPTCHA_SIGNATURES = [
+    'cf-browser-verification',
+    'just-a-moment',
+    'jschl-answer',
+    'hcaptcha.com',
+    'recaptcha/api',
+    'verifying you are human',
+    'please enable javascript',
+    'access denied',
+    'page has been denied',      # pairs with 'access denied' for bot-protection pages
+    'you have been blocked',
+    'ray-id',
+    'please wait while we verify',
+    'ddos-guard',
+]
+
+
+def is_interstitial_page(html: str) -> bool:
+    """
+    Returns True if the fetched HTML is a bot-detection/CAPTCHA interstitial.
+    Requires >= 2 signature matches to avoid false positives.
+    """
+    if not html or len(html.strip()) < 50:
+        return True
+    html_lower = html.lower()
+    matches = sum(1 for sig in CAPTCHA_SIGNATURES if sig in html_lower)
+    return matches >= 2
+
+
 def predict_url_modality(url_string, models):
     """Get URL modality prediction"""
     try:
@@ -71,10 +100,11 @@ def predict_url_modality(url_string, models):
         X = np.array(features).reshape(1, -1)
         X_scaled = models["url_scaler"].transform(X)
         proba = models["url_model"].predict_proba(X_scaled)[0]
-        return proba[1], max(proba), True
+        signed_conf = (proba[1] - 0.5) * 2.0
+        return proba[1], signed_conf, True
     except Exception as e:
         print(f"[URL] Error: {e}")
-        return -1.0, 0.0, False
+        return float('nan'), float('nan'), False
 
 
 def predict_dom_modality(dom_features_dict, models):
@@ -84,18 +114,19 @@ def predict_dom_modality(dom_features_dict, models):
         tokens = build_dom_tokens(dom_features_dict)
         embedding = models["doc2vec"].infer_vector(tokens)
         proba = models["dom_model"].predict_proba([embedding])[0]
-        return proba[1], max(proba), True
+        signed_conf = (proba[1] - 0.5) * 2.0
+        return proba[1], signed_conf, True
     except Exception as e:
         print(f"[DOM] Error: {e}")
-        return -1.0, 0.0, False
+        return float('nan'), float('nan'), False
 
 
 def predict_visual_modality(image_path, models, device):
     """Get Visual modality prediction from screenshot"""
     try:
         if not image_path or not os.path.exists(image_path):
-            return -1.0, 0.0, False
-        
+            return float('nan'), float('nan'), False
+
         transform = transforms.Compose([
             transforms.Resize((256, 256)),
             transforms.CenterCrop(224),
@@ -105,20 +136,20 @@ def predict_visual_modality(image_path, models, device):
                 std=[0.229, 0.224, 0.225]
             )
         ])
-        
+
         img = Image.open(image_path).convert("RGB")
         img_tensor = transform(img).unsqueeze(0).to(device)
-        
+
         with torch.no_grad():
             out = models["visual_model"](img_tensor)
             probs = torch.softmax(out, dim=1)[0]
             p_phish = probs[1].item()
-            confidence = max(probs[0].item(), probs[1].item())
-        
-        return p_phish, confidence, True
+            signed_conf = (p_phish - 0.5) * 2.0
+
+        return p_phish, signed_conf, True
     except Exception as e:
         print(f"[Visual] Error: {e}")
-        return -1.0, 0.0, False
+        return float('nan'), float('nan'), False
 
 
 def predict_fusion(url_string, dom_features=None, screenshot_path=None, models=None, device="cpu"):
@@ -138,30 +169,35 @@ def predict_fusion(url_string, dom_features=None, screenshot_path=None, models=N
     # Get modality predictions
     p_url, conf_url, has_url = predict_url_modality(url_string, models)
     
-    # DOM features (use provided or extract from dummy)
+    # DOM features — skip if interstitial/CAPTCHA page
     if dom_features is None:
-        # Placeholder: in production, fetch page HTML and extract DOM features
         dom_features = {
             "HasForm": 0,
             "HasPasswordField": 0,
             "NoOfImage": 0,
             "NoOfJS": 0
         }
-    p_dom, conf_dom, has_dom = predict_dom_modality(dom_features, models)
-    
+
+    raw_html = dom_features.get("_raw_html", "") if isinstance(dom_features, dict) else ""
+    if raw_html and is_interstitial_page(raw_html):
+        print("[Warning] CAPTCHA/interstitial detected — skipping DOM modality")
+        p_dom, conf_dom, has_dom = float('nan'), float('nan'), False
+    else:
+        p_dom, conf_dom, has_dom = predict_dom_modality(dom_features, models)
+
     # Visual
     p_visual, conf_visual, has_visual = predict_visual_modality(screenshot_path, models, device)
-    
+
     # Build fusion feature vector
     fusion_features = [
-        p_url,
-        p_dom,
-        p_visual,
-        conf_url,
-        conf_dom,
-        conf_visual,
-        1.0 if has_url else 0.0,
-        1.0 if has_dom else 0.0,
+        p_url    if has_url    else float('nan'),
+        p_dom    if has_dom    else float('nan'),
+        p_visual if has_visual else float('nan'),
+        conf_url    if has_url    else float('nan'),
+        conf_dom    if has_dom    else float('nan'),
+        conf_visual if has_visual else float('nan'),
+        1.0 if has_url    else 0.0,
+        1.0 if has_dom    else 0.0,
         1.0 if has_visual else 0.0
     ]
     

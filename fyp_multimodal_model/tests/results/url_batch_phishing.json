@@ -1,0 +1,385 @@
+{
+  "total_sampled": 500,
+  "dead_links": 427,
+  "tested": 73,
+  "valid": 73,
+  "detected": 72,
+  "missed": 1,
+  "detection_rate_percent": 98.63013698630137,
+  "fnr_percent": 1.36986301369863,
+  "passed": true,
+  "false_negatives": [
+    {
+      "url": "https://www.auth-legends-cup.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.08641798157072815
+    }
+  ],
+  "all_results": [
+    {
+      "url": "http://animalwelfareinc.org/wp-content/themes/ado/adobelatest/adbx/home/index.php",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999868292528008
+    },
+    {
+      "url": "http://149.28.47.36/wp-content/plugins/eqgigbgakc/chase.aspx-login.aspx/dashboard/new/home/3f1c51817959b461d0ccaac82387cc78",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999997682582704
+    },
+    {
+      "url": "http://3dshelly.haassncbngjqyg3fd.tempa-bersama.co.id/?=redacted@redacted.invalid",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999940095135234
+    },
+    {
+      "url": "http://adloafjihad.github.io/Facebook-Log-in-or-sign-up",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999979048971305
+    },
+    {
+      "url": "http://209.141.43.146",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9997942525318136
+    },
+    {
+      "url": "https://imagizer.imageshack.com/img922/7929/f0LDA5.png",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999957629852515
+    },
+    {
+      "url": "http://3blbsnwq0lbzsbjg.adamandco.co.uk",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9950949902814555
+    },
+    {
+      "url": "http://3656aa.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9983982465760282
+    },
+    {
+      "url": "http://528487hola1122.filesusr.com/html/6c0a83_90cbd78fff460e72d156ee8a8824acb8.html?nti4ndg3facebook/=",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999995691648622
+    },
+    {
+      "url": "http://7wej7-lyaaa-aaaad-qcrzq-cai.raw.ic0.app/login.html?cjiyna=9nwgdfytrmnevtcge9mrxn28x5snrm&vwoz=nnetzvrlhyzww2vvkfrh&xypielajx=xwu91djmlgsfmyeigie9ehzm&hpqvngv=qoja8tkonld2j6ffibzbvlkb",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999989211856505
+    },
+    {
+      "url": "https://help-exodus.teachable.com/p/home",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9984301396363792
+    },
+    {
+      "url": "http://142.93.181.27/CarrierRefund/online/CIBC/7d4d27e7a0ecbcab00f9ad8d86d4f5db/ebm-mobile-app/index.html",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999997568660961
+    },
+    {
+      "url": "http://akmeena5726.github.io/netflix_clone",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999968624800762
+    },
+    {
+      "url": "http://al-thawiya.com/files/online/LinkedIn.htm",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999917927098849
+    },
+    {
+      "url": "http://1ce94cba11407f43768cde7a311365c1fb9f04b29ffec272565f70b4b0.pages.dev",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999973718017822
+    },
+    {
+      "url": "https://www.auth-legends-cup.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.08641798157072815
+    },
+    {
+      "url": "http://abc-overview-cck6546754.pages.dev/help/contact/713501037118519",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999993682408937
+    },
+    {
+      "url": "http://account-recovery-help-centerr.pages.dev/29603945.html",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999803933907201
+    },
+    {
+      "url": "http://4pjqi.skipdns.link/wp-content/plugins/affiliatewp-signup-referrals/includes/d",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999997639496683
+    },
+    {
+      "url": "http://4fe5d8da46dda229779e39c3caef2d2b1308684ecdbf740cbd1aa45ae5.pages.dev",
+      "prediction": "PHISHING",
+      "p_phishing": 0.999997382752854
+    },
+    {
+      "url": "http://advertiser-business-network-harassment-appeal.pages.dev",
+      "prediction": "PHISHING",
+      "p_phishing": 0.999925390071406
+    },
+    {
+      "url": "http://502c2dae4e5cfad452551b5d7032b151-dot-goff039302032323.rj.r.appspot.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999963382834944
+    },
+    {
+      "url": "http://a0423094.xsph.ru/deutsh/new/12960260c9de21a8b3f5c8dac9e21908/?dispatch=Wnr15ob4NASxtKCjnrQ6AZQJyFPnpMUP2FcodLpSpQ6aOtNZkw",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999999245690155
+    },
+    {
+      "url": "http://367667.com/index.php",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9998424356877457
+    },
+    {
+      "url": "http://6ta.eu/EZqMs",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9972734585753831
+    },
+    {
+      "url": "http://45.64.113.37",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999035213912008
+    },
+    {
+      "url": "http://a0566105.xsph.ru/KJSGDFGFFDJGFKQ/GTRZVyIUJHGSJHG/cc5c0b3b6cfa28a/region.php?AUTH=cc5c0b3b6cfa28a",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999999245690155
+    },
+    {
+      "url": "http://551002z.cc",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999043767336467
+    },
+    {
+      "url": "http://026foto9kichitogralbum2facebook92sj84kl20s.filesusr.com/html/361366_6134101ab7807962f92ae301b32cb8a3.html?7046065*cm9szwl0zte5nzhaz21hawwuy29t*https:/www.facebook.com/photo.php?fbid=1293548467743000&set=pb.100012635762796.-2207520000..&type=3*facebook",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999991113815321
+    },
+    {
+      "url": "http://aib-review-security.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9838643369579522
+    },
+    {
+      "url": "http://ancient-dew-fc07.fenix-815.workers.dev/bdo-form/auth/realms/retail/custom-login-actions/forgot-username",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999989754611199
+    },
+    {
+      "url": "https://legderhealth.com/captcha",
+      "prediction": "PHISHING",
+      "p_phishing": 0.998593187663071
+    },
+    {
+      "url": "http://9ikjk.fw7p6i3kiz.workers.dev",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9996043084379024
+    },
+    {
+      "url": "http://4qe9-i-cloud.mipaginaweb.us/expire/index2.html",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999982586266737
+    },
+    {
+      "url": "http://a0638750.xsph.ru",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999913891974096
+    },
+    {
+      "url": "http://access.net.ua/bankofamerica/bnd/challengevdl.php?cmd=_account-details&session=795da690f5c580076c33340a9b36a0cf&dispatch=9ee0e7d28bd85545260aab889bbc90222b676f42",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999996777541974
+    },
+    {
+      "url": "http://084839152018418813072328-0140422251546948553796820.glitch.me/bpjixslbuqaelcunyyvfxqxoyukgqwla-tnnczjtkfjlbqfusvnwwxvuctbqmtptn-tntcnxljdfdihqaolvbazajsssbeghbi-vwdijpgnbijphytbcbrqwpnsexvwijst-crhzqpismrozrfmhsocehekrxabhtcdo.html?$web_only=true&amp;_branch_match_id=991872213595728177&amp;utm_medium=marketing&amp;_branch_referrer=h4siaaaaaaaaa8sokskottlxt7a0nzswndyxmte1ntuwnjq1tzttsywo0mvjzmvwt9uvsooqnynotm7itgiahuprxdmaaaa=",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999969735816515
+    },
+    {
+      "url": "http://adobe-drgs.pages.dev/favicon.ico",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999706174313281
+    },
+    {
+      "url": "http://190.115.21.6/login.html",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999856212863754
+    },
+    {
+      "url": "http://190.115.21.53/login.html",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999923139364015
+    },
+    {
+      "url": "http://109.234.201.207/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999889597098635
+    },
+    {
+      "url": "http://allabouticmeler.com/ofnooohxxx/ofynoupdateandverifynowhxx.html",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999888158331264
+    },
+    {
+      "url": "http://8mt-online.webcindario.com/info/BoGa/4.php",
+      "prediction": "PHISHING",
+      "p_phishing": 0.999980809064298
+    },
+    {
+      "url": "http://analyticscenterbeta.pages.dev",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9857484116035333
+    },
+    {
+      "url": "http://683.pages.dev/macu%20(3)",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999965615022549
+    },
+    {
+      "url": "http://ad-account-guard-hub.pages.dev",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9995932798762532
+    },
+    {
+      "url": "http://0.feixue317p.cloudns.biz",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9998279325277716
+    },
+    {
+      "url": "http://aol381739237981.yolasite.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999880482420087
+    },
+    {
+      "url": "http://0099extuyafeliciades092.c1.biz",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9997873982089802
+    },
+    {
+      "url": "http://178.128.172.20/?id=1f0d4d289a98e65f871060295ddfb3681R8378RR6326R2BR8B23RB237R723GRY2V3R8238R283YR1hgfhdfhgdhfgdhRT2387TR823TR87T2837TR8273R23R2Y3R2yttdtefdtetdfte87T2387RT87T378RT273R823RB23R7237R237R11f0d4d289a98e65f871060295ddfb3687387R873TR87378RG34RY3G4834GT348TG58TG85G6T36T23TR1dfndbfndbdnfbdnR3RY2Y3YR723R7G58737T753TU5GT9374GR723GRG23R862F36RF23R23R823R23",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999993076934836
+    },
+    {
+      "url": "http://246401010845776865578536310213226167.hanefra7bikiemta.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999973718017822
+    },
+    {
+      "url": "http://2515841lesliealgaropackcompleto.filesusr.com/html/8a3035_6e0cf564bd0282bacdf3f29d46d65717.html?mjuxntg0mq==snapchat/d=sn&*bgvzbgllywxaz21hawwuy29t*https:/href.li/=",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999982580423252
+    },
+    {
+      "url": "http://177559.com/index.php",
+      "prediction": "PHISHING",
+      "p_phishing": 0.999946069489454
+    },
+    {
+      "url": "http://8ujoo-4.pages.dev/haul/store?ref_=nav_cs_hul_disb",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999997474413095
+    },
+    {
+      "url": "http://4399.939578594-661.workers.dev",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999833358833352
+    },
+    {
+      "url": "http://account-verification-id3.appspot.com/j3bwlc/rs0mta?pp=11",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999935633006419
+    },
+    {
+      "url": "http://alphagympark.com/contents/service/bankofamerica/dcccf857/overviewshn.php?cmd=_account-details&session=6f7c9c1b3428a49fa7832092795d2fb0&dispatch=95cbfbba81367db2037feffe3be6253384f783f9",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999991281181754
+    },
+    {
+      "url": "http://agarammilk.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9974602428710732
+    },
+    {
+      "url": "http://ahinsashoes.cz/css/scure/BOfA/BOfA/BOfA/Validation",
+      "prediction": "PHISHING",
+      "p_phishing": 0.999999428494694
+    },
+    {
+      "url": "http://9955333.cc",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9997872498037752
+    },
+    {
+      "url": "http://4beach.pt",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9967395532277789
+    },
+    {
+      "url": "http://43.134.178.58/ServiceLogin",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999952534336329
+    },
+    {
+      "url": "http://365b04.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9990025846331109
+    },
+    {
+      "url": "http://43.159.37.67/v3/signin/identifier?dsh=S-939328393:1680350431039174&followup=https://accounts.google.com/?&ifkv=AQMjQ7SYq0xKP_l_Nhc5pro7evBhOBB-g9wn1LG7nozgEkBVL5bXORiSqFuF2Es-PujnpAtMBENtiQ&passive=1209600&xrealip=35.203.245.120&continue=https://accounts.google.com/?&xrealip=34.198.46.118&flowName=WebLiteSignIn&flowEntry=ServiceLogin&ifkv=AQMjQ7R0gJWGcQENN5Coxo4zkq0cAYm3QV_aOwuqAmeX0huJicuKIwjWzZcak3erPGs_RZ3_fR-4",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999997682582704
+    },
+    {
+      "url": "http://1b14cfad-0956-4209-a1fa-5667e582d652.htmlcomponentservice.com/get_draft?id=96c871_39d1eee16c26eff7fabe1ba646529cb6.html",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999977371364133
+    },
+    {
+      "url": "http://a0639364.xsph.ru/validar-identidad.html",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999998362627455
+    },
+    {
+      "url": "https://html-preview.github.io/?url=https://github.com/marshedsky/facebook.io/blob/main/index.html",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999990456822624
+    },
+    {
+      "url": "http://2541256325875454vr25415563.filesusr.com/html/334398_5a1730ed1c5e186978715100362167af.html?*cgvsb25tzwxvbjeym0bnbwfpbc5jb20=*https:/www.facebook.com/profile.php?id=100081147955135**facebook+latino",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999990288879201
+    },
+    {
+      "url": "http://587f9289-623b-46d9-b950-20b476dbfaff.usrfiles.com/html/1411d2_20babe85331bcec3acca549e98d5c9f6.html",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999977371364133
+    },
+    {
+      "url": "https://start--legorcom.teachable.com/p/home",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9996685979280404
+    },
+    {
+      "url": "http://1gxutkvi4wdc0u.qwo231sdx.club",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999941313601
+    },
+    {
+      "url": "https://llmood.lv/M3I0MjVEN282MDRZNjU=",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999939342062854
+    },
+    {
+      "url": "http://365xxf.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9918283524647241
+    }
+  ]
+}

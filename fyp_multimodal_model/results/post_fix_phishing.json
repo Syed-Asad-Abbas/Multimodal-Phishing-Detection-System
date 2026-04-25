@@ -1,0 +1,2028 @@
+[
+  {
+    "url": "http://allegrolokalnie.pl-oferta73419590.icu",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.540916953286447e-05,
+    "modality_scores": {
+      "url": 3.5081795227160624e-06,
+      "dom": null,
+      "visual": null
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "N/A",
+      "visual": "N/A"
+    },
+    "modality_confidence": {
+      "url": -0.9999929836409546,
+      "dom": null,
+      "visual": null
+    },
+    "modality_available": {
+      "url": true,
+      "dom": false,
+      "visual": false
+    },
+    "page_info": {
+      "fetch_success": false,
+      "page_title": null,
+      "final_url": "http://allegrolokalnie.pl-oferta73419590.icu",
+      "screenshot_path": null
+    },
+    "dom_features": {},
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -13.320328315070405,
+        "URLCharProb": 1.9123395932356928,
+        "TLDLegitimateProb": 1.0258748887589437,
+        "DomainLength": -0.8153335542865555,
+        "URLLength": 0.45242107352873934
+      },
+      "fusion_contribution": {
+        "url": 0.687090945730586,
+        "dom": 0.31290905426941396,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 59.09090909090909,
+          "shap_impact": -13.320328315070405,
+          "abs_impact": 13.320328315070405
+        },
+        {
+          "feature": "URLCharProb",
+          "value": 0.15,
+          "shap_impact": 1.9123395932356928,
+          "abs_impact": 1.9123395932356928
+        },
+        {
+          "feature": "TLDLegitimateProb",
+          "value": 0.0,
+          "shap_impact": 1.0258748887589437,
+          "abs_impact": 1.0258748887589437
+        },
+        {
+          "feature": "DomainLength",
+          "value": 37.0,
+          "shap_impact": -0.8153335542865555,
+          "abs_impact": 0.8153335542865555
+        },
+        {
+          "feature": "URLLength",
+          "value": 44.0,
+          "shap_impact": 0.45242107352873934,
+          "abs_impact": 0.45242107352873934
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.414191462764284,
+          "dom": -3.8319187720568824,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.687090945730586,
+          "dom": 0.31290905426941396,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": null,
+      "geo": null
+    }
+  },
+  {
+    "url": "http://allegro.pl-oferta73419590.icu",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.540916953286447e-05,
+    "modality_scores": {
+      "url": 3.157991375280953e-06,
+      "dom": null,
+      "visual": null
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "N/A",
+      "visual": "N/A"
+    },
+    "modality_confidence": {
+      "url": -0.9999936840172494,
+      "dom": null,
+      "visual": null
+    },
+    "modality_available": {
+      "url": true,
+      "dom": false,
+      "visual": false
+    },
+    "page_info": {
+      "fetch_success": false,
+      "page_title": null,
+      "final_url": "http://allegro.pl-oferta73419590.icu",
+      "screenshot_path": null
+    },
+    "dom_features": {},
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -13.238765151534269,
+        "URLCharProb": 1.8608593416719328,
+        "DomainLength": -1.4857083144103087,
+        "URLLength": 1.1175203058664636,
+        "TLDLegitimateProb": 0.9502662325365345
+      },
+      "fusion_contribution": {
+        "url": 0.687090945730586,
+        "dom": 0.31290905426941396,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 66.66666666666666,
+          "shap_impact": -13.238765151534269,
+          "abs_impact": 13.238765151534269
+        },
+        {
+          "feature": "URLCharProb",
+          "value": 0.15,
+          "shap_impact": 1.8608593416719328,
+          "abs_impact": 1.8608593416719328
+        },
+        {
+          "feature": "DomainLength",
+          "value": 29.0,
+          "shap_impact": -1.4857083144103087,
+          "abs_impact": 1.4857083144103087
+        },
+        {
+          "feature": "URLLength",
+          "value": 36.0,
+          "shap_impact": 1.1175203058664636,
+          "abs_impact": 1.1175203058664636
+        },
+        {
+          "feature": "TLDLegitimateProb",
+          "value": 0.0,
+          "shap_impact": 0.9502662325365345,
+          "abs_impact": 0.9502662325365345
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.414191462764284,
+          "dom": -3.8319187720568824,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.687090945730586,
+          "dom": 0.31290905426941396,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": null,
+      "geo": null
+    }
+  },
+  {
+    "url": "https://zanilo.cfd/indexco.jp",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.5409169532863568e-05,
+    "modality_scores": {
+      "url": 1.3234282631404245e-07,
+      "dom": null,
+      "visual": null
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "N/A",
+      "visual": "N/A"
+    },
+    "modality_confidence": {
+      "url": -0.9999997353143474,
+      "dom": null,
+      "visual": null
+    },
+    "modality_available": {
+      "url": true,
+      "dom": false,
+      "visual": false
+    },
+    "page_info": {
+      "fetch_success": false,
+      "page_title": null,
+      "final_url": "https://zanilo.cfd/indexco.jp",
+      "screenshot_path": null
+    },
+    "dom_features": {},
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -10.46681974498904,
+        "NoOfSubDomain": -5.7329555030871475,
+        "URLCharProb": 1.3468922322350654,
+        "TLDLegitimateProb": 0.7472168965952621,
+        "CharContinuationRate": 0.3525532941428454
+      },
+      "fusion_contribution": {
+        "url": 0.6870909457305869,
+        "dom": 0.31290905426941307,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 65.51724137931035,
+          "shap_impact": -10.46681974498904,
+          "abs_impact": 10.46681974498904
+        },
+        {
+          "feature": "NoOfSubDomain",
+          "value": 0.0,
+          "shap_impact": -5.7329555030871475,
+          "abs_impact": 5.7329555030871475
+        },
+        {
+          "feature": "URLCharProb",
+          "value": 0.15,
+          "shap_impact": 1.3468922322350654,
+          "abs_impact": 1.3468922322350654
+        },
+        {
+          "feature": "TLDLegitimateProb",
+          "value": 0.0,
+          "shap_impact": 0.7472168965952621,
+          "abs_impact": 0.7472168965952621
+        },
+        {
+          "feature": "CharContinuationRate",
+          "value": 0.06896551724137931,
+          "shap_impact": 0.3525532941428454,
+          "abs_impact": 0.3525532941428454
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.414191462764322,
+          "dom": -3.8319187720568837,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.6870909457305869,
+          "dom": 0.31290905426941307,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": null,
+      "geo": null
+    }
+  },
+  {
+    "url": "https://deliva.cfd/indexco.jp",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.5409169532863568e-05,
+    "modality_scores": {
+      "url": 1.3234282631404245e-07,
+      "dom": null,
+      "visual": null
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "N/A",
+      "visual": "N/A"
+    },
+    "modality_confidence": {
+      "url": -0.9999997353143474,
+      "dom": null,
+      "visual": null
+    },
+    "modality_available": {
+      "url": true,
+      "dom": false,
+      "visual": false
+    },
+    "page_info": {
+      "fetch_success": false,
+      "page_title": null,
+      "final_url": "https://deliva.cfd/indexco.jp",
+      "screenshot_path": null
+    },
+    "dom_features": {},
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -10.46681974498904,
+        "NoOfSubDomain": -5.7329555030871475,
+        "URLCharProb": 1.3468922322350654,
+        "TLDLegitimateProb": 0.7472168965952621,
+        "CharContinuationRate": 0.3525532941428454
+      },
+      "fusion_contribution": {
+        "url": 0.6870909457305869,
+        "dom": 0.31290905426941307,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 65.51724137931035,
+          "shap_impact": -10.46681974498904,
+          "abs_impact": 10.46681974498904
+        },
+        {
+          "feature": "NoOfSubDomain",
+          "value": 0.0,
+          "shap_impact": -5.7329555030871475,
+          "abs_impact": 5.7329555030871475
+        },
+        {
+          "feature": "URLCharProb",
+          "value": 0.15,
+          "shap_impact": 1.3468922322350654,
+          "abs_impact": 1.3468922322350654
+        },
+        {
+          "feature": "TLDLegitimateProb",
+          "value": 0.0,
+          "shap_impact": 0.7472168965952621,
+          "abs_impact": 0.7472168965952621
+        },
+        {
+          "feature": "CharContinuationRate",
+          "value": 0.06896551724137931,
+          "shap_impact": 0.3525532941428454,
+          "abs_impact": 0.3525532941428454
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.414191462764322,
+          "dom": -3.8319187720568837,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.6870909457305869,
+          "dom": 0.31290905426941307,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": null,
+      "geo": null
+    }
+  },
+  {
+    "url": "https://bpp01-6816a2c8dbc1.herokuapp.com/",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.5409169532863568e-05,
+    "modality_scores": {
+      "url": 2.0022910726560765e-07,
+      "dom": null,
+      "visual": null
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "N/A",
+      "visual": "N/A"
+    },
+    "modality_confidence": {
+      "url": -0.9999995995417855,
+      "dom": null,
+      "visual": null
+    },
+    "modality_available": {
+      "url": true,
+      "dom": false,
+      "visual": false
+    },
+    "page_info": {
+      "fetch_success": false,
+      "page_title": null,
+      "final_url": "https://bpp01-6816a2c8dbc1.herokuapp.com/",
+      "screenshot_path": null
+    },
+    "dom_features": {},
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -12.876112329465837,
+        "DomainLength": -1.6523540236973624,
+        "URLLength": 0.9245211097316106,
+        "NoOfSubDomain": 0.12181915104485883,
+        "CharContinuationRate": 0.08382051055384952
+      },
+      "fusion_contribution": {
+        "url": 0.687090945730587,
+        "dom": 0.31290905426941307,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 56.09756097560976,
+          "shap_impact": -12.876112329465837,
+          "abs_impact": 12.876112329465837
+        },
+        {
+          "feature": "DomainLength",
+          "value": 32.0,
+          "shap_impact": -1.6523540236973624,
+          "abs_impact": 1.6523540236973624
+        },
+        {
+          "feature": "URLLength",
+          "value": 41.0,
+          "shap_impact": 0.9245211097316106,
+          "abs_impact": 0.9245211097316106
+        },
+        {
+          "feature": "NoOfSubDomain",
+          "value": 1.0,
+          "shap_impact": 0.12181915104485883,
+          "abs_impact": 0.12181915104485883
+        },
+        {
+          "feature": "CharContinuationRate",
+          "value": 0.04878048780487805,
+          "shap_impact": 0.08382051055384952,
+          "abs_impact": 0.08382051055384952
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.414191462764324,
+          "dom": -3.8319187720568832,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.687090945730587,
+          "dom": 0.31290905426941307,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": "54.235.77.118",
+      "geo": {
+        "country": "United States",
+        "lat": 39.0438,
+        "long": -77.4874
+      }
+    }
+  },
+  {
+    "url": "https://beneficios-banproduccion2-five.vercel.app/...",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.5409169532863568e-05,
+    "modality_scores": {
+      "url": 1.6864993065610339e-07,
+      "dom": null,
+      "visual": null
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "N/A",
+      "visual": "N/A"
+    },
+    "modality_confidence": {
+      "url": -0.9999996627001387,
+      "dom": null,
+      "visual": null
+    },
+    "modality_available": {
+      "url": true,
+      "dom": false,
+      "visual": false
+    },
+    "page_info": {
+      "fetch_success": false,
+      "page_title": null,
+      "final_url": "https://beneficios-banproduccion2-five.vercel.app/...",
+      "screenshot_path": null
+    },
+    "dom_features": {},
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -12.994267416207919,
+        "DomainLength": -2.3728962306263215,
+        "URLLength": 1.4180341346214207,
+        "URLCharProb": 0.16508532416923458,
+        "CharContinuationRate": 0.15271171335477352
+      },
+      "fusion_contribution": {
+        "url": 0.6870909457305869,
+        "dom": 0.31290905426941307,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 41.509433962264154,
+          "shap_impact": -12.994267416207919,
+          "abs_impact": 12.994267416207919
+        },
+        {
+          "feature": "DomainLength",
+          "value": 41.0,
+          "shap_impact": -2.3728962306263215,
+          "abs_impact": 2.3728962306263215
+        },
+        {
+          "feature": "URLLength",
+          "value": 53.0,
+          "shap_impact": 1.4180341346214207,
+          "abs_impact": 1.4180341346214207
+        },
+        {
+          "feature": "URLCharProb",
+          "value": 0.01,
+          "shap_impact": 0.16508532416923458,
+          "abs_impact": 0.16508532416923458
+        },
+        {
+          "feature": "CharContinuationRate",
+          "value": 0.05660377358490566,
+          "shap_impact": 0.15271171335477352,
+          "abs_impact": 0.15271171335477352
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.414191462764322,
+          "dom": -3.8319187720568832,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.6870909457305869,
+          "dom": 0.31290905426941307,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": "216.198.79.195",
+      "geo": {
+        "country": "United States",
+        "lat": 34.0119,
+        "long": -117.86
+      }
+    }
+  },
+  {
+    "url": "https://netempresa.sac-on.com/sicronizar/8VY0JG5G...",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.5409169532863615e-05,
+    "modality_scores": {
+      "url": 2.6848351521260503e-07,
+      "dom": null,
+      "visual": null
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "N/A",
+      "visual": "N/A"
+    },
+    "modality_confidence": {
+      "url": -0.9999994630329696,
+      "dom": null,
+      "visual": null
+    },
+    "modality_available": {
+      "url": true,
+      "dom": false,
+      "visual": false
+    },
+    "page_info": {
+      "fetch_success": false,
+      "page_title": null,
+      "final_url": "https://netempresa.sac-on.com/sicronizar/8VY0JG5G...",
+      "screenshot_path": null
+    },
+    "dom_features": {},
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -13.63470567227391,
+        "URLLength": 1.4619791341190598,
+        "DomainLength": -1.1656118864336926,
+        "URLCharProb": 0.1696687541077187,
+        "NoOfSubDomain": 0.12019623949163143
+      },
+      "fusion_contribution": {
+        "url": 0.687090945730587,
+        "dom": 0.31290905426941307,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 46.15384615384615,
+          "shap_impact": -13.63470567227391,
+          "abs_impact": 13.63470567227391
+        },
+        {
+          "feature": "URLLength",
+          "value": 52.0,
+          "shap_impact": 1.4619791341190598,
+          "abs_impact": 1.4619791341190598
+        },
+        {
+          "feature": "DomainLength",
+          "value": 21.0,
+          "shap_impact": -1.1656118864336926,
+          "abs_impact": 1.1656118864336926
+        },
+        {
+          "feature": "URLCharProb",
+          "value": 0.01,
+          "shap_impact": 0.1696687541077187,
+          "abs_impact": 0.1696687541077187
+        },
+        {
+          "feature": "NoOfSubDomain",
+          "value": 1.0,
+          "shap_impact": 0.12019623949163143,
+          "abs_impact": 0.12019623949163143
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.414191462764324,
+          "dom": -3.8319187720568832,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.687090945730587,
+          "dom": 0.31290905426941307,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": null,
+      "geo": null
+    }
+  },
+  {
+    "url": "http://allegrolokalnie.pl-oferta98137359.sbs",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.540916953286447e-05,
+    "modality_scores": {
+      "url": 3.53036760020081e-06,
+      "dom": null,
+      "visual": null
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "N/A",
+      "visual": "N/A"
+    },
+    "modality_confidence": {
+      "url": -0.9999929392647996,
+      "dom": null,
+      "visual": null
+    },
+    "modality_available": {
+      "url": true,
+      "dom": false,
+      "visual": false
+    },
+    "page_info": {
+      "fetch_success": false,
+      "page_title": null,
+      "final_url": "http://allegrolokalnie.pl-oferta98137359.sbs",
+      "screenshot_path": null
+    },
+    "dom_features": {},
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -13.310514038047023,
+        "URLCharProb": 1.9129014611026287,
+        "TLDLegitimateProb": 1.0251967652895746,
+        "DomainLength": -0.8152146658232354,
+        "URLLength": 0.4523190056507837
+      },
+      "fusion_contribution": {
+        "url": 0.687090945730586,
+        "dom": 0.31290905426941396,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 56.81818181818182,
+          "shap_impact": -13.310514038047023,
+          "abs_impact": 13.310514038047023
+        },
+        {
+          "feature": "URLCharProb",
+          "value": 0.15,
+          "shap_impact": 1.9129014611026287,
+          "abs_impact": 1.9129014611026287
+        },
+        {
+          "feature": "TLDLegitimateProb",
+          "value": 0.0,
+          "shap_impact": 1.0251967652895746,
+          "abs_impact": 1.0251967652895746
+        },
+        {
+          "feature": "DomainLength",
+          "value": 37.0,
+          "shap_impact": -0.8152146658232354,
+          "abs_impact": 0.8152146658232354
+        },
+        {
+          "feature": "URLLength",
+          "value": 44.0,
+          "shap_impact": 0.4523190056507837,
+          "abs_impact": 0.4523190056507837
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.414191462764284,
+          "dom": -3.8319187720568824,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.687090945730586,
+          "dom": 0.31290905426941396,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": null,
+      "geo": null
+    }
+  },
+  {
+    "url": "https://abszfgrtr65.blogspot.com",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.5409169532863568e-05,
+    "modality_scores": {
+      "url": 2.2203227107765475e-07,
+      "dom": null,
+      "visual": null
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "N/A",
+      "visual": "N/A"
+    },
+    "modality_confidence": {
+      "url": -0.9999995559354579,
+      "dom": null,
+      "visual": null
+    },
+    "modality_available": {
+      "url": true,
+      "dom": false,
+      "visual": false
+    },
+    "page_info": {
+      "fetch_success": false,
+      "page_title": null,
+      "final_url": "https://abszfgrtr65.blogspot.com",
+      "screenshot_path": null
+    },
+    "dom_features": {},
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -13.081371398958069,
+        "DomainLength": -0.9573952963953004,
+        "URLLength": 0.7613498988431672,
+        "NoOfSubDomain": 0.12596101513912178,
+        "TLDLegitimateProb": -0.0813301412276093
+      },
+      "fusion_contribution": {
+        "url": 0.687090945730587,
+        "dom": 0.31290905426941307,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 59.375,
+          "shap_impact": -13.081371398958069,
+          "abs_impact": 13.081371398958069
+        },
+        {
+          "feature": "DomainLength",
+          "value": 24.0,
+          "shap_impact": -0.9573952963953004,
+          "abs_impact": 0.9573952963953004
+        },
+        {
+          "feature": "URLLength",
+          "value": 32.0,
+          "shap_impact": 0.7613498988431672,
+          "abs_impact": 0.7613498988431672
+        },
+        {
+          "feature": "NoOfSubDomain",
+          "value": 1.0,
+          "shap_impact": 0.12596101513912178,
+          "abs_impact": 0.12596101513912178
+        },
+        {
+          "feature": "TLDLegitimateProb",
+          "value": 0.52,
+          "shap_impact": -0.0813301412276093,
+          "abs_impact": 0.0813301412276093
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.414191462764324,
+          "dom": -3.8319187720568832,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.687090945730587,
+          "dom": 0.31290905426941307,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": "142.250.202.129",
+      "geo": {
+        "country": "United States",
+        "lat": 37.4225,
+        "long": -122.085
+      }
+    }
+  },
+  {
+    "url": "http://allegrolokalnie.oferta212472.sbs",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.540916953286447e-05,
+    "modality_scores": {
+      "url": 3.855939942059876e-06,
+      "dom": null,
+      "visual": null
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "N/A",
+      "visual": "N/A"
+    },
+    "modality_confidence": {
+      "url": -0.9999922881201159,
+      "dom": null,
+      "visual": null
+    },
+    "modality_available": {
+      "url": true,
+      "dom": false,
+      "visual": false
+    },
+    "page_info": {
+      "fetch_success": false,
+      "page_title": null,
+      "final_url": "http://allegrolokalnie.oferta212472.sbs",
+      "screenshot_path": null
+    },
+    "dom_features": {},
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -13.382122173757713,
+        "URLCharProb": 1.9265101230768085,
+        "DomainLength": -1.5130567637516,
+        "URLLength": 1.3719281248006066,
+        "TLDLegitimateProb": 1.040859402125246
+      },
+      "fusion_contribution": {
+        "url": 0.687090945730586,
+        "dom": 0.31290905426941396,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 56.41025641025641,
+          "shap_impact": -13.382122173757713,
+          "abs_impact": 13.382122173757713
+        },
+        {
+          "feature": "URLCharProb",
+          "value": 0.15,
+          "shap_impact": 1.9265101230768085,
+          "abs_impact": 1.9265101230768085
+        },
+        {
+          "feature": "DomainLength",
+          "value": 32.0,
+          "shap_impact": -1.5130567637516,
+          "abs_impact": 1.5130567637516
+        },
+        {
+          "feature": "URLLength",
+          "value": 39.0,
+          "shap_impact": 1.3719281248006066,
+          "abs_impact": 1.3719281248006066
+        },
+        {
+          "feature": "TLDLegitimateProb",
+          "value": 0.0,
+          "shap_impact": 1.040859402125246,
+          "abs_impact": 1.040859402125246
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.414191462764284,
+          "dom": -3.8319187720568824,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.687090945730586,
+          "dom": 0.31290905426941396,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": null,
+      "geo": null
+    }
+  },
+  {
+    "url": "http://allegro.pl-oferta955294390.icu",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.540916953286447e-05,
+    "modality_scores": {
+      "url": 3.1918347328095283e-06,
+      "dom": null,
+      "visual": null
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "N/A",
+      "visual": "N/A"
+    },
+    "modality_confidence": {
+      "url": -0.9999936163305344,
+      "dom": null,
+      "visual": null
+    },
+    "modality_available": {
+      "url": true,
+      "dom": false,
+      "visual": false
+    },
+    "page_info": {
+      "fetch_success": false,
+      "page_title": null,
+      "final_url": "http://allegro.pl-oferta955294390.icu",
+      "screenshot_path": null
+    },
+    "dom_features": {},
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -13.273096029522316,
+        "URLCharProb": 1.8467455223298395,
+        "DomainLength": -1.4201899518202932,
+        "URLLength": 1.161851975694255,
+        "TLDLegitimateProb": 0.9690867047799024
+      },
+      "fusion_contribution": {
+        "url": 0.687090945730586,
+        "dom": 0.31290905426941396,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 62.16216216216216,
+          "shap_impact": -13.273096029522316,
+          "abs_impact": 13.273096029522316
+        },
+        {
+          "feature": "URLCharProb",
+          "value": 0.15,
+          "shap_impact": 1.8467455223298395,
+          "abs_impact": 1.8467455223298395
+        },
+        {
+          "feature": "DomainLength",
+          "value": 30.0,
+          "shap_impact": -1.4201899518202932,
+          "abs_impact": 1.4201899518202932
+        },
+        {
+          "feature": "URLLength",
+          "value": 37.0,
+          "shap_impact": 1.161851975694255,
+          "abs_impact": 1.161851975694255
+        },
+        {
+          "feature": "TLDLegitimateProb",
+          "value": 0.0,
+          "shap_impact": 0.9690867047799024,
+          "abs_impact": 0.9690867047799024
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.414191462764284,
+          "dom": -3.8319187720568824,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.687090945730586,
+          "dom": 0.31290905426941396,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": null,
+      "geo": null
+    }
+  },
+  {
+    "url": "https://serbasi1.blogspot.com",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.5409169532863568e-05,
+    "modality_scores": {
+      "url": 3.0919463337866467e-08,
+      "dom": 0.6919644291999378,
+      "visual": 0.5959169268608093
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "PHISHING",
+      "visual": "PHISHING"
+    },
+    "modality_confidence": {
+      "url": -0.9999999381610734,
+      "dom": 0.38392885839987567,
+      "visual": 0.19183385372161865
+    },
+    "modality_available": {
+      "url": true,
+      "dom": true,
+      "visual": true
+    },
+    "page_info": {
+      "fetch_success": true,
+      "page_title": "byflowersg.com",
+      "final_url": "https://byflowersg.com/opt",
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777015357339.png"
+    },
+    "dom_features": {
+      "HasForm": 0,
+      "NoOfForm": 0,
+      "HasPasswordField": 0,
+      "NoOfHiddenInputs": 0,
+      "NoOfImage": 2,
+      "NoOfExternalImage": 0,
+      "NoOfJS": 2,
+      "NoOfExternalJS": 0,
+      "NoOfLinks": 1,
+      "NoOfExternalLinks": 0,
+      "HasIframe": 0,
+      "NoOfIframe": 0,
+      "SuspiciousFormAction": 0,
+      "Bank": 0,
+      "Pay": 0,
+      "Crypto": 0
+    },
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -12.913790352544298,
+        "DomainLength": -0.7804565694981365,
+        "URLLength": 0.49653806246844406,
+        "NoOfSubDomain": 0.11995147624973873,
+        "TLDLegitimateProb": -0.11775183133588228
+      },
+      "fusion_contribution": {
+        "url": 0.9586521813710409,
+        "dom": 0.04134781862895919,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 62.06896551724138,
+          "shap_impact": -12.913790352544298,
+          "abs_impact": 12.913790352544298
+        },
+        {
+          "feature": "DomainLength",
+          "value": 21.0,
+          "shap_impact": -0.7804565694981365,
+          "abs_impact": 0.7804565694981365
+        },
+        {
+          "feature": "URLLength",
+          "value": 29.0,
+          "shap_impact": 0.49653806246844406,
+          "abs_impact": 0.49653806246844406
+        },
+        {
+          "feature": "NoOfSubDomain",
+          "value": 1.0,
+          "shap_impact": 0.11995147624973873,
+          "abs_impact": 0.11995147624973873
+        },
+        {
+          "feature": "TLDLegitimateProb",
+          "value": 0.52,
+          "shap_impact": -0.11775183133588228,
+          "abs_impact": 0.11775183133588228
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -11.739760289921572,
+          "dom": -0.5063499448996278,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.9586521813710409,
+          "dom": 0.04134781862895919,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": "142.250.202.129",
+      "geo": {
+        "country": "United States",
+        "lat": 37.4225,
+        "long": -122.085
+      }
+    }
+  },
+  {
+    "url": "https://app.biamilhasofertas.live/inicio",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.540916953286447e-05,
+    "modality_scores": {
+      "url": 5.060946903222133e-06,
+      "dom": null,
+      "visual": null
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "N/A",
+      "visual": "N/A"
+    },
+    "modality_confidence": {
+      "url": -0.9999898781061936,
+      "dom": null,
+      "visual": null
+    },
+    "modality_available": {
+      "url": true,
+      "dom": false,
+      "visual": false
+    },
+    "page_info": {
+      "fetch_success": false,
+      "page_title": null,
+      "final_url": "https://app.biamilhasofertas.live/inicio",
+      "screenshot_path": null
+    },
+    "dom_features": {},
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -13.371145739083278,
+        "URLCharProb": 2.0398689633348037,
+        "DomainLength": -1.6109915955212655,
+        "URLLength": 1.5040340673446309,
+        "TLDLegitimateProb": 0.9861201579403993
+      },
+      "fusion_contribution": {
+        "url": 0.687090945730586,
+        "dom": 0.31290905426941396,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 47.5,
+          "shap_impact": -13.371145739083278,
+          "abs_impact": 13.371145739083278
+        },
+        {
+          "feature": "URLCharProb",
+          "value": 0.15,
+          "shap_impact": 2.0398689633348037,
+          "abs_impact": 2.0398689633348037
+        },
+        {
+          "feature": "DomainLength",
+          "value": 25.0,
+          "shap_impact": -1.6109915955212655,
+          "abs_impact": 1.6109915955212655
+        },
+        {
+          "feature": "URLLength",
+          "value": 40.0,
+          "shap_impact": 1.5040340673446309,
+          "abs_impact": 1.5040340673446309
+        },
+        {
+          "feature": "TLDLegitimateProb",
+          "value": 0.0,
+          "shap_impact": 0.9861201579403993,
+          "abs_impact": 0.9861201579403993
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.414191462764284,
+          "dom": -3.8319187720568824,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.687090945730586,
+          "dom": 0.31290905426941396,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": "34.76.205.124",
+      "geo": {
+        "country": "Belgium",
+        "lat": 50.9009,
+        "long": 4.4855
+      }
+    }
+  },
+  {
+    "url": "http://allegro.pl-3255111.cyou",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.540916953286447e-05,
+    "modality_scores": {
+      "url": 2.2259224820958652e-06,
+      "dom": null,
+      "visual": null
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "N/A",
+      "visual": "N/A"
+    },
+    "modality_confidence": {
+      "url": -0.9999955481550358,
+      "dom": null,
+      "visual": null
+    },
+    "modality_available": {
+      "url": true,
+      "dom": false,
+      "visual": false
+    },
+    "page_info": {
+      "fetch_success": false,
+      "page_title": null,
+      "final_url": "http://allegro.pl-3255111.cyou",
+      "screenshot_path": null
+    },
+    "dom_features": {},
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -13.210535017634895,
+        "URLCharProb": 1.464993071867426,
+        "DomainLength": -0.9255268777771767,
+        "TLDLegitimateProb": 0.899419333080408,
+        "URLLength": 0.41152150240078106
+      },
+      "fusion_contribution": {
+        "url": 0.687090945730586,
+        "dom": 0.31290905426941396,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 66.66666666666666,
+          "shap_impact": -13.210535017634895,
+          "abs_impact": 13.210535017634895
+        },
+        {
+          "feature": "URLCharProb",
+          "value": 0.15,
+          "shap_impact": 1.464993071867426,
+          "abs_impact": 1.464993071867426
+        },
+        {
+          "feature": "DomainLength",
+          "value": 23.0,
+          "shap_impact": -0.9255268777771767,
+          "abs_impact": 0.9255268777771767
+        },
+        {
+          "feature": "TLDLegitimateProb",
+          "value": 0.0,
+          "shap_impact": 0.899419333080408,
+          "abs_impact": 0.899419333080408
+        },
+        {
+          "feature": "URLLength",
+          "value": 30.0,
+          "shap_impact": 0.41152150240078106,
+          "abs_impact": 0.41152150240078106
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.414191462764284,
+          "dom": -3.8319187720568824,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.687090945730586,
+          "dom": 0.31290905426941396,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": null,
+      "geo": null
+    }
+  },
+  {
+    "url": "https://app.promoexata.live/splash",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.540916953286447e-05,
+    "modality_scores": {
+      "url": 3.6382807189076383e-06,
+      "dom": null,
+      "visual": null
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "N/A",
+      "visual": "N/A"
+    },
+    "modality_confidence": {
+      "url": -0.9999927234385622,
+      "dom": null,
+      "visual": null
+    },
+    "modality_available": {
+      "url": true,
+      "dom": false,
+      "visual": false
+    },
+    "page_info": {
+      "fetch_success": false,
+      "page_title": null,
+      "final_url": "https://app.promoexata.live/splash",
+      "screenshot_path": null
+    },
+    "dom_features": {},
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -13.692633174931647,
+        "URLCharProb": 1.7267502402492703,
+        "URLLength": 1.2942738973425125,
+        "TLDLegitimateProb": 0.839919289430353,
+        "DomainLength": -0.8263001646119618
+      },
+      "fusion_contribution": {
+        "url": 0.687090945730586,
+        "dom": 0.31290905426941396,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 47.05882352941176,
+          "shap_impact": -13.692633174931647,
+          "abs_impact": 13.692633174931647
+        },
+        {
+          "feature": "URLCharProb",
+          "value": 0.15,
+          "shap_impact": 1.7267502402492703,
+          "abs_impact": 1.7267502402492703
+        },
+        {
+          "feature": "URLLength",
+          "value": 34.0,
+          "shap_impact": 1.2942738973425125,
+          "abs_impact": 1.2942738973425125
+        },
+        {
+          "feature": "TLDLegitimateProb",
+          "value": 0.0,
+          "shap_impact": 0.839919289430353,
+          "abs_impact": 0.839919289430353
+        },
+        {
+          "feature": "DomainLength",
+          "value": 19.0,
+          "shap_impact": -0.8263001646119618,
+          "abs_impact": 0.8263001646119618
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.414191462764284,
+          "dom": -3.8319187720568824,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.687090945730586,
+          "dom": 0.31290905426941396,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": "34.76.205.124",
+      "geo": {
+        "country": "Belgium",
+        "lat": 50.9009,
+        "long": 4.4855
+      }
+    }
+  },
+  {
+    "url": "https://app.biaatendimentoclube.live/baser",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.540916953286447e-05,
+    "modality_scores": {
+      "url": 3.5298251616592413e-06,
+      "dom": null,
+      "visual": null
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "N/A",
+      "visual": "N/A"
+    },
+    "modality_confidence": {
+      "url": -0.9999929403496767,
+      "dom": null,
+      "visual": null
+    },
+    "modality_available": {
+      "url": true,
+      "dom": false,
+      "visual": false
+    },
+    "page_info": {
+      "fetch_success": false,
+      "page_title": null,
+      "final_url": "https://app.biaatendimentoclube.live/baser",
+      "screenshot_path": null
+    },
+    "dom_features": {},
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -13.375143226633162,
+        "URLCharProb": 1.9507545046881192,
+        "DomainLength": -1.4984296189237767,
+        "URLLength": 1.2589847504353209,
+        "TLDLegitimateProb": 0.9587471462940835
+      },
+      "fusion_contribution": {
+        "url": 0.687090945730586,
+        "dom": 0.31290905426941396,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 47.61904761904761,
+          "shap_impact": -13.375143226633162,
+          "abs_impact": 13.375143226633162
+        },
+        {
+          "feature": "URLCharProb",
+          "value": 0.15,
+          "shap_impact": 1.9507545046881192,
+          "abs_impact": 1.9507545046881192
+        },
+        {
+          "feature": "DomainLength",
+          "value": 28.0,
+          "shap_impact": -1.4984296189237767,
+          "abs_impact": 1.4984296189237767
+        },
+        {
+          "feature": "URLLength",
+          "value": 42.0,
+          "shap_impact": 1.2589847504353209,
+          "abs_impact": 1.2589847504353209
+        },
+        {
+          "feature": "TLDLegitimateProb",
+          "value": 0.0,
+          "shap_impact": 0.9587471462940835,
+          "abs_impact": 0.9587471462940835
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.414191462764284,
+          "dom": -3.8319187720568824,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.687090945730586,
+          "dom": 0.31290905426941396,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": "34.76.205.124",
+      "geo": {
+        "country": "Belgium",
+        "lat": 50.9009,
+        "long": 4.4855
+      }
+    }
+  },
+  {
+    "url": "http://allegrolokalnie.pl-82725255162619876667a726252552526267pp271.ic...",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.5409169532863615e-05,
+    "modality_scores": {
+      "url": 4.196531577296678e-07,
+      "dom": null,
+      "visual": null
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "N/A",
+      "visual": "N/A"
+    },
+    "modality_confidence": {
+      "url": -0.9999991606936846,
+      "dom": null,
+      "visual": null
+    },
+    "modality_available": {
+      "url": true,
+      "dom": false,
+      "visual": false
+    },
+    "page_info": {
+      "fetch_success": false,
+      "page_title": null,
+      "final_url": "http://allegrolokalnie.pl-82725255162619876667a726252552526267pp271.ic...",
+      "screenshot_path": null
+    },
+    "dom_features": {},
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -13.191287680218187,
+        "DomainLength": -2.4774910622580437,
+        "URLLength": 1.4010601656198316,
+        "CharContinuationRate": 0.45951997579939474,
+        "NoOfSubDomain": 0.45799912870802967
+      },
+      "fusion_contribution": {
+        "url": 0.6870909457305869,
+        "dom": 0.31290905426941307,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 32.87671232876712,
+          "shap_impact": -13.191287680218187,
+          "abs_impact": 13.191287680218187
+        },
+        {
+          "feature": "DomainLength",
+          "value": 66.0,
+          "shap_impact": -2.4774910622580437,
+          "abs_impact": 2.4774910622580437
+        },
+        {
+          "feature": "URLLength",
+          "value": 73.0,
+          "shap_impact": 1.4010601656198316,
+          "abs_impact": 1.4010601656198316
+        },
+        {
+          "feature": "CharContinuationRate",
+          "value": 0.0410958904109589,
+          "shap_impact": 0.45951997579939474,
+          "abs_impact": 0.45951997579939474
+        },
+        {
+          "feature": "NoOfSubDomain",
+          "value": 4.0,
+          "shap_impact": 0.45799912870802967,
+          "abs_impact": 0.45799912870802967
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.414191462764322,
+          "dom": -3.8319187720568832,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.6870909457305869,
+          "dom": 0.31290905426941307,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": null,
+      "geo": null
+    }
+  },
+  {
+    "url": "https://maintain.antiquels.cn/mizuho",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.540916953286447e-05,
+    "modality_scores": {
+      "url": 4.152928266848125e-06,
+      "dom": null,
+      "visual": null
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "N/A",
+      "visual": "N/A"
+    },
+    "modality_confidence": {
+      "url": -0.9999916941434663,
+      "dom": null,
+      "visual": null
+    },
+    "modality_available": {
+      "url": true,
+      "dom": false,
+      "visual": false
+    },
+    "page_info": {
+      "fetch_success": false,
+      "page_title": null,
+      "final_url": "https://maintain.antiquels.cn/mizuho",
+      "screenshot_path": null
+    },
+    "dom_features": {},
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -13.528673803032454,
+        "URLCharProb": 1.756066848595539,
+        "URLLength": 1.2585513102383756,
+        "DomainLength": -1.1198707879219088,
+        "TLDLegitimateProb": 0.9178490729654735
+      },
+      "fusion_contribution": {
+        "url": 0.687090945730586,
+        "dom": 0.31290905426941396,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 50.0,
+          "shap_impact": -13.528673803032454,
+          "abs_impact": 13.528673803032454
+        },
+        {
+          "feature": "URLCharProb",
+          "value": 0.15,
+          "shap_impact": 1.756066848595539,
+          "abs_impact": 1.756066848595539
+        },
+        {
+          "feature": "URLLength",
+          "value": 36.0,
+          "shap_impact": 1.2585513102383756,
+          "abs_impact": 1.2585513102383756
+        },
+        {
+          "feature": "DomainLength",
+          "value": 21.0,
+          "shap_impact": -1.1198707879219088,
+          "abs_impact": 1.1198707879219088
+        },
+        {
+          "feature": "TLDLegitimateProb",
+          "value": 0.0,
+          "shap_impact": 0.9178490729654735,
+          "abs_impact": 0.9178490729654735
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.414191462764284,
+          "dom": -3.8319187720568824,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.687090945730586,
+          "dom": 0.31290905426941396,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": null,
+      "geo": null
+    }
+  },
+  {
+    "url": "https://scanned.page/55eUnV",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.5409169532863568e-05,
+    "modality_scores": {
+      "url": 3.101789876503939e-08,
+      "dom": 0.8302155826067528,
+      "visual": 0.12898607552051544
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "PHISHING",
+      "visual": "BENIGN"
+    },
+    "modality_confidence": {
+      "url": -0.9999999379642025,
+      "dom": 0.6604311652135055,
+      "visual": -0.7420278489589691
+    },
+    "modality_available": {
+      "url": true,
+      "dom": true,
+      "visual": true
+    },
+    "page_info": {
+      "fetch_success": true,
+      "page_title": "Scanned Page | No Data",
+      "final_url": "https://scanned.page/no-data",
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777015413553.png"
+    },
+    "dom_features": {
+      "HasForm": 0,
+      "NoOfForm": 0,
+      "HasPasswordField": 0,
+      "NoOfHiddenInputs": 0,
+      "NoOfImage": 1,
+      "NoOfExternalImage": 0,
+      "NoOfJS": 13,
+      "NoOfExternalJS": 1,
+      "NoOfLinks": 0,
+      "NoOfExternalLinks": 0,
+      "HasIframe": 0,
+      "NoOfIframe": 0,
+      "SuspiciousFormAction": 0,
+      "Bank": 0,
+      "Pay": 0,
+      "Crypto": 0
+    },
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -9.900568440725072,
+        "NoOfSubDomain": -5.3274796405579705,
+        "URLLength": -0.5368936444007091,
+        "CharContinuationRate": 0.24927092565961712,
+        "URLCharProb": 0.1923393276328804
+      },
+      "fusion_contribution": {
+        "url": 0.9590142485989678,
+        "dom": 0.04098575140103221,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 59.25925925925925,
+          "shap_impact": -9.900568440725072,
+          "abs_impact": 9.900568440725072
+        },
+        {
+          "feature": "NoOfSubDomain",
+          "value": 0.0,
+          "shap_impact": -5.3274796405579705,
+          "abs_impact": 5.3274796405579705
+        },
+        {
+          "feature": "URLLength",
+          "value": 27.0,
+          "shap_impact": -0.5368936444007091,
+          "abs_impact": 0.5368936444007091
+        },
+        {
+          "feature": "CharContinuationRate",
+          "value": 0.07407407407407407,
+          "shap_impact": 0.24927092565961712,
+          "abs_impact": 0.24927092565961712
+        },
+        {
+          "feature": "URLCharProb",
+          "value": 0.01,
+          "shap_impact": 0.1923393276328804,
+          "abs_impact": 0.1923393276328804
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -11.744194205107185,
+          "dom": -0.5019160297140179,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.9590142485989678,
+          "dom": 0.04098575140103221,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": "172.66.40.234",
+      "geo": {
+        "country": "Canada",
+        "lat": 43.6532,
+        "long": -79.3832
+      }
+    }
+  },
+  {
+    "url": "http://78382google.com",
+    "prediction": "BENIGN",
+    "confidence": 0.9999745908304671,
+    "fusion_probability_phishing": 2.5409169532863568e-05,
+    "modality_scores": {
+      "url": 3.060340656974307e-08,
+      "dom": null,
+      "visual": null
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "N/A",
+      "visual": "N/A"
+    },
+    "modality_confidence": {
+      "url": -0.9999999387931868,
+      "dom": null,
+      "visual": null
+    },
+    "modality_available": {
+      "url": true,
+      "dom": false,
+      "visual": false
+    },
+    "page_info": {
+      "fetch_success": false,
+      "page_title": null,
+      "final_url": "http://78382google.com",
+      "screenshot_path": null
+    },
+    "dom_features": {},
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "URLSimilarityIndex": -10.033779640000889,
+        "NoOfSubDomain": -5.248677348888048,
+        "URLLength": -0.3107063172788571,
+        "CharContinuationRate": 0.2174045693390201,
+        "URLCharProb": 0.19866089746863688
+      },
+      "fusion_contribution": {
+        "url": 0.6870909457305869,
+        "dom": 0.31290905426941307,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "URLSimilarityIndex",
+          "value": 72.72727272727273,
+          "shap_impact": -10.033779640000889,
+          "abs_impact": 10.033779640000889
+        },
+        {
+          "feature": "NoOfSubDomain",
+          "value": 0.0,
+          "shap_impact": -5.248677348888048,
+          "abs_impact": 5.248677348888048
+        },
+        {
+          "feature": "URLLength",
+          "value": 22.0,
+          "shap_impact": -0.3107063172788571,
+          "abs_impact": 0.3107063172788571
+        },
+        {
+          "feature": "CharContinuationRate",
+          "value": 0.09090909090909091,
+          "shap_impact": 0.2174045693390201,
+          "abs_impact": 0.2174045693390201
+        },
+        {
+          "feature": "URLCharProb",
+          "value": 0.01,
+          "shap_impact": 0.19866089746863688,
+          "abs_impact": 0.19866089746863688
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.414191462764322,
+          "dom": -3.8319187720568837,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.6870909457305869,
+          "dom": 0.31290905426941307,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": null,
+      "geo": null
+    }
+  }
+]

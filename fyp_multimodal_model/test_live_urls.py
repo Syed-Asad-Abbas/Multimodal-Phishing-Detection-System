@@ -55,11 +55,11 @@ def test_urls(urls, models_dir="models", timeout=10, device="cpu", output_file=N
             results.append(result)
             
             # Brief summary
-            print(f"\n→ Result: {result['prediction']} ({result['confidence']:.1%} confidence)")
-            print(f"→ Modalities: {sum(result['modality_available'].values())}/3")
-            
+            print(f"\n>> Result: {result['prediction']} ({result['confidence']:.1%} confidence)")
+            print(f">> Modalities: {sum(result['modality_available'].values())}/3")
+
         except Exception as e:
-            print(f"\n✗ Error testing {url}: {e}")
+            print(f"\nX Error testing {url}: {e}")
             results.append({
                 "url": url,
                 "error": str(e),
@@ -81,9 +81,9 @@ def test_urls(urls, models_dir="models", timeout=10, device="cpu", output_file=N
     error_count = sum(1 for r in results if r.get('prediction') == 'ERROR')
     
     print(f"\nTotal Tested: {total}")
-    print(f"  ✓ Predicted BENIGN: {benign_count}")
-    print(f"  ⚠  Predicted PHISHING: {phishing_count}")
-    print(f"  ✗ Errors: {error_count}")
+    print(f"  [OK] Predicted BENIGN: {benign_count}")
+    print(f"  [!!] Predicted PHISHING: {phishing_count}")
+    print(f"  [ERR] Errors: {error_count}")
     
     # Detailed table
     print("\n" + "="*70)
@@ -103,7 +103,7 @@ def test_urls(urls, models_dir="models", timeout=10, device="cpu", output_file=N
     if output_file:
         with open(output_file, 'w') as f:
             json.dump(results, f, indent=2)
-        print(f"\n✓ Results saved to: {output_file}")
+        print(f"\n[OK] Results saved to: {output_file}")
     
     print("="*70)
     

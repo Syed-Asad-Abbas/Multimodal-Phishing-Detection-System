@@ -15,7 +15,7 @@ import torch.nn as nn
 from PIL import Image
 
 from webpage_fetcher import SafeWebpageFetcher
-from url_feature_extractor import extract_url_features_from_string
+from url_feature_extractor import extract_url_features_from_string, extract_url_features_dict
 from utils import load_config, build_dom_tokens
 from url_utils import is_url_alive
 from explain_prediction import get_shap_url_explanations, get_shap_fusion_explanations, generate_llm_explanation
@@ -71,31 +71,38 @@ def predict_url_modality(url_string, models):
         X = np.array(features).reshape(1, -1)
         X_scaled = models["url_scaler"].transform(X)
         proba = models["url_model"].predict_proba(X_scaled)[0]
-        return proba[1], max(proba), True
+        signed_conf = (proba[1] - 0.5) * 2.0
+        return proba[1], signed_conf, True
     except Exception as e:
         print(f"[URL Modality] Error: {e}")
-        return -1.0, 0.0, False
+        return float('nan'), float('nan'), False
 
 
 def predict_dom_modality(dom_features_dict, models):
-    """Get DOM modality prediction from extracted features"""
+    """Get DOM modality prediction from extracted features.
+    DOM model trained with non-flipped PhiUSIIL labels: proba[1] = P(benign).
+    We invert here so the returned value is P(phishing), consistent with URL/visual.
+    """
     try:
         # Build tokens from DOM features
         tokens = build_dom_tokens(dom_features_dict)
         embedding = models["doc2vec"].infer_vector(tokens)
         proba = models["dom_model"].predict_proba([embedding])[0]
-        return proba[1], max(proba), True
+        # proba[1] = P(benign in PhiUSIIL) — invert to get P(phishing)
+        p_phish = 1.0 - proba[1]
+        signed_conf = (p_phish - 0.5) * 2.0
+        return p_phish, signed_conf, True
     except Exception as e:
         print(f"[DOM Modality] Error: {e}")
-        return -1.0, 0.0, False
+        return float('nan'), float('nan'), False
 
 
 def predict_visual_modality(screenshot_path, models, device):
     """Get Visual modality prediction from screenshot"""
     try:
         if not screenshot_path or not os.path.exists(screenshot_path):
-            return -1.0, 0.0, False
-        
+            return float('nan'), float('nan'), False
+
         transform = transforms.Compose([
             transforms.Resize((256, 256)),
             transforms.CenterCrop(224),
@@ -105,20 +112,20 @@ def predict_visual_modality(screenshot_path, models, device):
                 std=[0.229, 0.224, 0.225]
             )
         ])
-        
+
         img = Image.open(screenshot_path).convert("RGB")
         img_tensor = transform(img).unsqueeze(0).to(device)
-        
+
         with torch.no_grad():
             out = models["visual_model"](img_tensor)
             probs = torch.softmax(out, dim=1)[0]
             p_phish = probs[1].item()
-            confidence = max(probs[0].item(), probs[1].item())
-        
-        return p_phish, confidence, True
+            signed_conf = (p_phish - 0.5) * 2.0
+
+        return p_phish, signed_conf, True
     except Exception as e:
         print(f"[Visual Modality] Error: {e}")
-        return -1.0, 0.0, False
+        return float('nan'), float('nan'), False
 
 
 def predict_complete_pipeline(url, models_dir="models", fetch_timeout=10, device="cpu"):
@@ -171,52 +178,86 @@ def predict_complete_pipeline(url, models_dir="models", fetch_timeout=10, device
         print(f"      [OK] URL is alive. Fetching content (safe mode)...")
         fetcher = SafeWebpageFetcher(timeout=fetch_timeout, headless=True)
         page_result = fetcher.fetch_page(url)
-    
+
+        # F8: Update URL features using final (post-redirect) URL if it differs
+        if page_result.get('success') and page_result.get('final_url'):
+            from urllib.parse import urlparse as _urlparse
+            from url_feature_extractor import extract_url_features_with_redirect
+            final_url = page_result['final_url']
+            init_domain = _urlparse(url).netloc.replace('www.', '')
+            final_domain = _urlparse(final_url).netloc.replace('www.', '')
+            cross_domain = int(init_domain != final_domain)
+            # F8: only rescore URL features when redirect crosses domains (e.g. bit.ly → evil.tk)
+            # Trivial same-domain redirects (trailing slash, https normalisation) must NOT
+            # trigger rescoring — they change URLLength by 1 char and can flip the classifier.
+            if final_url != url and cross_domain:
+                try:
+                    redir_dict = extract_url_features_with_redirect(
+                        url, final_url, redirect_depth=1,
+                        cross_domain_redirect=cross_domain,
+                        feature_names=models["url_features"]
+                    )
+                    X_r = np.array([redir_dict.get(fn, 0) for fn in models["url_features"]]).reshape(1, -1)
+                    X_r_s = models["url_scaler"].transform(X_r)
+                    redir_proba = models["url_model"].predict_proba(X_r_s)[0]
+                    p_url = redir_proba[1]
+                    conf_url = (p_url - 0.5) * 2.0
+                    has_url = True
+                    print(f"      [F8] Cross-domain redirect → final URL features applied (cross_domain={cross_domain})")
+                except Exception:
+                    pass
+
     # Step 3: DOM Modality
     print("\n[4/5] Analyzing DOM structure...")
     if page_result['success']:
-        # Extract DOM features
-        dom_features_dict = fetcher.extract_dom_features(page_result['html'])
+        raw_html = page_result.get('html', '')
+        dom_features_dict = fetcher.extract_dom_features(raw_html)
         print(f"      [OK] Extracted DOM features: {len(dom_features_dict)} features")
         print(f"        HasForm: {dom_features_dict.get('HasForm', 0)}")
         print(f"        HasPasswordField: {dom_features_dict.get('HasPasswordField', 0)}")
         print(f"        NoOfImage: {dom_features_dict.get('NoOfImage', 0)}")
-        
-        # Get DOM prediction
-        p_dom, conf_dom, has_dom = predict_dom_modality(dom_features_dict, models)
-        if has_dom:
-            print(f"      [OK] DOM Score: {p_dom:.4f} (confidence: {conf_dom:.2%})")
+
+        # F9: Skip DOM modality if CAPTCHA/interstitial detected
+        from inference_pipeline import is_interstitial_page
+        if is_interstitial_page(raw_html):
+            print("      [F9] CAPTCHA/interstitial detected — skipping DOM modality")
+            p_dom, conf_dom, has_dom = float('nan'), float('nan'), False
+        else:
+            # Get DOM prediction
+            p_dom, conf_dom, has_dom = predict_dom_modality(dom_features_dict, models)
+            if has_dom:
+                print(f"      [OK] DOM Score: {p_dom:.4f} (signed_conf: {conf_dom:.4f})")
     else:
         print(f"      [FAIL] Webpage fetch failed: {page_result.get('error', 'Unknown error')}")
-        p_dom, conf_dom, has_dom = -1.0, 0.0, False
+        p_dom, conf_dom, has_dom = float('nan'), float('nan'), False
         dom_features_dict = {}
     print()
-    
+
     # Step 4: Visual Modality
     print("[5/5] Analyzing visual appearance...")
     if page_result['success'] and page_result.get('screenshot_path'):
         screenshot_path = page_result['screenshot_path']
         p_visual, conf_visual, has_visual = predict_visual_modality(screenshot_path, models, device)
         if has_visual:
-            print(f"      [OK] Visual Score: {p_visual:.4f} (confidence: {conf_visual:.2%})")
+            print(f"      [OK] Visual Score: {p_visual:.4f} (signed_conf: {conf_visual:.4f})")
             print(f"      [OK] Screenshot: {screenshot_path}")
     else:
         print(f"      [FAIL] Screenshot not available")
-        p_visual, conf_visual, has_visual = -1.0, 0.0, False
+        p_visual, conf_visual, has_visual = float('nan'), float('nan'), False
         screenshot_path = None
     print()
-    
+
     # Step 5: Fusion
     print("[FUSION] Combining all modalities...")
     fusion_features = [
-        p_url if has_url else -1.0,
-        p_dom if has_dom else -1.0,
-        p_visual if has_visual else -1.0,
-        conf_url if has_url else 0.0,
-        conf_dom if has_dom else 0.0,
-        conf_visual if has_visual else 0.0,
-        1.0 if has_url else 0.0,
-        1.0 if has_dom else 0.0,
+        p_url    if has_url    else float('nan'),
+        p_dom    if has_dom    else float('nan'),
+        p_visual if has_visual else float('nan'),
+        conf_url    if has_url    else float('nan'),
+        conf_dom    if has_dom    else float('nan'),
+        conf_visual if has_visual else float('nan'),
+        1.0 if has_url    else 0.0,
+        1.0 if has_dom    else 0.0,
         1.0 if has_visual else 0.0
     ]
     
@@ -237,7 +278,82 @@ def predict_complete_pipeline(url, models_dir="models", fetch_timeout=10, device
     else:
         prediction = "BENIGN"
         final_prob = fusion_prob_phish
-        
+
+    # ------------------------------------------------------------------
+    # POST-FUSION EDGE-CASE CORRECTIONS
+    #
+    # Rule 1 — LoginPath:
+    #   The URL model over-fires on clean domains with /login paths
+    #   (PhiUSIIL training set has almost no benign login-page URLs).
+    #   If DOM + Visual together are NOT strongly phishing, the page is
+    #   almost certainly a legitimate login portal.
+    #
+    # Rule 2 — DOMSpike:
+    #   When URL is very benign and Visual is borderline benign but DOM
+    #   alone spikes (wiki search box, CMS portal, etc.), the DOM model
+    #   is reacting to an unusual-but-legitimate page structure, not to
+    #   real phishing content.
+    #
+    # Rule 3 — OAuthRedirect:
+    #   F8 redirect rescoring can cause clean portals (portal.azure.com)
+    #   to inherit the URL score of their OAuth destination
+    #   (login.microsoftonline.com?client_id=...).  When BOTH DOM and
+    #   Visual clearly agree the page is benign, trust them over the URL.
+    # ------------------------------------------------------------------
+    if prediction == "PHISHING":
+        from urllib.parse import urlparse as _urlparse2
+        _login_kws = {'login', 'signin', 'sign-in', 'logon', 'log-in', 'auth', 'logins'}
+        _path_lower = _urlparse2(url).path.lower()
+        _has_login_path = any(kw in _path_lower for kw in _login_kws)
+
+        if _has_login_path and has_url and p_url >= 0.80 and has_dom and has_visual:
+            _feats = extract_url_features_dict(url)
+            _is_clean = (
+                _feats.get('DomainHyphenCount', 1) == 0
+                and _feats.get('DomainDigitRatio', 1.0) == 0.0
+                and _feats.get('MaxDigitRunLength', 1) == 0
+                and _feats.get('BrandKeywordInSLD', 1) == 0
+                and _feats.get('NoOfSubDomain', 1) == 0
+                and _feats.get('HasIDNHomograph', 1) == 0
+            )
+            if _is_clean and (p_dom + p_visual) / 2.0 < 0.65:
+                prediction = "BENIGN"
+                final_prob = 0.30
+                print("      [Rule1-LoginPath] Clean-domain login page — overriding to BENIGN")
+
+    if prediction == "PHISHING" and has_url and has_dom and has_visual:
+        if p_url < 0.10 and p_visual < 0.50 and p_dom > 0.85:
+            # Guard: only override for clean domains (no hyphens/digits in SLD).
+            # Hyphenated domains like auth-legends-cup.com can score low on URL model
+            # but are still suspicious; a DOM spike on those should not override.
+            _feats2 = extract_url_features_dict(url)
+            _r2_clean = (
+                _feats2.get('DomainHyphenCount', 1) == 0
+                and _feats2.get('DomainDigitRatio', 1.0) == 0.0
+                and _feats2.get('IsSLDNumeric', 1) == 0
+                and _feats2.get('HasIDNHomograph', 1) == 0
+            )
+            if _r2_clean:
+                prediction = "BENIGN"
+                final_prob = max(p_url, p_visual) * 0.5
+                print("      [Rule2-DOMSpike] URL+Visual both benign, DOM spike only — overriding to BENIGN")
+
+    if prediction == "PHISHING" and has_url and has_dom and has_visual:
+        if p_url >= 0.95 and p_dom < 0.45 and p_visual < 0.45:
+            # Guard: only override if the URL itself (pre-F8, no redirect rescoring)
+            # is benign. F8 can inflate p_url for clean portals that redirect to OAuth
+            # endpoints. Phishing URLs returning error pages also have low DOM+Visual
+            # but their pre-F8 score is already high — those must NOT be overridden.
+            _feats_r3 = extract_url_features_from_string(url, models["url_features"])
+            _raw_r3 = np.array(_feats_r3).reshape(1, -1)
+            _raw_r3_s = models["url_scaler"].transform(_raw_r3)
+            _prefx_r3 = models["url_model"].predict_proba(_raw_r3_s)[0][1]
+            if _prefx_r3 < 0.50:
+                prediction = "BENIGN"
+                final_prob = (p_dom + p_visual) / 2.0
+                print("      [Rule3-OAuthRedirect] Both DOM and Visual benign despite URL score — overriding to BENIGN")
+    # ------------------------------------------------------------------
+
     confidence = final_prob if prediction == "PHISHING" else (1.0 - final_prob)
 
     # Build result

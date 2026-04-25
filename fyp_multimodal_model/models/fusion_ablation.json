@@ -1,44 +1,42 @@
 {
   "url_only": {
-    "accuracy": 0.9974342119213724,
-    "precision_phish": 0.9976645041705283,
-    "recall_phish": 0.9978494623655914,
-    "f1_phish": 0.9977569746964501
+    "accuracy": 0.9871710596068619,
+    "precision_phish": 0.9926048898279505,
+    "recall_phish": 0.9773143791173411,
+    "f1_phish": 0.9849002920108818
   },
   "dom_only": {
-    "accuracy": 0.9849657541508514,
-    "precision_phish": 0.9827212234844307,
-    "recall_phish": 0.9911383018168335,
-    "f1_phish": 0.9869118162854664
+    "accuracy": 0.9855806950953159,
+    "precision_phish": 0.9867757872149309,
+    "recall_phish": 0.9794442518202982,
+    "f1_phish": 0.9830963508004376
   },
   "visual_only": {
-    "accuracy": 0.9102316602316602,
-    "precision_phish": 0.8558558558558559,
-    "recall_phish": 0.8636363636363636,
-    "f1_phish": 0.8597285067873304
+    "accuracy": 0.0,
+    "note": "Insufficient visual samples"
   },
   "url_dom": {
-    "accuracy": 0.999618312517229,
-    "precision_phish": 0.9993700437263766,
-    "recall_phish": 0.999962921764924,
-    "f1_phish": 0.9996663948402402
+    "accuracy": 0.9974766216416803,
+    "precision_phish": 0.9973731165741475,
+    "recall_phish": 0.9967308930605775,
+    "f1_phish": 0.9970519013997274
   },
   "url_visual": {
-    "accuracy": 0.9974342119213724,
-    "precision_phish": 0.9976645041705283,
-    "recall_phish": 0.9978494623655914,
-    "f1_phish": 0.9977569746964501
+    "accuracy": 0.9871710596068619,
+    "precision_phish": 0.9926048898279505,
+    "recall_phish": 0.9773143791173411,
+    "f1_phish": 0.9849002920108818
   },
   "dom_visual": {
-    "accuracy": 0.9850717784516211,
-    "precision_phish": 0.9829374126645584,
-    "recall_phish": 0.9911012235817576,
-    "f1_phish": 0.9870024370430545
+    "accuracy": 0.9855806950953159,
+    "precision_phish": 0.9867757872149309,
+    "recall_phish": 0.9794442518202982,
+    "f1_phish": 0.9830963508004376
   },
   "all_modalities": {
-    "accuracy": 0.999618312517229,
-    "precision_phish": 0.9993700437263766,
-    "recall_phish": 0.999962921764924,
-    "f1_phish": 0.9996663948402402
+    "accuracy": 0.9974766216416803,
+    "precision_phish": 0.9973731165741475,
+    "recall_phish": 0.9967308930605775,
+    "f1_phish": 0.9970519013997274
   }
 }

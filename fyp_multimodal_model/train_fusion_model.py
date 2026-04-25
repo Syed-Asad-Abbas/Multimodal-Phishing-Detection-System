@@ -12,11 +12,13 @@ Run:
 import argparse
 import os
 import json
+import math
 import joblib
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
 from utils import load_config, load_dataset, build_dom_tokens
+from url_feature_extractor import extract_url_features_from_string
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import (
     accuracy_score, classification_report, confusion_matrix,
@@ -54,34 +56,42 @@ def load_visual_model(models_dir, device):
 
 
 def get_url_prediction(url_model, scaler, feature_names, row):
-    """Get URL modality prediction"""
+    """Get URL modality prediction using raw URL string via feature extractor"""
     try:
-        features = [row[fn] for fn in feature_names]
+        url_str = str(row.get('url', row.get('URL', row.get('Url', ''))))
+        features = extract_url_features_from_string(url_str, feature_names)
         X = np.array(features).reshape(1, -1)
         X_scaled = scaler.transform(X)
         proba = url_model.predict_proba(X_scaled)[0]  # [p_benign, p_phish]
-        return proba[1], max(proba)  # phishing prob, confidence
+        signed_conf = (proba[1] - 0.5) * 2.0
+        return proba[1], signed_conf
     except Exception as e:
-        return -1.0, 0.0  # missing
+        return float('nan'), float('nan')
 
 
 def get_dom_prediction(doc2vec_model, dom_model, row):
-    """Get DOM modality prediction"""
+    """Get DOM modality prediction.
+    DOM model trained with non-flipped PhiUSIIL labels: proba[1] = P(benign).
+    We invert here so the returned value is consistently P(phishing).
+    """
     try:
         tokens = build_dom_tokens(row)
         embedding = doc2vec_model.infer_vector(tokens)
         proba = dom_model.predict_proba([embedding])[0]
-        return proba[1], max(proba)
+        # proba[1] = P(benign in PhiUSIIL) — invert to get P(phishing)
+        p_phish = 1.0 - proba[1]
+        signed_conf = (p_phish - 0.5) * 2.0
+        return p_phish, signed_conf
     except Exception as e:
-        return -1.0, 0.0
+        return float('nan'), float('nan')
 
 
 def get_visual_prediction(visual_model, image_path, device):
     """Get Visual modality prediction"""
     try:
         if not os.path.exists(image_path):
-            return -1.0, 0.0
-        
+            return float('nan'), float('nan')
+
         transform = transforms.Compose([
             transforms.Resize((256, 256)),
             transforms.CenterCrop(224),
@@ -91,19 +101,19 @@ def get_visual_prediction(visual_model, image_path, device):
                 std=[0.229, 0.224, 0.225]
             )
         ])
-        
+
         img = Image.open(image_path).convert("RGB")
         img_tensor = transform(img).unsqueeze(0).to(device)
-        
+
         with torch.no_grad():
             out = visual_model(img_tensor)
             probs = torch.softmax(out, dim=1)[0]
             p_phish = probs[1].item()
-            confidence = max(probs[0].item(), probs[1].item())
-        
-        return p_phish, confidence
+            signed_conf = (p_phish - 0.5) * 2.0
+
+        return p_phish, signed_conf
     except Exception as e:
-        return -1.0, 0.0
+        return float('nan'), float('nan')
 
 
 def build_fusion_features(df, url_model, url_scaler, url_features,
@@ -135,26 +145,27 @@ def build_fusion_features(df, url_model, url_scaler, url_features,
             if img_path:
                 break
         
-        p_visual, conf_visual = get_visual_prediction(visual_model, img_path, device) if img_path else (-1.0, 0.0)
-        
+        p_visual, conf_visual = get_visual_prediction(visual_model, img_path, device) if img_path else (float('nan'), float('nan'))
+
         # Build fusion feature vector
         features = [
             p_url,           # URL phishing probability
             p_dom,           # DOM phishing probability
             p_visual,        # Visual phishing probability
-            conf_url,        # URL confidence
-            conf_dom,        # DOM confidence
-            conf_visual,     # Visual confidence
-            1.0 if p_url >= 0 else 0.0,    # has_url flag
-            1.0 if p_dom >= 0 else 0.0,    # has_dom flag
-            1.0 if p_visual >= 0 else 0.0, # has_visual flag
+            conf_url,        # URL signed confidence
+            conf_dom,        # DOM signed confidence
+            conf_visual,     # Visual signed confidence
+            0.0 if math.isnan(p_url)    else 1.0,  # has_url flag
+            0.0 if math.isnan(p_dom)    else 1.0,  # has_dom flag
+            0.0 if math.isnan(p_visual) else 1.0,  # has_visual flag
         ]
-        
+
         fusion_data.append({
             "features": features,
-            "label": int(row["label"]),
+            # Dataset: 0=phishing, 1=benign → flip to standard: 0=benign, 1=phishing
+            "label": 1 - int(row["label"]),
             "filename": filename,
-            "has_visual": p_visual >= 0
+            "has_visual": not math.isnan(p_visual)
         })
     
     X = np.array([d["features"] for d in fusion_data])
@@ -168,6 +179,47 @@ def build_fusion_features(df, url_model, url_scaler, url_features,
     return X, y, metadata
 
 
+def simulate_missing_modalities(X, y, dom_missing_rate=0.25, visual_missing_rate=0.50,
+                                 rng_seed=42):
+    """
+    Augment fusion training data by simulating missing DOM/Visual modalities.
+
+    During training every row has DOM (from CSV) and some have Visual (from images).
+    At inference, DOM requires a live page fetch and Visual requires a screenshot —
+    both can fail.  Without augmentation the fusion model has no training signal for
+    NaN inputs and falls back to predicting PHISHING for everything.
+
+    Feature vector layout:
+      [p_url, p_dom, p_visual, conf_url, conf_dom, conf_visual, has_url, has_dom, has_visual]
+       idx:  0     1       2        3        4          5         6       7       8
+    """
+    rng = np.random.RandomState(rng_seed)
+    X_aug = X.copy().astype(float)
+    n = len(X_aug)
+
+    # Simulate missing DOM for dom_missing_rate fraction
+    dom_mask = rng.rand(n) < dom_missing_rate
+    X_aug[dom_mask, 1] = np.nan   # p_dom
+    X_aug[dom_mask, 4] = np.nan   # conf_dom
+    X_aug[dom_mask, 7] = 0.0      # has_dom
+
+    # Simulate missing Visual for visual_missing_rate fraction (independently)
+    vis_mask = rng.rand(n) < visual_missing_rate
+    X_aug[vis_mask, 2] = np.nan   # p_visual
+    X_aug[vis_mask, 5] = np.nan   # conf_visual
+    X_aug[vis_mask, 8] = 0.0      # has_visual
+
+    # Stack augmented rows with originals so the model sees both complete
+    # and partial vectors at training time
+    X_combined = np.vstack([X, X_aug])
+    y_combined = np.concatenate([y, y])
+
+    print(f"[Fusion] Augmented with {dom_missing_rate*100:.0f}% missing DOM rows + "
+          f"{visual_missing_rate*100:.0f}% missing Visual rows "
+          f"({n} -> {len(X_combined)} total training rows)")
+    return X_combined, y_combined
+
+
 def train_fusion_classifier(X_train, y_train, X_test, y_test):
     """Train meta-classifier for fusion"""
     clf = LGBMClassifier(
@@ -178,7 +230,9 @@ def train_fusion_classifier(X_train, y_train, X_test, y_test):
         subsample=0.9,
         colsample_bytree=0.9,
         random_state=42,
-        n_jobs=-1
+        n_jobs=-1,
+        use_missing=True,
+        zero_as_missing=False
     )
     
     clf.fit(X_train, y_train)
@@ -242,26 +296,34 @@ def ablation_study(X, y, metadata):
         X_train_sub = X_train[:, indices]
         X_test_sub = X_test[:, indices]
         
-        # For visual-only, filter to samples with screenshots
+        # For visual-only, filter BOTH train AND test to visual-present samples
         if name == "visual_only":
-            has_visual_test = X_test[:, 8] > 0
-            if has_visual_test.sum() == 0:
-                results[name] = {"accuracy": 0.0, "note": "No visual samples in test set"}
+            has_visual_train = ~np.isnan(X_train[:, 2])  # p_visual is index 2
+            has_visual_test  = ~np.isnan(X_test[:, 2])
+
+            if has_visual_train.sum() < 10 or has_visual_test.sum() == 0:
+                results[name] = {"accuracy": 0.0, "note": "Insufficient visual samples"}
                 continue
-            X_test_sub = X_test_sub[has_visual_test]
-            y_test_sub = y_test[has_visual_test]
+
+            X_train_sub = X_train[has_visual_train][:, indices]
+            y_train_sub  = y_train[has_visual_train]
+            X_test_sub   = X_test[has_visual_test][:, indices]
+            y_test_sub   = y_test[has_visual_test]
         else:
-            y_test_sub = y_test
-        
+            y_train_sub = y_train
+            y_test_sub  = y_test
+
         clf = LGBMClassifier(
             n_estimators=200,
             learning_rate=0.05,
             max_depth=5,
             num_leaves=31,
             random_state=42,
-            n_jobs=-1
+            n_jobs=-1,
+            use_missing=True,
+            zero_as_missing=False
         )
-        clf.fit(X_train_sub, y_train)
+        clf.fit(X_train_sub, y_train_sub)
         
         y_pred = clf.predict(X_test_sub)
         acc = accuracy_score(y_test_sub, y_pred)
@@ -321,10 +383,14 @@ def main():
     
     print(f"[Fusion] Built fusion dataset: {X.shape[0]} samples, {X.shape[1]} features")
     print(f"[Fusion] Samples with visual data: {metadata['has_visual'].sum()} / {len(metadata)}")
-    
-    # Split data
+
+    # Augment with simulated missing modalities before splitting.
+    # This teaches the model how to predict when DOM/Visual are unavailable at inference.
+    X_aug, y_aug = simulate_missing_modalities(X, y, dom_missing_rate=0.25, visual_missing_rate=0.50)
+
+    # Split data (use augmented set for train/test; ablation still uses original X/y)
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42, stratify=y
+        X_aug, y_aug, test_size=0.2, random_state=42, stratify=y_aug
     )
     
     # Train fusion classifier
@@ -365,7 +431,7 @@ def main():
     print(f"\n[Fusion] Saved fusion model to {fusion_path}")
     print(f"[Fusion] Saved metrics to {metrics_path}")
     print(f"[Fusion] Saved ablation results to {ablation_path}")
-    print("[Fusion] Training complete! ✔")
+    print("[Fusion] Training complete!")
 
 
 if __name__ == "__main__":

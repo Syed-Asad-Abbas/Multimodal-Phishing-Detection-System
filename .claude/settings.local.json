@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c ' *)",
+      "Bash(python retrain_url_from_extractor.py --config config.json)",
+      "Bash(python diagnose_killswitch.py)",
+      "Bash(mkdir -p results)",
+      "Bash(python test_live_urls.py --file data/phising_feed.txt --output results/option_a_results.json)",
+      "Bash(python *)",
+      "PowerShell(Get-Command *)",
+      "PowerShell(Get-ChildItem *)",
+      "PowerShell(python -c \"import joblib, shap, lightgbm, numpy; print\\('all imports OK'\\)\" 2>&1)",
+      "PowerShell(python -c \"import openpyxl; print\\('openpyxl OK'\\)\" 2>&1; python -c \"import sys; sys.path.insert\\(0, 'C:/Users/asad/Desktop/Multimodal-Phishing-Detection-System-main - Claude/fyp_multimodal_model'\\); from url_utils import is_url_alive; print\\('url_utils OK'\\)\" 2>&1)"
+    ]
+  }
+}

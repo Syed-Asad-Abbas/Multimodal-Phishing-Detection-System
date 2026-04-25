@@ -1,0 +1,232 @@
+{
+  "total": 20,
+  "valid": 20,
+  "detected": 20,
+  "missed": 0,
+  "detection_rate_percent": 100.0,
+  "fnr_percent": 0.0,
+  "passed": true,
+  "false_negatives": [],
+  "all_results": [
+    {
+      "url": "http://animalwelfareinc.org/wp-content/themes/ado/adobelatest/adbx/home/index.php",
+      "prediction": "PHISHING",
+      "confidence": 0.9999730014207308,
+      "fusion_p_phishing": 0.9999730014207308,
+      "modalities_used": 1,
+      "url_score": 0.9999868292528008,
+      "dom_score": null,
+      "visual_score": null,
+      "fetch_success": false
+    },
+    {
+      "url": "http://3dshelly.haassncbngjqyg3fd.tempa-bersama.co.id/?=redacted@redacted.invalid",
+      "prediction": "PHISHING",
+      "confidence": 0.9999730014207308,
+      "fusion_p_phishing": 0.9999730014207308,
+      "modalities_used": 2,
+      "url_score": 0.9999940095135234,
+      "dom_score": null,
+      "visual_score": 0.20339475572109222,
+      "fetch_success": true
+    },
+    {
+      "url": "http://adloafjihad.github.io/Facebook-Log-in-or-sign-up",
+      "prediction": "PHISHING",
+      "confidence": 0.9999744574877074,
+      "fusion_p_phishing": 0.9999744574877074,
+      "modalities_used": 3,
+      "url_score": 0.9999979048971305,
+      "dom_score": 0.9093676850338377,
+      "visual_score": 0.31422799825668335,
+      "fetch_success": true
+    },
+    {
+      "url": "http://149.28.47.36/wp-content/plugins/eqgigbgakc/chase.aspx-login.aspx/dashboard/new/home/3f1c51817959b461d0ccaac82387cc78",
+      "prediction": "PHISHING",
+      "confidence": 0.9999730014207308,
+      "fusion_p_phishing": 0.9999730014207308,
+      "modalities_used": 2,
+      "url_score": 0.9999997682582704,
+      "dom_score": null,
+      "visual_score": 0.20339475572109222,
+      "fetch_success": true
+    },
+    {
+      "url": "http://3blbsnwq0lbzsbjg.adamandco.co.uk",
+      "prediction": "PHISHING",
+      "confidence": 0.9997664814305903,
+      "fusion_p_phishing": 0.9997664814305903,
+      "modalities_used": 3,
+      "url_score": 0.9950949902814555,
+      "dom_score": 0.201594846926901,
+      "visual_score": 0.2600747346878052,
+      "fetch_success": true
+    },
+    {
+      "url": "https://imagizer.imageshack.com/img922/7929/f0LDA5.png",
+      "prediction": "PHISHING",
+      "confidence": 0.9999744574877074,
+      "fusion_p_phishing": 0.9999744574877074,
+      "modalities_used": 3,
+      "url_score": 0.9999957629852515,
+      "dom_score": 0.9943646370521104,
+      "visual_score": 0.3359181582927704,
+      "fetch_success": true
+    },
+    {
+      "url": "http://3656aa.com",
+      "prediction": "PHISHING",
+      "confidence": 0.9999730014207308,
+      "fusion_p_phishing": 0.9999730014207308,
+      "modalities_used": 2,
+      "url_score": 0.9983982465760282,
+      "dom_score": null,
+      "visual_score": 0.20339475572109222,
+      "fetch_success": true
+    },
+    {
+      "url": "http://142.93.181.27/CarrierRefund/online/CIBC/7d4d27e7a0ecbcab00f9ad8d86d4f5db/ebm-mobile-app/index.html",
+      "prediction": "PHISHING",
+      "confidence": 0.9999730014207308,
+      "fusion_p_phishing": 0.9999730014207308,
+      "modalities_used": 2,
+      "url_score": 0.9999997568660961,
+      "dom_score": null,
+      "visual_score": 0.20339475572109222,
+      "fetch_success": true
+    },
+    {
+      "url": "http://528487hola1122.filesusr.com/html/6c0a83_90cbd78fff460e72d156ee8a8824acb8.html?nti4ndg3facebook/=",
+      "prediction": "PHISHING",
+      "confidence": 0.9999744574877074,
+      "fusion_p_phishing": 0.9999744574877074,
+      "modalities_used": 3,
+      "url_score": 0.9999995691648622,
+      "dom_score": 0.9869487223499499,
+      "visual_score": 0.16334602236747742,
+      "fetch_success": true
+    },
+    {
+      "url": "https://help-exodus.teachable.com/p/home",
+      "prediction": "PHISHING",
+      "confidence": 0.9999744574877074,
+      "fusion_p_phishing": 0.9999744574877074,
+      "modalities_used": 3,
+      "url_score": 0.9984301396363792,
+      "dom_score": 0.9519696633446341,
+      "visual_score": 0.3972604274749756,
+      "fetch_success": true
+    },
+    {
+      "url": "http://7wej7-lyaaa-aaaad-qcrzq-cai.raw.ic0.app/login.html?cjiyna=9nwgdfytrmnevtcge9mrxn28x5snrm&vwoz=nnetzvrlhyzww2vvkfrh&xypielajx=xwu91djmlgsfmyeigie9ehzm&hpqvngv=qoja8tkonld2j6ffibzbvlkb",
+      "prediction": "PHISHING",
+      "confidence": 0.9999744574877074,
+      "fusion_p_phishing": 0.9999744574877074,
+      "modalities_used": 3,
+      "url_score": 0.9999989211856505,
+      "dom_score": 0.9907287431811375,
+      "visual_score": 0.43903595209121704,
+      "fetch_success": true
+    },
+    {
+      "url": "http://akmeena5726.github.io/netflix_clone",
+      "prediction": "PHISHING",
+      "confidence": 0.9999673983919288,
+      "fusion_p_phishing": 0.9999673983919288,
+      "modalities_used": 3,
+      "url_score": 0.9999968624800762,
+      "dom_score": 0.05274165996533986,
+      "visual_score": 0.8779440522193909,
+      "fetch_success": true
+    },
+    {
+      "url": "http://al-thawiya.com/files/online/LinkedIn.htm",
+      "prediction": "PHISHING",
+      "confidence": 0.9999663973669987,
+      "fusion_p_phishing": 0.9999663973669987,
+      "modalities_used": 3,
+      "url_score": 0.9999917927098849,
+      "dom_score": 0.025603341999884788,
+      "visual_score": 0.1793675571680069,
+      "fetch_success": true
+    },
+    {
+      "url": "http://1ce94cba11407f43768cde7a311365c1fb9f04b29ffec272565f70b4b0.pages.dev",
+      "prediction": "PHISHING",
+      "confidence": 0.9999744574877074,
+      "fusion_p_phishing": 0.9999744574877074,
+      "modalities_used": 3,
+      "url_score": 0.9999973718017822,
+      "dom_score": 0.9886546536660642,
+      "visual_score": 0.06304165720939636,
+      "fetch_success": true
+    },
+    {
+      "url": "https://www.auth-legends-cup.com",
+      "prediction": "PHISHING",
+      "confidence": 0.5483380356124001,
+      "fusion_p_phishing": 0.5483380356124001,
+      "modalities_used": 3,
+      "url_score": 0.08641798157072815,
+      "dom_score": 0.9561303334191038,
+      "visual_score": 0.42063578963279724,
+      "fetch_success": true
+    },
+    {
+      "url": "http://abc-overview-cck6546754.pages.dev/help/contact/713501037118519",
+      "prediction": "PHISHING",
+      "confidence": 0.9999744574877074,
+      "fusion_p_phishing": 0.9999744574877074,
+      "modalities_used": 3,
+      "url_score": 0.9999993682408937,
+      "dom_score": 0.9886546536660642,
+      "visual_score": 0.06536596268415451,
+      "fetch_success": true
+    },
+    {
+      "url": "http://502c2dae4e5cfad452551b5d7032b151-dot-goff039302032323.rj.r.appspot.com",
+      "prediction": "PHISHING",
+      "confidence": 0.9999744574877074,
+      "fusion_p_phishing": 0.9999744574877074,
+      "modalities_used": 3,
+      "url_score": 0.9999963382834944,
+      "dom_score": 0.9869487223499499,
+      "visual_score": 0.19506806135177612,
+      "fetch_success": true
+    },
+    {
+      "url": "http://account-recovery-help-centerr.pages.dev/29603945.html",
+      "prediction": "PHISHING",
+      "confidence": 0.9999744574877074,
+      "fusion_p_phishing": 0.9999744574877074,
+      "modalities_used": 3,
+      "url_score": 0.9999803933907201,
+      "dom_score": 0.9886546536660642,
+      "visual_score": 0.06310644745826721,
+      "fetch_success": true
+    },
+    {
+      "url": "http://advertiser-business-network-harassment-appeal.pages.dev",
+      "prediction": "PHISHING",
+      "confidence": 0.9999744574877074,
+      "fusion_p_phishing": 0.9999744574877074,
+      "modalities_used": 3,
+      "url_score": 0.999925390071406,
+      "dom_score": 0.9132900999128541,
+      "visual_score": 0.02676902338862419,
+      "fetch_success": true
+    },
+    {
+      "url": "http://367667.com/index.php",
+      "prediction": "PHISHING",
+      "confidence": 0.9999730014207308,
+      "fusion_p_phishing": 0.9999730014207308,
+      "modalities_used": 1,
+      "url_score": 0.9998424356877457,
+      "dom_score": null,
+      "visual_score": null,
+      "fetch_success": false
+    }
+  ]
+}

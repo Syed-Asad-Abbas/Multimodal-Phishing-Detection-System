@@ -122,35 +122,50 @@ def generate_llm_explanation(prediction_result, shap_url_features, shap_fusion):
         pred = prediction_result['prediction']
         conf = prediction_result['confidence']
         url = prediction_result['url']
-        
-        # Prepare context for LLM
-        context = f"""
-        Analyze this URL scan result and explain why it is {pred} (Confidence: {conf:.1%}).
-        URL: {url}
-        
-        Key Technical Indicators:
-        """
-        
+
+        scores = prediction_result.get('modality_scores', {})
+        p_url    = scores.get('url')    or 0.0
+        p_dom    = scores.get('dom')    or 0.0
+        p_visual = scores.get('visual') or 0.0
+
+        # Build top-5 URL SHAP dict sorted by absolute impact
+        url_shap_top5 = {}
         if shap_url_features:
-            context += "\nURL Features (SHAP importance):"
-            for feat in shap_url_features[:3]:
-                context += f"\n- {feat['feature']}: {feat['value']} (Impact: {feat['shap_impact']:.4f})"
-                
+            sorted_feats = sorted(shap_url_features, key=lambda x: abs(x['shap_impact']), reverse=True)[:5]
+            url_shap_top5 = {f['feature']: round(f['shap_impact'], 4) for f in sorted_feats}
+
+        # Fusion-level SHAP top drivers
+        fusion_shap_top = {}
         if shap_fusion:
-            weights = shap_fusion['modality_weights']
-            top_modality = max(weights, key=weights.get)
-            context += f"\n\nModality Analysis:\n- Top Factor: {top_modality.upper()} ({weights[top_modality]:.1%} weight)"
-            context += f"\n- Full weights: {weights}"
+            fusion_shap_top = {
+                k: round(v, 4)
+                for k, v in shap_fusion.get('modality_contributions', {}).items()
+            }
 
         prompt = f"""
-        Act as a cybersecurity expert. {context}
-        
-        Provide a concise, non-technical explanation for a regular user. 
-        1. Start with a clear verdict (Safe/Unsafe).
-        2. Explain 2-3 key reasons based on the indicators above.
-        3. Give a safety recommendation.
-        Keep it under 100 words. Do not use markdown bolding too heavily.
-        """
+You are explaining a phishing detection decision.
+You MUST only use evidence from the structured data below.
+Do NOT invent reasons. Do NOT mention features not listed here.
+If a feature is absent from the evidence, do not reference it.
+
+FINAL DECISION: {pred}
+Overall confidence: {conf:.1%}
+
+MODALITY SCORES:
+- URL model score: {p_url:.3f} (1.0 = certain phishing)
+- DOM model score: {p_dom:.3f}
+- Visual model score: {p_visual:.3f}
+
+FUSION-LEVEL EVIDENCE (which modality drove the final decision):
+{json.dumps(fusion_shap_top, indent=2)}
+
+URL-LEVEL EVIDENCE (which URL features drove the URL score of {p_url:.3f}):
+{json.dumps(url_shap_top5, indent=2)}
+
+Write exactly 3 sentences. Sentence 1: state the prediction and primary driver.
+Sentence 2: name the specific URL feature with the highest SHAP value and explain what it means.
+Sentence 3: state the confidence level and any conflicting signals if present.
+"""
 
         response = client.models.generate_content(
             model='gemini-2.5-flash',

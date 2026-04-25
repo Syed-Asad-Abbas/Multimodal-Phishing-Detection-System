@@ -1,0 +1,208 @@
+{
+  "total": 15,
+  "skipped": 0,
+  "valid": 15,
+  "false_positives_count": 13,
+  "fpr_percent": 86.66666666666667,
+  "passed": false,
+  "false_positives": [
+    {
+      "url": "https://github.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.741260290145874,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084169735.png",
+      "page_title": "GitHub \u00b7 Change is constant. GitHub keeps you ahead. \u00b7 GitHub"
+    },
+    {
+      "url": "https://www.daraz.pk",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9955136179924011,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084192020.png",
+      "page_title": "Online Shopping in Pakistan: Fashion, Electronics & Groceries - Daraz.pk"
+    },
+    {
+      "url": "https://www.dawn.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.967870831489563,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084215782.png",
+      "page_title": "Home - DAWN.COM"
+    },
+    {
+      "url": "https://nadra.gov.pk",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9811972975730896,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084237399.png",
+      "page_title": "NADRA"
+    },
+    {
+      "url": "https://bahria.edu.pk",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9671732783317566,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084263839.png",
+      "page_title": "Bahria University"
+    },
+    {
+      "url": "https://nust.edu.pk",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9219450354576111,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084275265.png",
+      "page_title": "Welcome to National University of Sciences & Technology | NUST"
+    },
+    {
+      "url": "https://www.hbl.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.990696907043457,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084288967.png",
+      "page_title": "HBL The Largest Bank in Pakistan - Best Award Winning Bank"
+    },
+    {
+      "url": "https://www.facebook.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9821364283561707,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084300452.png",
+      "page_title": "Facebook"
+    },
+    {
+      "url": "https://www.instagram.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.8975110650062561,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084312220.png",
+      "page_title": "Instagram"
+    },
+    {
+      "url": "https://www.ptcl.com.pk",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9889664053916931,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084337228.png",
+      "page_title": "Pakistan's No. 1 Telecommunication Company - PTCL"
+    },
+    {
+      "url": "https://icloud.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.7830209136009216,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084347872.png",
+      "page_title": "iCloud"
+    },
+    {
+      "url": "https://www.geo.tv",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9701617360115051,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084357329.png",
+      "page_title": "Geo News: Latest News Breaking, Live Videos, World, Entertainment, Royal"
+    },
+    {
+      "url": "https://easypaisa.com.pk",
+      "prediction": "PHISHING",
+      "p_phishing": 0.7409902215003967,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084368415.png",
+      "page_title": "Home - easypaisa"
+    }
+  ],
+  "all_results": [
+    {
+      "url": "https://www.google.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.23750580847263336,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084159150.png",
+      "page_title": "Google"
+    },
+    {
+      "url": "https://github.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.741260290145874,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084169735.png",
+      "page_title": "GitHub \u00b7 Change is constant. GitHub keeps you ahead. \u00b7 GitHub"
+    },
+    {
+      "url": "https://www.daraz.pk",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9955136179924011,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084192020.png",
+      "page_title": "Online Shopping in Pakistan: Fashion, Electronics & Groceries - Daraz.pk"
+    },
+    {
+      "url": "https://www.dawn.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.967870831489563,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084215782.png",
+      "page_title": "Home - DAWN.COM"
+    },
+    {
+      "url": "https://nadra.gov.pk",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9811972975730896,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084237399.png",
+      "page_title": "NADRA"
+    },
+    {
+      "url": "https://bahria.edu.pk",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9671732783317566,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084263839.png",
+      "page_title": "Bahria University"
+    },
+    {
+      "url": "https://nust.edu.pk",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9219450354576111,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084275265.png",
+      "page_title": "Welcome to National University of Sciences & Technology | NUST"
+    },
+    {
+      "url": "https://www.hbl.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.990696907043457,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084288967.png",
+      "page_title": "HBL The Largest Bank in Pakistan - Best Award Winning Bank"
+    },
+    {
+      "url": "https://www.facebook.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9821364283561707,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084300452.png",
+      "page_title": "Facebook"
+    },
+    {
+      "url": "https://www.instagram.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.8975110650062561,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084312220.png",
+      "page_title": "Instagram"
+    },
+    {
+      "url": "https://foodpanda.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.2239651381969452,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084324164.png",
+      "page_title": "Access to this page has been denied"
+    },
+    {
+      "url": "https://www.ptcl.com.pk",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9889664053916931,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084337228.png",
+      "page_title": "Pakistan's No. 1 Telecommunication Company - PTCL"
+    },
+    {
+      "url": "https://icloud.com",
+      "prediction": "PHISHING",
+      "p_phishing": 0.7830209136009216,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084347872.png",
+      "page_title": "iCloud"
+    },
+    {
+      "url": "https://www.geo.tv",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9701617360115051,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084357329.png",
+      "page_title": "Geo News: Latest News Breaking, Live Videos, World, Entertainment, Royal"
+    },
+    {
+      "url": "https://easypaisa.com.pk",
+      "prediction": "PHISHING",
+      "p_phishing": 0.7409902215003967,
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777084368415.png",
+      "page_title": "Home - easypaisa"
+    }
+  ]
+}

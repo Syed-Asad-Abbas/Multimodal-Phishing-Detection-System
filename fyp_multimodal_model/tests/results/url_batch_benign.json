@@ -1,0 +1,1661 @@
+{
+  "total": 300,
+  "valid": 300,
+  "false_positives_count": 29,
+  "fpr_percent": 9.666666666666666,
+  "domain_only_fpr_percent": 1.1152416356877324,
+  "domain_only_fp_count": 3,
+  "domain_only_total": 269,
+  "login_path_fp_count": 26,
+  "login_path_total": 31,
+  "passed": true,
+  "false_positives": [
+    {
+      "url": "https://daraz.pk/customer/account/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999987609458731
+    },
+    {
+      "url": "https://upwork.com/ab/account-security/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999956306680731
+    },
+    {
+      "url": "https://tradingview.com/accounts/signin",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999589935240062
+    },
+    {
+      "url": "https://ptcl.com.pk/customer-login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9998948049827494
+    },
+    {
+      "url": "https://instagram.com/accounts/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9998427787270897
+    },
+    {
+      "url": "https://spotify.com/pk-en/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9998051770727348
+    },
+    {
+      "url": "https://tinder.com/app/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9996208532647095
+    },
+    {
+      "url": "https://investing.com/registration",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9995644223254964
+    },
+    {
+      "url": "https://slack.com/signin",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9995598976243989
+    },
+    {
+      "url": "https://binance.com/en/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9994814733946585
+    },
+    {
+      "url": "https://zoom.us/signin",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9993943439614296
+    },
+    {
+      "url": "https://stripe.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9991399584101828
+    },
+    {
+      "url": "https://skrill.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9991399584101828
+    },
+    {
+      "url": "https://cloud.google.com/console",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9990538071314622
+    },
+    {
+      "url": "https://revolut.com/en-PK",
+      "prediction": "PHISHING",
+      "p_phishing": 0.998938677243977
+    },
+    {
+      "url": "https://reddit.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9989280515049872
+    },
+    {
+      "url": "https://coinbase.com/signin",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9988759029060988
+    },
+    {
+      "url": "https://fiverr.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9988622928407459
+    },
+    {
+      "url": "https://payoneer.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9987788005805648
+    },
+    {
+      "url": "https://discord.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9987783192440207
+    },
+    {
+      "url": "https://twitter.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9987701252239959
+    },
+    {
+      "url": "https://wise.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9987050543200675
+    },
+    {
+      "url": "https://neteller.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9986950671140694
+    },
+    {
+      "url": "https://facebook.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9986533208149094
+    },
+    {
+      "url": "https://netflix.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9986229115716146
+    },
+    {
+      "url": "https://linkedin.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9984616101558795
+    },
+    {
+      "url": "https://olx.com.pk/jobs",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9963326035588719
+    },
+    {
+      "url": "https://dw.com/urdu",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9958775028150968
+    },
+    {
+      "url": "https://jobs.hec.gov.pk",
+      "prediction": "PHISHING",
+      "p_phishing": 0.6698938850218783
+    }
+  ],
+  "all_results": [
+    {
+      "url": "https://google.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008698117551615085
+    },
+    {
+      "url": "https://google.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008959070026949643
+    },
+    {
+      "url": "https://youtube.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00796277631501137
+    },
+    {
+      "url": "https://chatgpt.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.02159345823534497
+    },
+    {
+      "url": "https://openai.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.004044182985832241
+    },
+    {
+      "url": "https://gemini.google.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.10404788001654101
+    },
+    {
+      "url": "https://claude.ai",
+      "prediction": "BENIGN",
+      "p_phishing": 0.014095386453186363
+    },
+    {
+      "url": "https://bing.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.001483775735055543
+    },
+    {
+      "url": "https://microsoft.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.015101888649131702
+    },
+    {
+      "url": "https://apple.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0069964817735422395
+    },
+    {
+      "url": "https://accounts.google.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.01232110656382899
+    },
+    {
+      "url": "https://mail.google.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0071544189619252305
+    },
+    {
+      "url": "https://drive.google.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00860414839673739
+    },
+    {
+      "url": "https://login.live.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.005494055463488518
+    },
+    {
+      "url": "https://maps.google.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.009758322606864194
+    },
+    {
+      "url": "https://play.google.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0071544189619252305
+    },
+    {
+      "url": "https://support.google.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.010470472496663495
+    },
+    {
+      "url": "https://cloud.google.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00901173829492462
+    },
+    {
+      "url": "https://github.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008786774590597934
+    },
+    {
+      "url": "https://stackoverflow.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.011725216784656722
+    },
+    {
+      "url": "https://chat.deepseek.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.027478714357349585
+    },
+    {
+      "url": "https://canva.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0034880483101715066
+    },
+    {
+      "url": "https://whatsapp.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.03284591623955737
+    },
+    {
+      "url": "https://web.whatsapp.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008874067485883163
+    },
+    {
+      "url": "https://telegram.org",
+      "prediction": "BENIGN",
+      "p_phishing": 0.006561579825937708
+    },
+    {
+      "url": "https://zoom.us",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0012540820638325715
+    },
+    {
+      "url": "https://teams.microsoft.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.18552210766457758
+    },
+    {
+      "url": "https://adobe.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0048443103529555165
+    },
+    {
+      "url": "https://wordpress.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.027478714357349585
+    },
+    {
+      "url": "https://wikipedia.org",
+      "prediction": "BENIGN",
+      "p_phishing": 0.011990895614426279
+    },
+    {
+      "url": "https://daraz.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.004125032732714513
+    },
+    {
+      "url": "https://sellercenter.daraz.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.08477988063529332
+    },
+    {
+      "url": "https://priceoye.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.012213645754357972
+    },
+    {
+      "url": "https://olx.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0013321871538048429
+    },
+    {
+      "url": "https://samsung.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00796277631501137
+    },
+    {
+      "url": "https://shophive.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008874067485883163
+    },
+    {
+      "url": "https://telemart.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.016222039878449078
+    },
+    {
+      "url": "https://ishopping.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.011973950463181747
+    },
+    {
+      "url": "https://bagallery.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00481200597512839
+    },
+    {
+      "url": "https://naheed.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008722316940403147
+    },
+    {
+      "url": "https://alfatah.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.017355960406187563
+    },
+    {
+      "url": "https://carrefour.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.009682168000896437
+    },
+    {
+      "url": "https://vmart.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.006025418055733678
+    },
+    {
+      "url": "https://mega.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0019058455339162697
+    },
+    {
+      "url": "https://pakwheels.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00916764051412851
+    },
+    {
+      "url": "https://zameen.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.004044182985832241
+    },
+    {
+      "url": "https://graana.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008786774590597934
+    },
+    {
+      "url": "https://aliexpress.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.007761475605303892
+    },
+    {
+      "url": "https://amazon.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.007380399824467487
+    },
+    {
+      "url": "https://temu.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0019112931332976742
+    },
+    {
+      "url": "https://dawn.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0015730021743556905
+    },
+    {
+      "url": "https://jang.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0023919759430608687
+    },
+    {
+      "url": "https://urdupoint.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008954484847790937
+    },
+    {
+      "url": "https://propakistani.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.02200235120255991
+    },
+    {
+      "url": "https://geo.tv",
+      "prediction": "BENIGN",
+      "p_phishing": 0.002938994784487842
+    },
+    {
+      "url": "https://arynews.tv",
+      "prediction": "BENIGN",
+      "p_phishing": 0.019974701735029046
+    },
+    {
+      "url": "https://thenews.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.010045790012321015
+    },
+    {
+      "url": "https://tribune.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.007474961728003307
+    },
+    {
+      "url": "https://hamariweb.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.009757275293087507
+    },
+    {
+      "url": "https://express.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.017355960406187563
+    },
+    {
+      "url": "https://dunyanews.tv",
+      "prediction": "BENIGN",
+      "p_phishing": 0.009693006246898301
+    },
+    {
+      "url": "https://nation.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008698117551615085
+    },
+    {
+      "url": "https://brecorder.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008294680314194124
+    },
+    {
+      "url": "https://dailypakistan.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0219717553136794
+    },
+    {
+      "url": "https://samaa.tv",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00992098600465938
+    },
+    {
+      "url": "https://bbcurdu.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0071544189619252305
+    },
+    {
+      "url": "https://dw.com/urdu",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9958775028150968
+    },
+    {
+      "url": "https://independenturdu.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.009854701952355955
+    },
+    {
+      "url": "https://parhlo.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.007380399824467487
+    },
+    {
+      "url": "https://mangobaaz.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008954484847790937
+    },
+    {
+      "url": "https://nadra.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008261073616634432
+    },
+    {
+      "url": "https://id.nadra.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.002062867712772961
+    },
+    {
+      "url": "https://fbr.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0015337278287473042
+    },
+    {
+      "url": "https://e.fbr.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0010605543989475885
+    },
+    {
+      "url": "https://hec.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0013321871538048429
+    },
+    {
+      "url": "https://pakistan.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.014425051543463772
+    },
+    {
+      "url": "https://pbs.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0011666774807583414
+    },
+    {
+      "url": "https://dgip.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0029645758839783446
+    },
+    {
+      "url": "https://fpsc.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0029645758839783446
+    },
+    {
+      "url": "https://ppsc.gop.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.002130339217195476
+    },
+    {
+      "url": "https://pass.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.006289477199530404
+    },
+    {
+      "url": "https://punjab.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.015989801668294477
+    },
+    {
+      "url": "https://sindh.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.005946087902868218
+    },
+    {
+      "url": "https://kpk.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0009675765560403232
+    },
+    {
+      "url": "https://balochistan.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00857903171698784
+    },
+    {
+      "url": "https://ajk.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0013321871538048429
+    },
+    {
+      "url": "https://moitt.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.009424796455192121
+    },
+    {
+      "url": "https://secp.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0029645758839783446
+    },
+    {
+      "url": "https://fbc.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0015337278287473042
+    },
+    {
+      "url": "https://fia.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0015337278287473042
+    },
+    {
+      "url": "https://vu.edu.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0017766692353962746
+    },
+    {
+      "url": "https://vulms.vu.edu.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0023752756676862084
+    },
+    {
+      "url": "https://nust.edu.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.002662816840430076
+    },
+    {
+      "url": "https://lms.nust.edu.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0029645758839783446
+    },
+    {
+      "url": "https://bahria.edu.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.007686445814310272
+    },
+    {
+      "url": "https://uettaxila.edu.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.012931290861813058
+    },
+    {
+      "url": "https://pu.edu.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0014232672085296438
+    },
+    {
+      "url": "https://lums.edu.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0023752756676862084
+    },
+    {
+      "url": "https://aiou.edu.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0020510352360510738
+    },
+    {
+      "url": "https://papacambridge.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.011051271957773213
+    },
+    {
+      "url": "https://ilmkidunya.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.006115799787182068
+    },
+    {
+      "url": "https://biselashore.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00982631754180414
+    },
+    {
+      "url": "https://fbise.edu.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.005946087902868218
+    },
+    {
+      "url": "https://biseisb.edu.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.007369975893774076
+    },
+    {
+      "url": "https://nts.org.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0011666774807583414
+    },
+    {
+      "url": "https://coursera.org",
+      "prediction": "BENIGN",
+      "p_phishing": 0.006561579825937708
+    },
+    {
+      "url": "https://udemy.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0048443103529555165
+    },
+    {
+      "url": "https://khanacademy.org",
+      "prediction": "BENIGN",
+      "p_phishing": 0.01076652369208454
+    },
+    {
+      "url": "https://researchgate.net",
+      "prediction": "BENIGN",
+      "p_phishing": 0.01622290372892597
+    },
+    {
+      "url": "https://academia.edu",
+      "prediction": "BENIGN",
+      "p_phishing": 0.006561579825937708
+    },
+    {
+      "url": "https://hbl.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0008130110729274519
+    },
+    {
+      "url": "https://meezanbank.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00827320892920197
+    },
+    {
+      "url": "https://mcb.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0010884684263971214
+    },
+    {
+      "url": "https://ubldigital.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.009005704203968725
+    },
+    {
+      "url": "https://bankalfalah.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.010147412865591919
+    },
+    {
+      "url": "https://alliedbank.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.006115799787182068
+    },
+    {
+      "url": "https://askaribank.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.007761475605303892
+    },
+    {
+      "url": "https://faysalbank.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.009005704203968725
+    },
+    {
+      "url": "https://easypaisa.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.011476627055306582
+    },
+    {
+      "url": "https://jazzcash.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.011175350149717093
+    },
+    {
+      "url": "https://sadapay.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.017355960406187563
+    },
+    {
+      "url": "https://nayapay.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.011266082936265229
+    },
+    {
+      "url": "https://jazz.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0020510352360510738
+    },
+    {
+      "url": "https://telenor.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.010774005228506838
+    },
+    {
+      "url": "https://zong.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0020510352360510738
+    },
+    {
+      "url": "https://ufone.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0048443103529555165
+    },
+    {
+      "url": "https://nayatel.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.009556827065652848
+    },
+    {
+      "url": "https://stormfiber.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.007192539443111102
+    },
+    {
+      "url": "https://ptcl.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.006289477199530404
+    },
+    {
+      "url": "https://psx.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0011666774807583414
+    },
+    {
+      "url": "https://facebook.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008145922104135506
+    },
+    {
+      "url": "https://m.facebook.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.004044182985832241
+    },
+    {
+      "url": "https://instagram.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008954484847790937
+    },
+    {
+      "url": "https://x.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.06650145517199967
+    },
+    {
+      "url": "https://tiktok.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.012736106273941276
+    },
+    {
+      "url": "https://linkedin.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00860414839673739
+    },
+    {
+      "url": "https://reddit.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008786774590597934
+    },
+    {
+      "url": "https://pinterest.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.01080643795877312
+    },
+    {
+      "url": "https://snapchat.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0112014047987241
+    },
+    {
+      "url": "https://netflix.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.009002805130523768
+    },
+    {
+      "url": "https://tamashaweb.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.014845540742688864
+    },
+    {
+      "url": "https://spotify.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.011266082936265229
+    },
+    {
+      "url": "https://soundcloud.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00787213870742146
+    },
+    {
+      "url": "https://espncricinfo.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.01013004326806621
+    },
+    {
+      "url": "https://cricbuzz.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008145922104135506
+    },
+    {
+      "url": "https://pcb.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0011666774807583414
+    },
+    {
+      "url": "https://psl-t20.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.18467225470522913
+    },
+    {
+      "url": "https://twitch.tv",
+      "prediction": "BENIGN",
+      "p_phishing": 0.019345197650836074
+    },
+    {
+      "url": "https://steampowered.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.01169789664287847
+    },
+    {
+      "url": "https://roblox.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008786774590597934
+    },
+    {
+      "url": "https://rozee.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.004125032732714513
+    },
+    {
+      "url": "https://mustakbil.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.009800858411472654
+    },
+    {
+      "url": "https://fiverr.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.004471657844300752
+    },
+    {
+      "url": "https://upwork.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00802864702708986
+    },
+    {
+      "url": "https://freelancer.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.007761475605303892
+    },
+    {
+      "url": "https://notion.so",
+      "prediction": "BENIGN",
+      "p_phishing": 0.011365605694942644
+    },
+    {
+      "url": "https://trello.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008959070026949643
+    },
+    {
+      "url": "https://slack.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0034880483101715066
+    },
+    {
+      "url": "https://marham.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00983101925534833
+    },
+    {
+      "url": "https://oladoc.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008959070026949643
+    },
+    {
+      "url": "https://healthwire.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.017018749433649904
+    },
+    {
+      "url": "https://sehat.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008726061519310985
+    },
+    {
+      "url": "https://dawaai.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.011691937011977504
+    },
+    {
+      "url": "https://shifa.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.005946087902868218
+    },
+    {
+      "url": "https://aku.edu",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0008130110729274519
+    },
+    {
+      "url": "https://indriver.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00860414839673739
+    },
+    {
+      "url": "https://foodpanda.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.010399194718098291
+    },
+    {
+      "url": "https://cheezious.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.011990895614426279
+    },
+    {
+      "url": "https://sastaticket.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.02496883055762782
+    },
+    {
+      "url": "https://bookme.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008722316940403147
+    },
+    {
+      "url": "https://console.aws.amazon.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.21231823719006382
+    },
+    {
+      "url": "https://portal.azure.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.005795535953494479
+    },
+    {
+      "url": "https://dash.cloudflare.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008737773897451563
+    },
+    {
+      "url": "https://login.yahoo.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.007513084755472835
+    },
+    {
+      "url": "https://mail.yahoo.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.007380399824467487
+    },
+    {
+      "url": "https://business.facebook.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.011715772213394085
+    },
+    {
+      "url": "https://adsmanager.facebook.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.013425820963862918
+    },
+    {
+      "url": "https://studio.youtube.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00787213870742146
+    },
+    {
+      "url": "https://analytics.google.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.009910860469317204
+    },
+    {
+      "url": "https://ads.google.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.004044182985832241
+    },
+    {
+      "url": "https://search.google.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.011990895614426279
+    },
+    {
+      "url": "https://cloud.google.com/console",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9990538071314622
+    },
+    {
+      "url": "https://appstoreconnect.apple.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.2934705957053552
+    },
+    {
+      "url": "https://icloud.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.004044182985832241
+    },
+    {
+      "url": "https://dropbox.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00796277631501137
+    },
+    {
+      "url": "https://wetransfer.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.007926331345203916
+    },
+    {
+      "url": "https://mega.nz",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0024206818980788396
+    },
+    {
+      "url": "https://virustotal.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.007816904631740099
+    },
+    {
+      "url": "https://speedtest.net",
+      "prediction": "BENIGN",
+      "p_phishing": 0.21387318219017562
+    },
+    {
+      "url": "https://fast.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0019112931332976742
+    },
+    {
+      "url": "https://ilovepdf.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00860414839673739
+    },
+    {
+      "url": "https://smallpdf.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.010736437969729838
+    },
+    {
+      "url": "https://bitly.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.004641424165296201
+    },
+    {
+      "url": "https://tinyurl.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.009002805130523768
+    },
+    {
+      "url": "https://scribd.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.004044182985832241
+    },
+    {
+      "url": "https://medium.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008786774590597934
+    },
+    {
+      "url": "https://quora.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0048443103529555165
+    },
+    {
+      "url": "https://archive.org",
+      "prediction": "BENIGN",
+      "p_phishing": 0.006431401441655558
+    },
+    {
+      "url": "https://pypi.org",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0019112931332976742
+    },
+    {
+      "url": "https://npmjs.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0032179288986606126
+    },
+    {
+      "url": "https://whatmobile.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.010830297785970349
+    },
+    {
+      "url": "https://mobshark.net",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008145922104135506
+    },
+    {
+      "url": "https://novavexis.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.006372622942205576
+    },
+    {
+      "url": "https://jobz.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0019058455339162697
+    },
+    {
+      "url": "https://gotest.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.011691937011977504
+    },
+    {
+      "url": "https://pakistan.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.006561579825937708
+    },
+    {
+      "url": "https://dunya.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.006393685797623238
+    },
+    {
+      "url": "https://hum.tv",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0034831203011604426
+    },
+    {
+      "url": "https://kfc.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0010884684263971214
+    },
+    {
+      "url": "https://mcdonalds.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.010580113853916034
+    },
+    {
+      "url": "https://pizzahut.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.011132216988627156
+    },
+    {
+      "url": "https://dominos.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.006468257054054757
+    },
+    {
+      "url": "https://ccl.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0011666774807583414
+    },
+    {
+      "url": "https://getzpharma.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.007192539443111102
+    },
+    {
+      "url": "https://pharma.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008479592555378068
+    },
+    {
+      "url": "https://dawat-e-islami.net",
+      "prediction": "BENIGN",
+      "p_phishing": 0.07382866124538467
+    },
+    {
+      "url": "https://quran.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.002794073174191219
+    },
+    {
+      "url": "https://islamicfinder.org",
+      "prediction": "BENIGN",
+      "p_phishing": 0.010400822577981111
+    },
+    {
+      "url": "https://par.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0011851521749008356
+    },
+    {
+      "url": "https://engro.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0048443103529555165
+    },
+    {
+      "url": "https://luck-core.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.048857288809751355
+    },
+    {
+      "url": "https://descon.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.007380399824467487
+    },
+    {
+      "url": "https://netsoltech.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.01184416830725085
+    },
+    {
+      "url": "https://systems-ltd.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.045979769223997026
+    },
+    {
+      "url": "https://trgpakistan.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.010147412865591919
+    },
+    {
+      "url": "https://ptcl.com.pk/customer-login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9998948049827494
+    },
+    {
+      "url": "https://sngpl.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.012200265732954378
+    },
+    {
+      "url": "https://lesco.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.005946087902868218
+    },
+    {
+      "url": "https://ke.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0017766692353962746
+    },
+    {
+      "url": "https://mepco.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.024000412512972708
+    },
+    {
+      "url": "https://gepco.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008726061519310985
+    },
+    {
+      "url": "https://hesco.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.007564470489266482
+    },
+    {
+      "url": "https://iesco.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.007564470489266482
+    },
+    {
+      "url": "https://pesco.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008726061519310985
+    },
+    {
+      "url": "https://sepco.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.024000412512972708
+    },
+    {
+      "url": "https://pide.org.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0022364584606512387
+    },
+    {
+      "url": "https://fauji.org.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.006393685797623238
+    },
+    {
+      "url": "https://askari.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00983101925534833
+    },
+    {
+      "url": "https://dha-lahore.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.025875502707910863
+    },
+    {
+      "url": "https://dhakarachi.org",
+      "prediction": "BENIGN",
+      "p_phishing": 0.013816927018326902
+    },
+    {
+      "url": "https://dhaislamabad.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.009851259485002973
+    },
+    {
+      "url": "https://bahriatown.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.007926331345203916
+    },
+    {
+      "url": "https://citi-housing.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.04652631977655975
+    },
+    {
+      "url": "https://olx.com.pk/jobs",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9963326035588719
+    },
+    {
+      "url": "https://daraz.pk/customer/account/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999987609458731
+    },
+    {
+      "url": "https://fiverr.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9988622928407459
+    },
+    {
+      "url": "https://upwork.com/ab/account-security/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999956306680731
+    },
+    {
+      "url": "https://linkedin.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9984616101558795
+    },
+    {
+      "url": "https://facebook.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9986533208149094
+    },
+    {
+      "url": "https://instagram.com/accounts/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9998427787270897
+    },
+    {
+      "url": "https://twitter.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9987701252239959
+    },
+    {
+      "url": "https://reddit.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9989280515049872
+    },
+    {
+      "url": "https://slack.com/signin",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9995598976243989
+    },
+    {
+      "url": "https://discord.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9987783192440207
+    },
+    {
+      "url": "https://zoom.us/signin",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9993943439614296
+    },
+    {
+      "url": "https://netflix.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9986229115716146
+    },
+    {
+      "url": "https://spotify.com/pk-en/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9998051770727348
+    },
+    {
+      "url": "https://appleid.apple.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.013413131698236975
+    },
+    {
+      "url": "https://id.cisco.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.002069581863965042
+    },
+    {
+      "url": "https://login.oracle.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00860414839673739
+    },
+    {
+      "url": "https://auth.docker.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.006431401441655558
+    },
+    {
+      "url": "https://tinder.com/app/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9996208532647095
+    },
+    {
+      "url": "https://binance.com/en/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9994814733946585
+    },
+    {
+      "url": "https://coinbase.com/signin",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9988759029060988
+    },
+    {
+      "url": "https://tradingview.com/accounts/signin",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9999589935240062
+    },
+    {
+      "url": "https://investing.com/registration",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9995644223254964
+    },
+    {
+      "url": "https://stripe.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9991399584101828
+    },
+    {
+      "url": "https://payoneer.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9987788005805648
+    },
+    {
+      "url": "https://wise.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9987050543200675
+    },
+    {
+      "url": "https://revolut.com/en-PK",
+      "prediction": "PHISHING",
+      "p_phishing": 0.998938677243977
+    },
+    {
+      "url": "https://skrill.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9991399584101828
+    },
+    {
+      "url": "https://neteller.com/login",
+      "prediction": "PHISHING",
+      "p_phishing": 0.9986950671140694
+    },
+    {
+      "url": "https://perfectmoney.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.010573375548346545
+    },
+    {
+      "url": "https://paisa.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.004731303259593435
+    },
+    {
+      "url": "https://procheck.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.01487526909307067
+    },
+    {
+      "url": "https://pakistanpost.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0137665078656657
+    },
+    {
+      "url": "https://tcscourier.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008554647791775172
+    },
+    {
+      "url": "https://leopardscourier.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0085538980733841
+    },
+    {
+      "url": "https://m-p.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008390988277773393
+    },
+    {
+      "url": "https://piac.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0029645758839783446
+    },
+    {
+      "url": "https://airblue.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.004938525002811099
+    },
+    {
+      "url": "https://sereneair.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008954484847790937
+    },
+    {
+      "url": "https://flyjinnah.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00481200597512839
+    },
+    {
+      "url": "https://daewoo.com.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.009103404420384405
+    },
+    {
+      "url": "https://faisalmovers.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.007331486733969894
+    },
+    {
+      "url": "https://bilal-travels.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.04309036356592703
+    },
+    {
+      "url": "https://niazibus.com",
+      "prediction": "BENIGN",
+      "p_phishing": 0.00860414839673739
+    },
+    {
+      "url": "https://e-portal.hec.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.03266521542170131
+    },
+    {
+      "url": "https://degreerequest.hec.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.11333913260898822
+    },
+    {
+      "url": "https://attestation.hec.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.04072689481451217
+    },
+    {
+      "url": "https://jobs.hec.gov.pk",
+      "prediction": "PHISHING",
+      "p_phishing": 0.6698938850218783
+    },
+    {
+      "url": "https://njp.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0011851521749008356
+    },
+    {
+      "url": "https://pmo.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0011666774807583414
+    },
+    {
+      "url": "https://citizenportal.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.01338101131143186
+    },
+    {
+      "url": "https://na.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.0035559189256726
+    },
+    {
+      "url": "https://senate.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.008698117551615085
+    },
+    {
+      "url": "https://supremecourt.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.01175561478428613
+    },
+    {
+      "url": "https://lahorehighcourt.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.01160945128788594
+    },
+    {
+      "url": "https://shariatcourt.gov.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.010793442051818215
+    },
+    {
+      "url": "https://pakistan.pk",
+      "prediction": "BENIGN",
+      "p_phishing": 0.011115729186567539
+    }
+  ]
+}

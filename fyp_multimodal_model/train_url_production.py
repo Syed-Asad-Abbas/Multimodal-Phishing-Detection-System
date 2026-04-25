@@ -24,15 +24,21 @@ COMPUTABLE_URL_FEATURES = [
     "URLLength",          # ✅ len(url)
     "DomainLength",       # ✅ len(domain)
     "IsDomainIP",         # ✅ regex check
-    "URLSimilarityIndex", # ✅ unique_chars / total_chars
-    "CharContinuationRate", # ✅ max_consecutive_chars / total
-    "TLDLegitimateProb",  # ✅ NOW INCLUDED (Heuristic approximation)
-    "URLCharProb",        # ✅ NOW INCLUDED (Heuristic approximation)
+    "URLSimilarityIndex", # ✅ unique_chars / total * 100
+    "CharContinuationRate", # ✅ max_consecutive / total
     "TLDLength",          # ✅ len(tld)
-    "NoOfSubDomain",      # ✅ count(domain.split('.')) - 2
-    "HasObfuscation",     # ✅ check for @, %, etc.
+    "NoOfSubDomain",      # ✅ count with prefix stripping
+    "HasObfuscation",     # ✅ @, %, \\ present
     "NoOfObfuscatedChar", # ✅ count obfuscation chars
-    "ObfuscationRatio"    # ✅ obfuscated / total
+    "ObfuscationRatio",   # ✅ obfuscated / total
+    "DomainDigitRatio",   # ✅ NEW: digits in domain / domain length
+    "DomainHyphenCount",  # ✅ NEW: number of hyphens in domain
+    "MaxDigitRunLength",  # ✅ NEW: longest consecutive digit sequence
+    "URLEntropy",         # ✅ NEW: Shannon entropy of URL string
+    "IsSLDNumeric",       # ✅ NEW: is second-level domain purely numeric
+    "PathDepth",          # ✅ NEW: number of URL path segments
+    "HasIDNHomograph",    # ✅ NEW: Unicode/Punycode spoofing detection
+    "BrandKeywordInSLD",  # ✅ NEW: brand keyword in second-level domain
 ]
 
 def select_features(df, wanted):
@@ -55,8 +61,6 @@ def main():
     print(f"\nDataset size: {len(df)}")
     print(f"\nDataset size: {len(df)}")
     print(f"Features used: {len(COMPUTABLE_URL_FEATURES)} (Full Feature Set)")
-    print(f"Included Heuristic Features: TLDLegitimateProb, URLCharProb")
-    print(f"  Reason: Enabled by Three Buckets Strategy")
 
     # Select computable features only
     y = df["label"].astype(int).values

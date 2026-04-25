@@ -1,60 +1,62 @@
 {
-  "accuracy": 0.9982612014673763,
+  "accuracy": 0.9875739519497869,
   "report": {
     "0": {
-      "precision": 0.9998011434253045,
-      "recall": 0.9961365099806826,
-      "f1-score": 0.9979654624851131,
-      "support": 20189.0
-    },
-    "1": {
-      "precision": 0.9971158112705221,
-      "recall": 0.999851687059696,
-      "f1-score": 0.9984818750694264,
+      "precision": 0.9831526516261354,
+      "recall": 0.9953281423804227,
+      "f1-score": 0.9892029332645466,
       "support": 26970.0
     },
-    "accuracy": 0.9982612014673763,
+    "1": {
+      "precision": 0.993653991437925,
+      "recall": 0.9772153152706919,
+      "f1-score": 0.9853660972929777,
+      "support": 20189.0
+    },
+    "accuracy": 0.9875739519497869,
     "macro avg": {
-      "precision": 0.9984584773479133,
-      "recall": 0.9979940985201893,
-      "f1-score": 0.9982236687772698,
+      "precision": 0.9884033215320303,
+      "recall": 0.9862717288255574,
+      "f1-score": 0.9872845152787622,
       "support": 47159.0
     },
     "weighted avg": {
-      "precision": 0.9982654151822442,
-      "recall": 0.9982612014673763,
-      "f1-score": 0.998260796300481,
+      "precision": 0.987648326883461,
+      "recall": 0.9875739519497869,
+      "f1-score": 0.9875603649015617,
       "support": 47159.0
     }
   },
   "confusion_matrix": [
     [
-      20111,
-      78
+      26844,
+      126
     ],
     [
-      4,
-      26966
+      460,
+      19729
     ]
   ],
-  "FPR": 0.0038634900193172585,
-  "FNR": 0.00014831294030403602,
-  "MCC": 0.9964524676603904,
-  "ROC_AUC": 0.9987022985034656,
+  "FPR": 0.004671857619577135,
+  "FNR": 0.02278468472930691,
+  "MCC": 0.9746727194818267,
+  "ROC_AUC": 0.9944656193263611,
   "features_used": [
     "URLLength",
     "DomainLength",
     "IsDomainIP",
-    "URLSimilarityIndex",
-    "CharContinuationRate",
-    "TLDLegitimateProb",
-    "URLCharProb",
     "TLDLength",
     "NoOfSubDomain",
     "HasObfuscation",
     "NoOfObfuscatedChar",
-    "ObfuscationRatio"
+    "ObfuscationRatio",
+    "DomainDigitRatio",
+    "DomainHyphenCount",
+    "MaxDigitRunLength",
+    "URLEntropy",
+    "IsSLDNumeric",
+    "HasIDNHomograph",
+    "BrandKeywordInSLD"
   ],
-  "num_features": 12,
-  "note": "Production model using only computable features (no external databases required)"
+  "note": "Trained on inference-time feature values \u2014 covariate shift eliminated"
 }

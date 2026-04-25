@@ -1,0 +1,954 @@
+[
+  {
+    "url": "https://www.google.com",
+    "prediction": "BENIGN",
+    "confidence": 0.999980807903544,
+    "fusion_probability_phishing": 1.9192096455933855e-05,
+    "modality_scores": {
+      "url": 0.0008947435110960772,
+      "dom": 0.9781229162523309,
+      "visual": 0.07312747836112976
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "PHISHING",
+      "visual": "BENIGN"
+    },
+    "modality_confidence": {
+      "url": -0.9982105129778078,
+      "dom": 0.9562458325046619,
+      "visual": -0.8537450432777405
+    },
+    "modality_available": {
+      "url": true,
+      "dom": true,
+      "visual": true
+    },
+    "page_info": {
+      "fetch_success": true,
+      "page_title": "Google",
+      "final_url": "https://www.google.com/",
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777024696426.png"
+    },
+    "dom_features": {
+      "HasForm": 1,
+      "NoOfForm": 1,
+      "HasPasswordField": 0,
+      "NoOfHiddenInputs": 4,
+      "NoOfImage": 10,
+      "NoOfExternalImage": 0,
+      "NoOfJS": 19,
+      "NoOfExternalJS": 1,
+      "NoOfLinks": 18,
+      "NoOfExternalLinks": 15,
+      "HasIframe": 0,
+      "NoOfIframe": 0,
+      "SuspiciousFormAction": 0,
+      "Bank": 0,
+      "Pay": 0,
+      "Crypto": 0
+    },
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "DomainLength": -2.9640175325701668,
+        "CharContinuationRate": -2.332520228103207,
+        "URLLength": -1.692322969579438,
+        "PathDepth": -0.2895298805331057,
+        "DomainDigitRatio": -0.2555524681896929
+      },
+      "fusion_contribution": {
+        "url": 0.9433605735848113,
+        "dom": 0.056639426415188786,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "DomainLength",
+          "value": 14.0,
+          "shap_impact": -2.9640175325701668,
+          "abs_impact": 2.9640175325701668
+        },
+        {
+          "feature": "CharContinuationRate",
+          "value": 0.13636363636363635,
+          "shap_impact": -2.332520228103207,
+          "abs_impact": 2.332520228103207
+        },
+        {
+          "feature": "URLLength",
+          "value": 22.0,
+          "shap_impact": -1.692322969579438,
+          "abs_impact": 1.692322969579438
+        },
+        {
+          "feature": "PathDepth",
+          "value": 0.0,
+          "shap_impact": -0.2895298805331057,
+          "abs_impact": 0.2895298805331057
+        },
+        {
+          "feature": "DomainDigitRatio",
+          "value": 0.0,
+          "shap_impact": -0.2555524681896929,
+          "abs_impact": 0.2555524681896929
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.957554897191146,
+          "dom": -0.5378121427435926,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.9433605735848113,
+          "dom": 0.056639426415188786,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": "142.251.154.119",
+      "geo": {
+        "country": "United States",
+        "lat": 37.4225,
+        "long": -122.085
+      }
+    }
+  },
+  {
+    "url": "https://www.github.com",
+    "prediction": "BENIGN",
+    "confidence": 0.999980807903544,
+    "fusion_probability_phishing": 1.9192096455933855e-05,
+    "modality_scores": {
+      "url": 0.0010828044483887761,
+      "dom": 0.9676766863039572,
+      "visual": 0.6898124814033508
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "PHISHING",
+      "visual": "PHISHING"
+    },
+    "modality_confidence": {
+      "url": -0.9978343911032225,
+      "dom": 0.9353533726079144,
+      "visual": 0.37962496280670166
+    },
+    "modality_available": {
+      "url": true,
+      "dom": true,
+      "visual": true
+    },
+    "page_info": {
+      "fetch_success": true,
+      "page_title": "GitHub \u00b7 Change is constant. GitHub keeps you ahead. \u00b7 GitHub",
+      "final_url": "https://github.com/",
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777024713117.png"
+    },
+    "dom_features": {
+      "HasForm": 1,
+      "NoOfForm": 5,
+      "HasPasswordField": 0,
+      "NoOfHiddenInputs": 7,
+      "NoOfImage": 24,
+      "NoOfExternalImage": 3,
+      "NoOfJS": 62,
+      "NoOfExternalJS": 55,
+      "NoOfLinks": 153,
+      "NoOfExternalLinks": 98,
+      "HasIframe": 0,
+      "NoOfIframe": 0,
+      "SuspiciousFormAction": 0,
+      "Bank": 0,
+      "Pay": 0,
+      "Crypto": 0
+    },
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "DomainLength": -2.877217964244503,
+        "CharContinuationRate": -2.3185930990228796,
+        "URLLength": -1.6747184583762376,
+        "PathDepth": -0.28994332811010637,
+        "DomainDigitRatio": -0.24279015238216722
+      },
+      "fusion_contribution": {
+        "url": 0.9498920081954346,
+        "dom": 0.050107991804565495,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "DomainLength",
+          "value": 14.0,
+          "shap_impact": -2.877217964244503,
+          "abs_impact": 2.877217964244503
+        },
+        {
+          "feature": "CharContinuationRate",
+          "value": 0.13636363636363635,
+          "shap_impact": -2.3185930990228796,
+          "abs_impact": 2.3185930990228796
+        },
+        {
+          "feature": "URLLength",
+          "value": 22.0,
+          "shap_impact": -1.6747184583762376,
+          "abs_impact": 1.6747184583762376
+        },
+        {
+          "feature": "PathDepth",
+          "value": 0.0,
+          "shap_impact": -0.28994332811010637,
+          "abs_impact": 0.28994332811010637
+        },
+        {
+          "feature": "DomainDigitRatio",
+          "value": 0.0,
+          "shap_impact": -0.24279015238216722,
+          "abs_impact": 0.24279015238216722
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -9.019573266116344,
+          "dom": -0.475793773818391,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.9498920081954346,
+          "dom": 0.050107991804565495,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": "20.207.73.82",
+      "geo": {
+        "country": "India",
+        "lat": 18.5144,
+        "long": 73.864235
+      }
+    }
+  },
+  {
+    "url": "https://www.wikipedia.org",
+    "prediction": "PHISHING",
+    "confidence": 0.543527020553412,
+    "fusion_probability_phishing": 0.543527020553412,
+    "modality_scores": {
+      "url": 0.003962337877121499,
+      "dom": 0.00755430724850364,
+      "visual": 0.46551287174224854
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "BENIGN",
+      "visual": "BENIGN"
+    },
+    "modality_confidence": {
+      "url": -0.992075324245757,
+      "dom": -0.9848913855029927,
+      "visual": -0.06897425651550293
+    },
+    "modality_available": {
+      "url": true,
+      "dom": true,
+      "visual": true
+    },
+    "page_info": {
+      "fetch_success": true,
+      "page_title": "Wikipedia",
+      "final_url": "https://www.wikipedia.org/",
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777024728193.png"
+    },
+    "dom_features": {
+      "HasForm": 1,
+      "NoOfForm": 1,
+      "HasPasswordField": 0,
+      "NoOfHiddenInputs": 2,
+      "NoOfImage": 1,
+      "NoOfExternalImage": 0,
+      "NoOfJS": 4,
+      "NoOfExternalJS": 0,
+      "NoOfLinks": 375,
+      "NoOfExternalLinks": 8,
+      "HasIframe": 0,
+      "NoOfIframe": 0,
+      "SuspiciousFormAction": 0,
+      "Bank": 0,
+      "Pay": 0,
+      "Crypto": 0
+    },
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "DomainLength": -3.6437523144168322,
+        "CharContinuationRate": -1.3724253671300786,
+        "URLLength": -1.2997861463637492,
+        "URLEntropy": 0.37708417026328517,
+        "PathDepth": -0.28388024233787434
+      },
+      "fusion_contribution": {
+        "url": 0.4473913693845315,
+        "dom": 0.5526086306154685,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "DomainLength",
+          "value": 17.0,
+          "shap_impact": -3.6437523144168322,
+          "abs_impact": 3.6437523144168322
+        },
+        {
+          "feature": "CharContinuationRate",
+          "value": 0.12,
+          "shap_impact": -1.3724253671300786,
+          "abs_impact": 1.3724253671300786
+        },
+        {
+          "feature": "URLLength",
+          "value": 25.0,
+          "shap_impact": -1.2997861463637492,
+          "abs_impact": 1.2997861463637492
+        },
+        {
+          "feature": "URLEntropy",
+          "value": 3.813661,
+          "shap_impact": 0.37708417026328517,
+          "abs_impact": 0.37708417026328517
+        },
+        {
+          "feature": "PathDepth",
+          "value": 0.0,
+          "shap_impact": -0.28388024233787434,
+          "abs_impact": 0.28388024233787434
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -6.548937903008491,
+          "dom": 8.089113590961432,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.4473913693845315,
+          "dom": 0.5526086306154685,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": "103.102.166.224",
+      "geo": {
+        "country": "United States",
+        "lat": 37.7892,
+        "long": -122.402
+      }
+    }
+  },
+  {
+    "url": "https://www.microsoft.com",
+    "prediction": "BENIGN",
+    "confidence": 0.999937833761589,
+    "fusion_probability_phishing": 6.216623841109604e-05,
+    "modality_scores": {
+      "url": 0.004698573392224094,
+      "dom": 0.9835715574556776,
+      "visual": 0.7003820538520813
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "PHISHING",
+      "visual": "PHISHING"
+    },
+    "modality_confidence": {
+      "url": -0.9906028532155519,
+      "dom": 0.9671431149113552,
+      "visual": 0.4007641077041626
+    },
+    "modality_available": {
+      "url": true,
+      "dom": true,
+      "visual": true
+    },
+    "page_info": {
+      "fetch_success": true,
+      "page_title": "Microsoft \u2013 AI, Cloud, Productivity, Gaming & Apps",
+      "final_url": "https://www.microsoft.com/en-pk",
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777024746356.png"
+    },
+    "dom_features": {
+      "HasForm": 1,
+      "NoOfForm": 1,
+      "HasPasswordField": 0,
+      "NoOfHiddenInputs": 0,
+      "NoOfImage": 17,
+      "NoOfExternalImage": 17,
+      "NoOfJS": 78,
+      "NoOfExternalJS": 15,
+      "NoOfLinks": 100,
+      "NoOfExternalLinks": 97,
+      "HasIframe": 1,
+      "NoOfIframe": 3,
+      "SuspiciousFormAction": 0,
+      "Bank": 0,
+      "Pay": 0,
+      "Crypto": 0
+    },
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "DomainLength": -3.671994302778241,
+        "CharContinuationRate": -1.2692247688914773,
+        "URLLength": -1.215020474580483,
+        "PathDepth": -0.28259060422833815,
+        "URLEntropy": 0.26424045738013285
+      },
+      "fusion_contribution": {
+        "url": 0.921903068974434,
+        "dom": 0.07809693102556603,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "DomainLength",
+          "value": 17.0,
+          "shap_impact": -3.671994302778241,
+          "abs_impact": 3.671994302778241
+        },
+        {
+          "feature": "CharContinuationRate",
+          "value": 0.12,
+          "shap_impact": -1.2692247688914773,
+          "abs_impact": 1.2692247688914773
+        },
+        {
+          "feature": "URLLength",
+          "value": 25.0,
+          "shap_impact": -1.215020474580483,
+          "abs_impact": 1.215020474580483
+        },
+        {
+          "feature": "PathDepth",
+          "value": 0.0,
+          "shap_impact": -0.28259060422833815,
+          "abs_impact": 0.28259060422833815
+        },
+        {
+          "feature": "URLEntropy",
+          "value": 3.67327,
+          "shap_impact": 0.26424045738013285,
+          "abs_impact": 0.26424045738013285
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -7.670243263491672,
+          "dom": -0.649767290355808,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.921903068974434,
+          "dom": 0.07809693102556603,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": "23.41.38.100",
+      "geo": {
+        "country": "Singapore",
+        "lat": 1.35208,
+        "long": 103.82
+      }
+    }
+  },
+  {
+    "url": "https://www.stackoverflow.com",
+    "prediction": "BENIGN",
+    "confidence": 0.9996826579418339,
+    "fusion_probability_phishing": 0.0003173420581661423,
+    "modality_scores": {
+      "url": 0.003339581277542712,
+      "dom": 0.9488588791079032,
+      "visual": 0.9510798454284668
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "PHISHING",
+      "visual": "PHISHING"
+    },
+    "modality_confidence": {
+      "url": -0.9933208374449146,
+      "dom": 0.8977177582158065,
+      "visual": 0.9021596908569336
+    },
+    "modality_available": {
+      "url": true,
+      "dom": true,
+      "visual": true
+    },
+    "page_info": {
+      "fetch_success": true,
+      "page_title": "Newest Questions - Stack Overflow",
+      "final_url": "https://stackoverflow.com/questions",
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777024763452.png"
+    },
+    "dom_features": {
+      "HasForm": 1,
+      "NoOfForm": 8,
+      "HasPasswordField": 1,
+      "NoOfHiddenInputs": 19,
+      "NoOfImage": 17,
+      "NoOfExternalImage": 16,
+      "NoOfJS": 67,
+      "NoOfExternalJS": 42,
+      "NoOfLinks": 215,
+      "NoOfExternalLinks": 88,
+      "HasIframe": 1,
+      "NoOfIframe": 5,
+      "SuspiciousFormAction": 0,
+      "Bank": 0,
+      "Pay": 1,
+      "Crypto": 1
+    },
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "DomainLength": -3.3357616857246124,
+        "URLLength": -1.6962402271949613,
+        "CharContinuationRate": -0.9243745496603369,
+        "PathDepth": -0.2813361799949396,
+        "NoOfSubDomain": -0.22808509994465678
+      },
+      "fusion_contribution": {
+        "url": 0.8581819823296949,
+        "dom": 0.14181801767030508,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "DomainLength",
+          "value": 21.0,
+          "shap_impact": -3.3357616857246124,
+          "abs_impact": 3.3357616857246124
+        },
+        {
+          "feature": "URLLength",
+          "value": 29.0,
+          "shap_impact": -1.6962402271949613,
+          "abs_impact": 1.6962402271949613
+        },
+        {
+          "feature": "CharContinuationRate",
+          "value": 0.10344827586206896,
+          "shap_impact": -0.9243745496603369,
+          "abs_impact": 0.9243745496603369
+        },
+        {
+          "feature": "PathDepth",
+          "value": 0.0,
+          "shap_impact": -0.2813361799949396,
+          "abs_impact": 0.2813361799949396
+        },
+        {
+          "feature": "NoOfSubDomain",
+          "value": 0.0,
+          "shap_impact": -0.22808509994465678,
+          "abs_impact": 0.22808509994465678
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -8.013919523586532,
+          "dom": 1.3243323723939149,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.8581819823296949,
+          "dom": 0.14181801767030508,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": "198.252.206.1",
+      "geo": {
+        "country": "United States",
+        "lat": 40.7088,
+        "long": -74.0068
+      }
+    }
+  },
+  {
+    "url": "https://www.reddit.com",
+    "prediction": "BENIGN",
+    "confidence": 0.9999763274475015,
+    "fusion_probability_phishing": 2.3672552498427796e-05,
+    "modality_scores": {
+      "url": 0.0010828044483887761,
+      "dom": 0.961412707442032,
+      "visual": 0.962810754776001
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "PHISHING",
+      "visual": "PHISHING"
+    },
+    "modality_confidence": {
+      "url": -0.9978343911032225,
+      "dom": 0.922825414884064,
+      "visual": 0.925621509552002
+    },
+    "modality_available": {
+      "url": true,
+      "dom": true,
+      "visual": true
+    },
+    "page_info": {
+      "fetch_success": true,
+      "page_title": "Reddit - The heart of the internet",
+      "final_url": "https://www.reddit.com/?solution=e20435aa7c7ebd9be20435aa7c7ebd9b&js_challenge=1&token=bbbe4bf1c9a2b5160829c4be34da586102a903fbb80a0ea160a3968d7e4e25c4&jsc_orig_r=",
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777024781743.png"
+    },
+    "dom_features": {
+      "HasForm": 1,
+      "NoOfForm": 1,
+      "HasPasswordField": 0,
+      "NoOfHiddenInputs": 0,
+      "NoOfImage": 140,
+      "NoOfExternalImage": 132,
+      "NoOfJS": 71,
+      "NoOfExternalJS": 12,
+      "NoOfLinks": 196,
+      "NoOfExternalLinks": 35,
+      "HasIframe": 1,
+      "NoOfIframe": 2,
+      "SuspiciousFormAction": 0,
+      "Bank": 0,
+      "Pay": 0,
+      "Crypto": 0
+    },
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "DomainLength": -2.877217964244503,
+        "CharContinuationRate": -2.3185930990228796,
+        "URLLength": -1.6747184583762376,
+        "PathDepth": -0.28994332811010637,
+        "DomainDigitRatio": -0.24279015238216722
+      },
+      "fusion_contribution": {
+        "url": 0.9710643504578887,
+        "dom": 0.028935649542111294,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "DomainLength",
+          "value": 14.0,
+          "shap_impact": -2.877217964244503,
+          "abs_impact": 2.877217964244503
+        },
+        {
+          "feature": "CharContinuationRate",
+          "value": 0.13636363636363635,
+          "shap_impact": -2.3185930990228796,
+          "abs_impact": 2.3185930990228796
+        },
+        {
+          "feature": "URLLength",
+          "value": 22.0,
+          "shap_impact": -1.6747184583762376,
+          "abs_impact": 1.6747184583762376
+        },
+        {
+          "feature": "PathDepth",
+          "value": 0.0,
+          "shap_impact": -0.28994332811010637,
+          "abs_impact": 0.28994332811010637
+        },
+        {
+          "feature": "DomainDigitRatio",
+          "value": 0.0,
+          "shap_impact": -0.24279015238216722,
+          "abs_impact": 0.24279015238216722
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -9.016861584412283,
+          "dom": -0.2686832717659269,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.9710643504578887,
+          "dom": 0.028935649542111294,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": "151.101.65.140",
+      "geo": {
+        "country": "Canada",
+        "lat": 45.5019,
+        "long": -73.5674
+      }
+    }
+  },
+  {
+    "url": "https://www.amazon.com",
+    "prediction": "BENIGN",
+    "confidence": 0.999964052275133,
+    "fusion_probability_phishing": 3.59477248670796e-05,
+    "modality_scores": {
+      "url": 0.0007880155219079748,
+      "dom": 0.958172308738111,
+      "visual": 0.965175449848175
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "PHISHING",
+      "visual": "PHISHING"
+    },
+    "modality_confidence": {
+      "url": -0.998423968956184,
+      "dom": 0.916344617476222,
+      "visual": 0.9303508996963501
+    },
+    "modality_available": {
+      "url": true,
+      "dom": true,
+      "visual": true
+    },
+    "page_info": {
+      "fetch_success": true,
+      "page_title": "Amazon.com. Spend less. Smile more.",
+      "final_url": "https://www.amazon.com/",
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777024798391.png"
+    },
+    "dom_features": {
+      "HasForm": 1,
+      "NoOfForm": 2,
+      "HasPasswordField": 0,
+      "NoOfHiddenInputs": 6,
+      "NoOfImage": 270,
+      "NoOfExternalImage": 268,
+      "NoOfJS": 132,
+      "NoOfExternalJS": 9,
+      "NoOfLinks": 400,
+      "NoOfExternalLinks": 41,
+      "HasIframe": 0,
+      "NoOfIframe": 0,
+      "SuspiciousFormAction": 0,
+      "Bank": 0,
+      "Pay": 1,
+      "Crypto": 0
+    },
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "DomainLength": -2.9553407990472547,
+        "CharContinuationRate": -2.343172597694546,
+        "URLLength": -1.6968102886228449,
+        "URLEntropy": -0.3213171255704319,
+        "PathDepth": -0.2919626941439896
+      },
+      "fusion_contribution": {
+        "url": 0.9651832707748763,
+        "dom": 0.03481672922512373,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "DomainLength",
+          "value": 14.0,
+          "shap_impact": -2.9553407990472547,
+          "abs_impact": 2.9553407990472547
+        },
+        {
+          "feature": "CharContinuationRate",
+          "value": 0.13636363636363635,
+          "shap_impact": -2.343172597694546,
+          "abs_impact": 2.343172597694546
+        },
+        {
+          "feature": "URLLength",
+          "value": 22.0,
+          "shap_impact": -1.6968102886228449,
+          "abs_impact": 1.6968102886228449
+        },
+        {
+          "feature": "URLEntropy",
+          "value": 3.697846,
+          "shap_impact": -0.3213171255704319,
+          "abs_impact": 0.3213171255704319
+        },
+        {
+          "feature": "PathDepth",
+          "value": 0.0,
+          "shap_impact": -0.2919626941439896,
+          "abs_impact": 0.2919626941439896
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -9.199638482187218,
+          "dom": 0.33185544310791226,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.9651832707748763,
+          "dom": 0.03481672922512373,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": "3.165.80.186",
+      "geo": {
+        "country": "Singapore",
+        "lat": 1.35208,
+        "long": 103.82
+      }
+    }
+  },
+  {
+    "url": "https://www.paypal.com",
+    "prediction": "BENIGN",
+    "confidence": 0.9997493817079404,
+    "fusion_probability_phishing": 0.0002506182920596764,
+    "modality_scores": {
+      "url": 0.0008947435110960772,
+      "dom": 0.9038940493861365,
+      "visual": 0.9166396856307983
+    },
+    "modality_verdicts": {
+      "url": "BENIGN",
+      "dom": "PHISHING",
+      "visual": "PHISHING"
+    },
+    "modality_confidence": {
+      "url": -0.9982105129778078,
+      "dom": 0.807788098772273,
+      "visual": 0.8332793712615967
+    },
+    "modality_available": {
+      "url": true,
+      "dom": true,
+      "visual": true
+    },
+    "page_info": {
+      "fetch_success": true,
+      "page_title": "Pay, Send and Save Money with PayPal | PayPal US",
+      "final_url": "https://www.paypal.com/us/home",
+      "screenshot_path": "C:\\Users\\asad\\AppData\\Local\\Temp\\phishing_detection_screenshots\\screenshot_1777024817794.png"
+    },
+    "dom_features": {
+      "HasForm": 0,
+      "NoOfForm": 0,
+      "HasPasswordField": 0,
+      "NoOfHiddenInputs": 0,
+      "NoOfImage": 9,
+      "NoOfExternalImage": 4,
+      "NoOfJS": 35,
+      "NoOfExternalJS": 15,
+      "NoOfLinks": 117,
+      "NoOfExternalLinks": 38,
+      "HasIframe": 1,
+      "NoOfIframe": 3,
+      "SuspiciousFormAction": 0,
+      "Bank": 1,
+      "Pay": 1,
+      "Crypto": 1
+    },
+    "explanation": "explanation currently unavailable due to technical connection.",
+    "shap_values": {
+      "url": {
+        "DomainLength": -2.9640175325701668,
+        "CharContinuationRate": -2.332520228103207,
+        "URLLength": -1.692322969579438,
+        "PathDepth": -0.2895298805331057,
+        "DomainDigitRatio": -0.2555524681896929
+      },
+      "fusion_contribution": {
+        "url": 0.8057367275880012,
+        "dom": 0.1942632724119988,
+        "visual": 0.0
+      }
+    },
+    "detailed_explanation": {
+      "shap_url_top": [
+        {
+          "feature": "DomainLength",
+          "value": 14.0,
+          "shap_impact": -2.9640175325701668,
+          "abs_impact": 2.9640175325701668
+        },
+        {
+          "feature": "CharContinuationRate",
+          "value": 0.13636363636363635,
+          "shap_impact": -2.332520228103207,
+          "abs_impact": 2.332520228103207
+        },
+        {
+          "feature": "URLLength",
+          "value": 22.0,
+          "shap_impact": -1.692322969579438,
+          "abs_impact": 1.692322969579438
+        },
+        {
+          "feature": "PathDepth",
+          "value": 0.0,
+          "shap_impact": -0.2895298805331057,
+          "abs_impact": 0.2895298805331057
+        },
+        {
+          "feature": "DomainDigitRatio",
+          "value": 0.0,
+          "shap_impact": -0.2555524681896929,
+          "abs_impact": 0.2555524681896929
+        }
+      ],
+      "shap_fusion": {
+        "modality_contributions": {
+          "url": -9.125978087241647,
+          "dom": 2.200274986216424,
+          "visual": 0.0
+        },
+        "modality_weights": {
+          "url": 0.8057367275880012,
+          "dom": 0.1942632724119988,
+          "visual": 0.0
+        }
+      }
+    },
+    "ip_metadata": {
+      "ip": "151.101.65.21",
+      "geo": {
+        "country": "Canada",
+        "lat": 45.5019,
+        "long": -73.5674
+      }
+    }
+  }
+]
