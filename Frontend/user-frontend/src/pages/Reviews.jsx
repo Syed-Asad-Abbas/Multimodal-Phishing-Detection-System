@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button, Input, Badge } from "../components/ui/Primitives";
+import { toast } from "react-toastify";
 import { Shield, Star, Loader2 } from "lucide-react";
 import api from "../services/api";
 
@@ -32,12 +33,13 @@ export default function Reviews() {
     setSubmitting(true);
     try {
       await api.post('/reviews', { rating, comment });
+      toast.success("Review submitted successfully!");
       setShowForm(false);
       setComment("");
       setRating(5);
       fetchReviews();
     } catch (err) {
-      alert("Failed to submit review.");
+      toast.error("Failed to submit review.");
     } finally {
       setSubmitting(false);
     }

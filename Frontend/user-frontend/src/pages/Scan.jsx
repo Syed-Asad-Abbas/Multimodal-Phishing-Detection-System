@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "motion/react";
+import { toast } from "react-toastify";
 import {
   PieChart, Pie, Cell, ResponsiveContainer,
   BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid
@@ -54,7 +55,7 @@ export default function ScanPage() {
     } catch (error) {
       console.error("Scan failed:", error);
       setStatus("idle");
-      alert(error.response?.data?.message || "Scan failed. Please try again.");
+      toast.error(error.response?.data?.message || "Scan failed. Please try again.");
     }
   };
 
@@ -89,7 +90,7 @@ export default function ScanPage() {
         setResult(mappedResult);
       }, 300);
     } catch (err) {
-      alert("Failed to load this report.");
+      toast.error("Failed to load this report.");
       setStatus("idle");
     }
   };

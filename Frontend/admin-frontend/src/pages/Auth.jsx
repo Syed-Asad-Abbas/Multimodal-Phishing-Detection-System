@@ -12,39 +12,64 @@ import {
   ChevronLeft,
 } from "lucide-react";
 import api from "../services/api";
+import { toast } from "react-toastify";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
   const [show2FA, setShow2FA] = useState(false);
+  const [twoFactorCode, setTwoFactorCode] = useState("");
+  const [userId, setUserId] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
+    setLoading(true);
     try {
-      const response = await api.post('/auth/login', { email, password });
-
-      // Ensure that only admins can log into the admin frontend
-      if (response.data?.user && response.data.user.role !== 'ADMIN') {
-        throw new Error('Access denied. Administrator privileges are required.');
-      }
-
-      // If the backend has 2FA enabled, it might return a specific status or flag
-      // For now, assuming direct login without 2FA step if not implemented yet
-      login(response.data.accessToken || response.data.token);
-      if (response.data?.user?.name) {
+      if (show2FA) {
+        // Verify 2FA OTP
+        const response = await api.post('/auth/2fa/verify', { userId, token: twoFactorCode });
+        if (response.data?.user && response.data.user.role !== 'ADMIN') {
+          toast.error('Access denied. Administrator privileges are required.');
+          setLoading(false);
+          return;
+        }
+        login(response.data.accessToken || response.data.token);
+        if (response.data?.user?.name) {
           localStorage.setItem("adminName", response.data.user.name);
-      }
-      navigate("/dashboard");
+        }
+        navigate("/dashboard");
+      } else {
+        const response = await api.post('/auth/login', { email, password });
 
+        // Ensure that only admins can log into the admin frontend
+        if (response.data?.user && response.data.user.role !== 'ADMIN') {
+          toast.error('Access denied. Administrator privileges are required.');
+          setLoading(false);
+          return;
+        }
+
+        // Handle 2FA challenge
+        if (response.data?.requires2FA) {
+          setUserId(response.data.userId);
+          setShow2FA(true);
+          toast.info('A verification code has been sent to your email.');
+          setLoading(false);
+          return;
+        }
+
+        login(response.data.accessToken || response.data.token);
+        if (response.data?.user?.name) {
+          localStorage.setItem("adminName", response.data.user.name);
+        }
+        navigate("/dashboard");
+      }
     } catch (err) {
-      setError(err.message === 'Access denied. Administrator privileges are required.'
-        ? err.message
-        : err.response?.data?.message || "Invalid credentials. Are you an Admin?");
-      console.error("Login failed:", err);
+      toast.error(err.response?.data?.message || "Invalid credentials. Are you an Admin?");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -110,7 +135,9 @@ export default function Auth() {
                     </label>
                     <Input
                       type="text"
-                      placeholder="000-000"
+                      placeholder="000000"
+                      value={twoFactorCode}
+                      onChange={(e) => setTwoFactorCode(e.target.value.replace(/\D/g, ''))}
                       className="text-center text-2xl tracking-[0.5em] font-mono h-14 bg-slate-950/50 border-slate-800 focus:border-cyan-500/50 text-white"
                       maxLength={6}
                       autoFocus
@@ -119,14 +146,15 @@ export default function Auth() {
                   <Button
                     className="w-full h-12 text-base shadow-[0_0_20px_rgba(34,211,238,0.2)] bg-cyan-600 hover:bg-cyan-500 text-white border-0"
                     type="submit"
+                    disabled={loading}
                   >
-                    Verify & Sign In
+                    {loading ? "Verifying..." : "Verify & Sign In"}
                   </Button>
                   <Button
                     variant="ghost"
                     type="button"
                     className="w-full text-xs text-slate-500 hover:text-slate-300"
-                    onClick={() => setShow2FA(false)}
+                    onClick={() => { setShow2FA(false); setTwoFactorCode(""); }}
                   >
                     <ChevronLeft className="w-3 h-3 mr-1" /> Back to login
                   </Button>
@@ -170,20 +198,17 @@ export default function Auth() {
                     />
                   </div>
 
-                  {error && <div className="text-xs text-red-500 mt-2">{error}</div>}
-
                   <Button
                     className="w-full h-12 text-base shadow-[0_0_20px_rgba(34,211,238,0.2)] bg-cyan-600 hover:bg-cyan-500 text-white border-0 font-semibold tracking-wide"
                     type="submit"
+                    disabled={loading}
                   >
-                    Sign In
-                    <ArrowRight className="ml-2 w-4 h-4" />
+                    {loading ? "Signing in..." : "Sign In"}
+                    {!loading && <ArrowRight className="ml-2 w-4 h-4" />}
                   </Button>
                 </motion.div>
               )}
             </AnimatePresence>
-
-
           </form>
         </Card>
 

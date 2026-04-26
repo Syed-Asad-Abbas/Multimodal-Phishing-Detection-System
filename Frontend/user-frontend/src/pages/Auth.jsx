@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Button, Input, Card } from "../components/ui/Primitives";
-import { ShieldCheck, Mail, Lock, ArrowRight, Github, ChevronLeft, KeyRound, CheckCircle } from "lucide-react";
+import { ShieldCheck, Mail, Lock, ArrowRight, ChevronLeft, KeyRound } from "lucide-react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import api from "../services/api";
+import { toast } from "react-toastify";
 
 export default function Auth({ initialMode = "login", onLogin }) {
   const navigate = useNavigate();
@@ -12,8 +13,6 @@ export default function Auth({ initialMode = "login", onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [error, setError] = useState(null);
-  const [successMsg, setSuccessMsg] = useState(null);
   const [twoFactorCode, setTwoFactorCode] = useState("");
   const [userId, setUserId] = useState(null);
   const [resetToken, setResetToken] = useState("");
@@ -54,7 +53,6 @@ export default function Auth({ initialMode = "login", onLogin }) {
 
   const handleGoogleLogin = async (response) => {
     const idToken = response.credential;
-    setError(null);
     setLoading(true);
     try {
       const res = await api.post('/auth/google', { idToken });
@@ -63,7 +61,7 @@ export default function Auth({ initialMode = "login", onLogin }) {
       if (res.data.user) localStorage.setItem('user', JSON.stringify(res.data.user));
       handleSuccessRedirect();
     } catch (err) {
-      setError(err.response?.data?.message || "Google Authentication failed");
+      toast.error(err.response?.data?.message || "Google Authentication failed");
     } finally {
       setLoading(false);
     }
@@ -74,14 +72,10 @@ export default function Auth({ initialMode = "login", onLogin }) {
     if (newMode === 'login' || newMode === 'signup') {
       navigate(`/${newMode}`);
     }
-    setError(null);
-    setSuccessMsg(null);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
-    setSuccessMsg(null);
     setLoading(true);
     try {
       if (mode === "login") {
@@ -115,26 +109,25 @@ export default function Auth({ initialMode = "login", onLogin }) {
         handleSuccessRedirect();
       } else if (mode === "forgot-password") {
         await api.post('/auth/forgot-password', { email });
-        setSuccessMsg("If your account exists, a 6-digit OTP has been sent to your email.");
+        toast.success("If your account exists, a 6-digit OTP has been sent to your email.");
         setMode("reset-password");
       } else if (mode === "reset-password") {
         if (newPassword !== confirmPassword) {
-          setError("Passwords do not match.");
+          toast.error("Passwords do not match.");
           setLoading(false);
           return;
         }
         await api.post('/auth/reset-password', { token: resetToken, newPassword });
-        setSuccessMsg("Password reset successfully! You can now log in.");
+        toast.success("Password reset successfully! You can now log in.");
         setResetToken("");
         setNewPassword("");
         setConfirmPassword("");
         setTimeout(() => {
           setMode("login");
-          setSuccessMsg(null);
         }, 2500);
       }
     } catch (err) {
-      setError(err.response?.data?.message || `Something went wrong. Please try again.`);
+      toast.error(err.response?.data?.message || `Something went wrong. Please try again.`);
       console.error(`${mode} failed:`, err);
     } finally {
       setLoading(false);
@@ -327,7 +320,7 @@ export default function Auth({ initialMode = "login", onLogin }) {
                     variant="ghost"
                     type="button"
                     className="w-full text-xs text-slate-500 hover:text-slate-300"
-                    onClick={() => { setMode("forgot-password"); setError(null); setSuccessMsg(null); }}
+                    onClick={() => { setMode("forgot-password");  }}
                   >
                     <ChevronLeft className="w-3 h-3 mr-1" /> Didn't get the code? Resend
                   </Button>
@@ -372,7 +365,7 @@ export default function Auth({ initialMode = "login", onLogin }) {
                       {mode === "login" && (
                         <button
                           type="button"
-                          onClick={() => { setMode("forgot-password"); setError(null); setSuccessMsg(null); }}
+                          onClick={() => { setMode("forgot-password");  }}
                           className="text-xs text-cyan-400 hover:text-cyan-300 transition-colors"
                         >
                           Forgot?
@@ -397,14 +390,6 @@ export default function Auth({ initialMode = "login", onLogin }) {
                 </motion.div>
               )}
             </AnimatePresence>
-            {successMsg && (
-              <div className="flex items-center gap-2 text-xs text-emerald-400 mt-4 text-center justify-center">
-                <CheckCircle className="w-4 h-4" />
-                {successMsg}
-              </div>
-            )}
-            {error && <div className="text-xs text-red-500 mt-4 text-center">{error}</div>}
-
             {(mode === "login" || mode === "register") && (
               <>
                 <div className="relative my-6"> {/* Changed my-8 to my-6 */}

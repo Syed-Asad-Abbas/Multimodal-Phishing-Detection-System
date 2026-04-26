@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button, Input, Avatar, AvatarFallback, AvatarImage } from "../components/ui/Primitives";
 import api from "../services/api";
+import { toast } from "react-toastify";
 
 export default function Profile() {
   const [user, setUser] = useState(null);
@@ -29,7 +30,7 @@ export default function Profile() {
         localStorage.setItem('user', JSON.stringify(updatedUser));
       }
     } catch (err) {
-      alert("Failed to toggle 2FA");
+      toast.error("Failed to toggle 2FA");
     }
   };
 
@@ -42,6 +43,7 @@ export default function Profile() {
         const updatedUser = { ...user, name: editName };
         setUser(updatedUser);
         localStorage.setItem('user', JSON.stringify(updatedUser));
+        toast.success("Profile updated successfully.");
       }
       setIsSaving(false);
     }, 600);
@@ -65,7 +67,13 @@ export default function Profile() {
           <h3 className="text-lg font-semibold mb-4">Personal Information</h3>
           <div className="flex items-center gap-6 mb-6">
             <Avatar className="h-20 w-20">
-              <AvatarImage src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.email || "User")}&background=0D8ABC&color=fff&size=128`} />
+              <AvatarImage
+                src={
+                  user?.avatar_url ||
+                  `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || user?.email || "User")}&background=0D8ABC&color=fff&size=128`
+                }
+                referrerPolicy="no-referrer"
+              />
               <AvatarFallback className="bg-cyan-500/10 text-cyan-400 text-xl border border-cyan-500/20">{user?.name ? user.name.substring(0, 2).toUpperCase() : "US"}</AvatarFallback>
             </Avatar>
             <div>

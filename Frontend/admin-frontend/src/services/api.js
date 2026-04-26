@@ -22,8 +22,11 @@ api.interceptors.response.use(
     (error) => {
         if (error.response && (error.response.status === 401 || error.response.status === 403)) {
             // Token is invalid, expired, or user is not an admin
-            localStorage.removeItem('token');
-            window.location.href = '/login';
+            // Do not redirect if the request was for authentication
+            if (error.config && !error.config.url.includes('/auth/')) {
+                localStorage.removeItem('token');
+                window.location.href = '/login';
+            }
         }
         return Promise.reject(error);
     }

@@ -6,6 +6,11 @@ const logger = require('../config/logger');
 const crypto = require('crypto');
 const { OAuth2Client } = require('google-auth-library');
 
+const getGravatarUrl = (email) => {
+    const hash = crypto.createHash('md5').update(email.toLowerCase().trim()).digest('hex');
+    return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
+};
+
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 exports.register = async (req, res, next) => {
@@ -28,6 +33,7 @@ exports.register = async (req, res, next) => {
                 name,
                 email,
                 password_hash: hashedPassword,
+                avatar_url: getGravatarUrl(email),
                 // Optional: Defaults to false, so 2FA is off initially
             },
         });
@@ -159,7 +165,8 @@ const completeLogin = async (user, req, res) => {
             role: user.role,
             is_verified: user.is_verified,
             is_2fa_enabled: user.is_2fa_enabled,
-            provider: user.provider
+            provider: user.provider,
+            avatar_url: user.avatar_url || getGravatarUrl(user.email),
         },
     });
 };
@@ -411,7 +418,7 @@ exports.googleAuth = async (req, res, next) => {
         });
 
         const payload = ticket.getPayload();
-        const { sub: googleId, email, name, email_verified } = payload;
+        const { sub: googleId, email, name, picture, email_verified } = payload;
 
         if (!email) {
             return res.status(400).json({ message: 'Google account does not have an email.' });
@@ -421,17 +428,17 @@ exports.googleAuth = async (req, res, next) => {
         let user = await prisma.user.findUnique({ where: { email } });
 
         if (user) {
-            // User exists — link Google ID if not already linked
+            // User exists — link Google ID if not already linked, always refresh avatar
+            const updateData = { avatar_url: picture || user.avatar_url };
             if (!user.google_id) {
-                user = await prisma.user.update({
-                    where: { id: user.id },
-                    data: {
-                        google_id: googleId,
-                        provider: user.provider === 'local' ? 'local+google' : user.provider,
-                        is_verified: true,
-                    }
-                });
+                updateData.google_id = googleId;
+                updateData.provider = user.provider === 'local' ? 'local+google' : user.provider;
+                updateData.is_verified = true;
             }
+            user = await prisma.user.update({
+                where: { id: user.id },
+                data: updateData,
+            });
         } else {
             // New user — create account with Google
             user = await prisma.user.create({
@@ -441,7 +448,7 @@ exports.googleAuth = async (req, res, next) => {
                     google_id: googleId,
                     provider: 'google',
                     is_verified: true,
-                    // No password for Google-only users
+                    avatar_url: picture || null,
                 }
             });
             logger.info(`[Google Auth] New user created: ${email}`);

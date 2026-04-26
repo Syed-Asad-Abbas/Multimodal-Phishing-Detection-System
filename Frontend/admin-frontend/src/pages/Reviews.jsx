@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Card, Badge, Avatar, AvatarFallback, Button } from "../components/ui/Primitives";
 import { Star, CheckCircle, XCircle, Clock } from "lucide-react";
 import api from "../services/api";
+import { toast } from "react-toastify";
 
 export default function Reviews() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const fetchReviews = async () => {
     try {
@@ -15,7 +15,7 @@ export default function Reviews() {
       setReviews(data);
     } catch (err) {
       console.error(err);
-      setError("Failed to fetch reviews");
+      toast.error("Failed to fetch reviews.");
     } finally {
       setLoading(false);
     }
@@ -28,11 +28,11 @@ export default function Reviews() {
   const handleUpdateStatus = async (id, status) => {
     try {
       await api.put(`/reviews/admin/${id}/status`, { status });
-      // Refresh list
+      toast.success(`Review ${status.toLowerCase()} successfully.`);
       fetchReviews();
     } catch (err) {
       console.error(err);
-      alert("Failed to update status");
+      toast.error("Failed to update review status.");
     }
   };
 
@@ -56,8 +56,6 @@ export default function Reviews() {
           <p className="text-slate-400">Manage client feedback and approve testimonials.</p>
         </div>
       </div>
-
-      {error && <div className="text-red-500 mb-4">{error}</div>}
 
       <div className="grid gap-6">
         {reviews.length === 0 ? (

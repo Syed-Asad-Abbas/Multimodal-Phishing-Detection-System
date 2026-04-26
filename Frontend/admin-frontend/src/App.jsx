@@ -1,6 +1,8 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import "./styles/globals.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import DashboardLayout from "./pages/Dashboard";
 import Auth from "./pages/Auth";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -17,6 +19,7 @@ import Users from "./pages/Users";
 export default function App() {
   return (
     <div className="bg-slate-950 min-h-screen font-sans text-slate-100 antialiased selection:bg-cyan-500/30 selection:text-white">
+      <ToastContainer position="top-right" theme="dark" autoClose={4000} closeOnClick pauseOnHover />
       <Routes>
         {/* Default route redirects to login */}
         <Route path="/" element={<Navigate to="/login" replace />} />

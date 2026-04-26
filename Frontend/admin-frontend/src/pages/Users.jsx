@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, Badge, Button, Avatar, AvatarFallback } from "../components/ui/Primitives";
 import { MoreVertical } from "lucide-react";
 import api from "../services/api";
+import { toast } from "react-toastify";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
@@ -25,9 +26,11 @@ export default function Users() {
   const handleRoleChange = async (userId, newRole) => {
     try {
       await api.put(`/admin/users/${userId}/role`, { role: newRole });
-      fetchUsers(); // Refresh list
+      toast.success(`User promoted to ${newRole} successfully.`);
+      fetchUsers();
     } catch (error) {
       console.error("Failed to update role:", error);
+      toast.error("Failed to update user role.");
     }
   };
 

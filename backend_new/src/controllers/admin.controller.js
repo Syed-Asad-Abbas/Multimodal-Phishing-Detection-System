@@ -2,6 +2,12 @@ const { prisma } = require('../config/database');
 const validation = require('../validations/admin.validation');
 const { hashPassword } = require('../utils/hash');
 const axios = require('axios');
+const crypto = require('crypto');
+
+const getGravatarUrl = (email) => {
+    const hash = crypto.createHash('md5').update(email.toLowerCase().trim()).digest('hex');
+    return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
+};
 
 // --- ADMIN MANAGEMENT ---
 
@@ -25,6 +31,7 @@ exports.createAdmin = async (req, res, next) => {
                 password_hash: hashedPassword,
                 role: 'ADMIN',
                 is_verified: true, // Admins created by admins are auto-verified
+                avatar_url: getGravatarUrl(email),
             }
         });
 
@@ -423,9 +430,14 @@ exports.updateUserRole = async (req, res, next) => {
         // Optional: prevent changing own role if needed (but sometimes admins downgrade themselves)
         // if (userToUpdate.id === adminId) return res.status(403).json({ message: "Cannot change own role" });
 
+        // Disable 2FA when promoting to ADMIN so the admin frontend login isn't blocked
+        const roleUpdateData = role === 'ADMIN'
+            ? { role, is_2fa_enabled: false }
+            : { role };
+
         const updatedUser = await prisma.user.update({
             where: { id },
-            data: { role }
+            data: roleUpdateData,
         });
 
         // Audit Log

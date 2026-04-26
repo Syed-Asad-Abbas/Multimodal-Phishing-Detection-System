@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./styles/globals.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
 import { Navbar } from "./components/layout/Navigation";
@@ -31,6 +33,7 @@ export default function App() {
   return (
     <Router>
       <div className="bg-slate-950 min-h-screen font-sans text-slate-100 antialiased selection:bg-cyan-500/30 selection:text-white">
+        <ToastContainer position="top-right" theme="dark" autoClose={4000} closeOnClick pauseOnHover />
         <Routes>
           <Route path="/" element={
             <>

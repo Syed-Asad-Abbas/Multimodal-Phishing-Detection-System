@@ -26,6 +26,7 @@ model User {
   is_2fa_enabled Boolean  @default(false)
   provider      String    @default("local")
   google_id     String?   @unique
+  avatar_url    String?
   last_login    DateTime?
   created_at    DateTime  @default(now())
   updated_at    DateTime  @updatedAt

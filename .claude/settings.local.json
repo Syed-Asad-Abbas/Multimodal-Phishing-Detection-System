@@ -10,7 +10,9 @@
       "PowerShell(Get-Command *)",
       "PowerShell(Get-ChildItem *)",
       "PowerShell(python -c \"import joblib, shap, lightgbm, numpy; print\\('all imports OK'\\)\" 2>&1)",
-      "PowerShell(python -c \"import openpyxl; print\\('openpyxl OK'\\)\" 2>&1; python -c \"import sys; sys.path.insert\\(0, 'C:/Users/asad/Desktop/Multimodal-Phishing-Detection-System-main - Claude/fyp_multimodal_model'\\); from url_utils import is_url_alive; print\\('url_utils OK'\\)\" 2>&1)"
+      "PowerShell(python -c \"import openpyxl; print\\('openpyxl OK'\\)\" 2>&1; python -c \"import sys; sys.path.insert\\(0, 'C:/Users/asad/Desktop/Multimodal-Phishing-Detection-System-main - Claude/fyp_multimodal_model'\\); from url_utils import is_url_alive; print\\('url_utils OK'\\)\" 2>&1)",
+      "Bash(npm install *)",
+      "Bash(npx prisma *)"
     ]
   }
 }
