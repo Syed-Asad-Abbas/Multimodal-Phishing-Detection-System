@@ -34,8 +34,9 @@ export default function Auth({ initialMode = "login", onLogin }) {
         callback: handleGoogleLogin,
       });
       window.google.accounts.id.renderButton(googleButtonRef.current, {
-        theme: "outline",
+        theme: "filled_black",
         size: "large",
+        shape: "pill",
         width: googleButtonRef.current.offsetWidth,
         text: mode === "login" ? "signin_with" : "signup_with",
       });
@@ -320,7 +321,7 @@ export default function Auth({ initialMode = "login", onLogin }) {
                     variant="ghost"
                     type="button"
                     className="w-full text-xs text-slate-500 hover:text-slate-300"
-                    onClick={() => { setMode("forgot-password");  }}
+                    onClick={() => { setMode("forgot-password"); }}
                   >
                     <ChevronLeft className="w-3 h-3 mr-1" /> Didn't get the code? Resend
                   </Button>
@@ -365,7 +366,7 @@ export default function Auth({ initialMode = "login", onLogin }) {
                       {mode === "login" && (
                         <button
                           type="button"
-                          onClick={() => { setMode("forgot-password");  }}
+                          onClick={() => { setMode("forgot-password"); }}
                           className="text-xs text-cyan-400 hover:text-cyan-300 transition-colors"
                         >
                           Forgot?

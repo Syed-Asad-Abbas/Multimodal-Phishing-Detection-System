@@ -204,8 +204,9 @@ const Landing = ({ isAuthenticated, onLogout }) => {
           Analyze URLs, DOM structures, and visual patterns in milliseconds.
         </p>
 
-        <div className="mt-12 md:mt-16 w-full max-w-2xl relative">
-          <div className="liquid-glass rounded-[24px] p-2 flex flex-col md:flex-row items-center gap-2 border border-white/5 focus-within:border-cyan-500/40 transition-all shadow-2xl">
+        <div className="mt-12 md:mt-16 w-full max-w-2xl relative flex flex-col gap-4 md:block">
+          {/* Mobile View: Separated Elements */}
+          <div className="md:hidden liquid-glass rounded-[24px] p-2 flex items-center gap-2 border border-white/5 focus-within:border-cyan-500/40 transition-all shadow-2xl">
             <div className="flex items-center w-full px-4 gap-2">
                <Search className="w-5 h-5 text-white/30" />
                <input
@@ -214,12 +215,32 @@ const Landing = ({ isAuthenticated, onLogout }) => {
                 onChange={(e) => setScanUrl(e.target.value)}
                 onKeyDown={(e) => { if (e.key === 'Enter') handleScanSubmit(); }}
                 placeholder="scan website (e.g., apple-id-login.com)"
-                className="flex-1 bg-transparent border-none outline-none py-4 text-white placeholder:text-white/20 font-medium text-sm md:text-base"
+                className="flex-1 bg-transparent border-none outline-none py-4 text-white placeholder:text-white/20 font-medium text-sm w-full"
+              />
+            </div>
+          </div>
+          <button 
+            onClick={handleScanSubmit}
+            className="md:hidden w-full bg-cyan-500 text-slate-950 px-8 py-4 rounded-[24px] font-bold hover:bg-cyan-400 active:scale-95 transition-all duration-300 glow-cyan cursor-pointer shadow-[0_0_20px_rgba(6,182,212,0.3)]">
+            Scan Now
+          </button>
+
+          {/* Desktop View: Combined Container */}
+          <div className="hidden md:flex liquid-glass rounded-[24px] p-2 flex-row items-center gap-2 border border-white/5 focus-within:border-cyan-500/40 transition-all shadow-2xl">
+            <div className="flex items-center w-full px-4 gap-2">
+               <Search className="w-5 h-5 text-white/30" />
+               <input
+                type="text"
+                value={scanUrl}
+                onChange={(e) => setScanUrl(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter') handleScanSubmit(); }}
+                placeholder="scan website (e.g., apple-id-login.com)"
+                className="flex-1 bg-transparent border-none outline-none py-4 text-white placeholder:text-white/20 font-medium text-base"
               />
             </div>
             <button 
               onClick={handleScanSubmit}
-              className="w-full md:w-auto bg-cyan-500 text-slate-950 px-8 py-4 rounded-[18px] font-bold hover:bg-cyan-400 hover:scale-[1.02] transition-all duration-300 glow-cyan active:scale-95 whitespace-nowrap cursor-pointer shadow-[0_0_20px_rgba(6,182,212,0.3)]">
+              className="w-auto bg-cyan-500 text-slate-950 px-8 py-4 rounded-[18px] font-bold hover:bg-cyan-400 hover:scale-[1.02] transition-all duration-300 glow-cyan active:scale-95 whitespace-nowrap cursor-pointer shadow-[0_0_20px_rgba(6,182,212,0.3)]">
               Scan Now
             </button>
           </div>
@@ -277,59 +298,39 @@ const Landing = ({ isAuthenticated, onLogout }) => {
          </div>
       </section>
 
-      {/* INFINITE TESTIMONIALS CAROUSEL (Peeking Overlap Logic) */}
+      {/* TESTIMONIALS CAROUSEL */}
       <section className="py-32 md:py-48 bg-transparent relative z-10 border-t border-white/5 overflow-hidden text-center">
         <h2 className="text-3xl md:text-5xl font-normal text-white leading-none mb-16 md:mb-24 px-6 md:px-0">Relied on by global security experts</h2>
 
-        <div className="relative flex justify-center items-center h-[400px] md:h-[550px] w-full max-w-6xl mx-auto px-4">
-          {[-1, 0, 1].map((offset) => {
-            const index = (activeIndex + offset + originalTestimonials.length) % originalTestimonials.length;
-            const item = originalTestimonials[index];
-            
-            let translateClass = "translate-x-0";
-            let scaleClass = "scale-100";
-            let opacityClass = "opacity-100";
-            let zIndexClass = "z-20 shadow-2xl glow-cyan";
-            let blurClass = "blur-none";
-
-            if (offset === -1) {
-              translateClass = "-translate-x-[85%] md:-translate-x-[110%]";
-              scaleClass = "scale-90 md:scale-[0.85]";
-              opacityClass = "opacity-40";
-              zIndexClass = "z-10";
-              blurClass = "blur-[2px]";
-            } else if (offset === 1) {
-              translateClass = "translate-x-[85%] md:translate-x-[110%]";
-              scaleClass = "scale-90 md:scale-[0.85]";
-              opacityClass = "opacity-40";
-              zIndexClass = "z-10";
-              blurClass = "blur-[2px]";
-            }
-
-            return (
-              <div
-                key={index}
-                className={`absolute transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] liquid-glass flex flex-col p-8 md:p-12 rounded-[32px] md:rounded-[48px] border border-white/10 w-[92%] md:w-[400px] min-h-[380px] md:min-h-[440px] bg-gradient-to-br from-indigo-500/5 to-purple-500/5 text-left ${translateClass} ${scaleClass} ${opacityClass} ${zIndexClass} ${blurClass}`}
-                style={{ pointerEvents: offset === 0 ? 'auto' : 'none' }}
-              >
-                <div className="flex gap-1.5 mb-6 md:mb-8">
-                  {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 md:w-5 md:h-5 fill-[#06b6d4] text-[#06b6d4]" />)}
-                </div>
-                <p className="text-lg md:text-[20px] text-white/90 mb-8 md:mb-10 italic leading-[1.7] font-light line-clamp-5 flex-1">
-                  "{item.text || item.comment}"
-                </p>
-                <div className="flex items-center gap-4 mt-auto">
-                  <div className="w-12 h-12 md:w-12 md:h-12 rounded-[14px] bg-[#0b1021] border border-white/5 flex items-center justify-center text-sm font-bold text-cyan-400">
-                    {(item.name || "U").substring(0, 2)}
+        <div className="relative flex items-center h-[400px] md:h-[550px] w-full max-w-6xl mx-auto px-4 overflow-hidden">
+          <div 
+            className="flex w-full transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)]"
+            style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+          >
+            {originalTestimonials.map((item, index) => (
+              <div key={index} className="w-full flex-shrink-0 flex justify-center items-center">
+                <div
+                  className={`liquid-glass flex flex-col p-8 md:p-12 rounded-[32px] md:rounded-[48px] border border-white/10 w-[92%] md:w-[600px] min-h-[380px] md:min-h-[440px] bg-gradient-to-br from-indigo-500/5 to-purple-500/5 text-left shadow-2xl glow-cyan`}
+                >
+                  <div className="flex gap-1.5 mb-6 md:mb-8">
+                    {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 md:w-5 md:h-5 fill-[#06b6d4] text-[#06b6d4]" />)}
                   </div>
-                  <div>
-                    <p className="text-sm md:text-[15px] font-bold text-white tracking-widest uppercase mb-0.5">{item.name}</p>
-                    <p className="text-[10px] md:text-[10px] text-white/40 uppercase tracking-widest">{item.role}</p>
+                  <p className="text-lg md:text-[20px] text-white/90 mb-8 md:mb-10 italic leading-[1.7] font-light line-clamp-5 flex-1">
+                    "{item.text || item.comment}"
+                  </p>
+                  <div className="flex items-center gap-4 mt-auto">
+                    <div className="w-12 h-12 md:w-12 md:h-12 rounded-[14px] bg-[#0b1021] border border-white/5 flex items-center justify-center text-sm font-bold text-cyan-400">
+                      {(item.name || "U").substring(0, 2)}
+                    </div>
+                    <div>
+                      <p className="text-sm md:text-[15px] font-bold text-white tracking-widest uppercase mb-0.5">{item.name}</p>
+                      <p className="text-[10px] md:text-[10px] text-white/40 uppercase tracking-widest">{item.role}</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            );
-          })}
+            ))}
+          </div>
         </div>
 
         <div className="flex justify-center gap-6 md:gap-8 mt-8 md:mt-16 z-50 relative">

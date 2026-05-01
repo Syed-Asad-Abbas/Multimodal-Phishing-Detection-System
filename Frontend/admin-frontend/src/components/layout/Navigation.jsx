@@ -31,7 +31,6 @@ export function Sidebar() {
     { path: "/dashboard", label: "Overview", icon: LayoutDashboard, end: true },
     { path: "/dashboard/analytics", label: "Analytics", icon: PieChart },
     { path: "/dashboard/map", label: "Threat Map", icon: Globe },
-    { path: "/dashboard/retraining", label: "Retraining", icon: RefreshCw },
     { path: "/dashboard/reviews", label: "Reviews", icon: FileText },
     { path: "/dashboard/health", label: "System Health", icon: Activity },
     { path: "/dashboard/users", label: "Users", icon: User },

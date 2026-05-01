@@ -57,9 +57,6 @@ export function Navbar({ isAuthenticated, onLogout }) {
               <button onClick={() => navigate("/working")} className="text-sm font-medium text-white/80 hover:text-white hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer">
                 How it Works
               </button>
-              <button onClick={() => navigate("/")} className="text-sm font-medium text-white/80 hover:text-white hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer">
-                Plans
-              </button>
             </div>
           </div>
 

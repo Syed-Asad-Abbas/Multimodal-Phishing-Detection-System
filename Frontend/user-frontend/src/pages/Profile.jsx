@@ -76,10 +76,6 @@ export default function Profile() {
               />
               <AvatarFallback className="bg-cyan-500/10 text-cyan-400 text-xl border border-cyan-500/20">{user?.name ? user.name.substring(0, 2).toUpperCase() : "US"}</AvatarFallback>
             </Avatar>
-            <div>
-              <Button variant="outline" size="sm" className="mb-2">Change Avatar</Button>
-              <p className="text-xs text-slate-500">JPG, GIF or PNG. 1MB max.</p>
-            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -96,7 +92,7 @@ export default function Profile() {
 
         <Card className="p-6 border-slate-800">
           <h3 className="text-lg font-semibold mb-4">Security</h3>
-          <div className="flex items-center justify-between py-4 border-b border-white/5">
+          <div className="flex items-center justify-between py-4">
             <div>
               <div className="font-medium">Two-Factor Authentication</div>
               <div className="text-sm text-slate-500">Add an extra layer of security to your account.</div>
@@ -104,13 +100,6 @@ export default function Profile() {
             <Button variant={is2FAEnabled ? "danger" : "outline"} onClick={handleToggle2FA}>
               {is2FAEnabled ? "Disable" : "Enable"}
             </Button>
-          </div>
-          <div className="flex items-center justify-between py-4">
-            <div>
-              <div className="font-medium">API Keys</div>
-              <div className="text-sm text-slate-500">Manage your API keys for external integration.</div>
-            </div>
-            <Button variant="outline">Manage Keys</Button>
           </div>
         </Card>
       </div>
