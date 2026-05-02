@@ -252,9 +252,7 @@ const Landing = ({ isAuthenticated, onLogout }) => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center md:text-left mb-16 md:mb-24 flex flex-col md:flex-row justify-between items-center md:items-end gap-6 md:gap-8">
             <h2 className="font-general text-[42px] md:text-[56px] font-normal text-white leading-none">Multimodal Engine</h2>
-            <button className="flex items-center gap-3 text-cyan-400 font-bold hover:gap-5 transition-all text-xs md:text-sm tracking-widest uppercase cursor-pointer">
-              View Specs <ArrowRight className="w-5 h-5" />
-            </button>
+            
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {[
