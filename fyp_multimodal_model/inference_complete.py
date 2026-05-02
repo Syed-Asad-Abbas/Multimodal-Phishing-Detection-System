@@ -31,6 +31,7 @@ def load_all_models(models_dir, device):
     url_path = os.path.join(models_dir, "url_lgbm_production.joblib")
     url_data = joblib.load(url_path)
     url_model = url_data["model"]
+    url_model.set_params(n_jobs=1)
     url_scaler = url_data["scaler"]
     url_features = url_data["feature_names"]
     
@@ -39,6 +40,7 @@ def load_all_models(models_dir, device):
     dom_data = joblib.load(dom_path)
     doc2vec = dom_data["doc2vec"]
     dom_model = dom_data["model"]
+    dom_model.set_params(n_jobs=1)
     
     # Visual model
     visual_path = os.path.join(models_dir, "visual_resnet50.pt")
@@ -52,6 +54,7 @@ def load_all_models(models_dir, device):
     fusion_path = os.path.join(models_dir, "fusion_lgbm.joblib")
     fusion_data = joblib.load(fusion_path)
     fusion_model = fusion_data["model"]
+    fusion_model.set_params(n_jobs=1)
     
     return {
         "url_model": url_model,

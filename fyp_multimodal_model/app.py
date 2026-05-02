@@ -1,6 +1,18 @@
 
 import os
 import json
+import multiprocessing
+
+os.environ['OBJC_DISABLE_INITIALIZE_FORK_SAFETY'] = 'YES'
+os.environ['OMP_NUM_THREADS'] = '1'
+os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
+os.environ['MKL_NUM_THREADS'] = '1'
+os.environ['OPENBLAS_NUM_THREADS'] = '1'
+
+# Configure multiprocessing to use 'spawn' instead of 'fork' to prevent crashes on macOS
+if multiprocessing.get_start_method(allow_none=True) != 'spawn':
+    multiprocessing.set_start_method('spawn', force=True)
+
 from flask import Flask, render_template, request, jsonify, send_from_directory
 from inference_complete import predict_complete_pipeline
 import torch
@@ -60,4 +72,4 @@ def serve_screenshot(filename):
 if __name__ == '__main__':
     print(f"Starting Phishing Detection Web UI on http://localhost:5001")
     print(f"Using device: {DEVICE}")
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    app.run(debug=True, use_reloader=False, host='0.0.0.0', port=5001)

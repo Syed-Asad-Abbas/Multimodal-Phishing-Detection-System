@@ -222,16 +222,7 @@ The ML pipeline handles multimodal phishing detection using **ResNet50** (visual
 ```bash
 cd fyp_multimodal_model
 
-# Create and activate a virtual environment
-python -m venv .venv
-
-# Windows PowerShell
-.\.venv\Scripts\Activate.ps1
-
-# Mac / Linux
-source .venv/bin/activate
-
-# Install all Python packages
+# Install all Python packages globally or user-level
 pip install -r requirements.txt
 ```
 
@@ -264,8 +255,11 @@ cd Frontend/user-frontend && npm run dev
 # Terminal 3 — Admin Frontend
 cd Frontend/admin-frontend && npm run dev
 
-# Terminal 4 — ML Service (activate venv first)
-cd fyp_multimodal_model && .\.venv\Scripts\Activate.ps1 && python app.py
+# Terminal 4 — ML Service
+# Windows:
+cd fyp_multimodal_model && python app.py
+# Mac / Linux:
+# cd fyp_multimodal_model && python app.py
 ```
 
 ### Default Service URLs
