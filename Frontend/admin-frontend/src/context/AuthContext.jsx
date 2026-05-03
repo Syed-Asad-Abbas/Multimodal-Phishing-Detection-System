@@ -39,19 +39,41 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (!isAuthenticated) return;
     
+    const TIMEOUT_MS = 30 * 60 * 1000; // 30 mins
     let timeoutId;
-    const resetTimer = () => {
+    let remainingTime = TIMEOUT_MS;
+    let lastTimerStart = Date.now();
+
+    const startTimer = (duration) => {
       clearTimeout(timeoutId);
+      remainingTime = duration;
+      lastTimerStart = Date.now();
       localStorage.setItem('adminLastActivity', Date.now().toString());
       timeoutId = setTimeout(() => {
         logout(true);
-      }, 30 * 60 * 1000); // 30 mins
+      }, duration);
     };
 
     const handleActivity = () => {
-      const lastAct = localStorage.getItem('adminLastActivity');
-      if (!lastAct || Date.now() - parseInt(lastAct) > 1000) {
-        resetTimer();
+      // Only reset if the tab is visible (active)
+      if (document.visibilityState === 'visible') {
+        startTimer(TIMEOUT_MS);
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        // Tab is being hidden — pause the timer, save remaining time
+        clearTimeout(timeoutId);
+        const elapsed = Date.now() - lastTimerStart;
+        remainingTime = Math.max(0, remainingTime - elapsed);
+      } else {
+        // Tab is visible again — resume with the remaining time
+        if (remainingTime <= 0) {
+          logout(true);
+        } else {
+          startTimer(remainingTime);
+        }
       }
     };
 
@@ -59,23 +81,18 @@ export const AuthProvider = ({ children }) => {
     window.addEventListener('keydown', handleActivity);
     window.addEventListener('scroll', handleActivity);
     window.addEventListener('click', handleActivity);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
-    const intervalId = setInterval(() => {
-      const lastAct = localStorage.getItem('adminLastActivity');
-      if (lastAct && Date.now() - parseInt(lastAct) > 30 * 60 * 1000) {
-        logout(true);
-      }
-    }, 10000);
-
-    resetTimer();
+    // Start the initial timer
+    startTimer(TIMEOUT_MS);
 
     return () => {
       clearTimeout(timeoutId);
-      clearInterval(intervalId);
       window.removeEventListener('mousemove', handleActivity);
       window.removeEventListener('keydown', handleActivity);
       window.removeEventListener('scroll', handleActivity);
       window.removeEventListener('click', handleActivity);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, [isAuthenticated]);
 
