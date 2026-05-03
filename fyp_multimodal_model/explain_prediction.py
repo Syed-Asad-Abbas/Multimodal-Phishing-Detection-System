@@ -11,6 +11,8 @@ Usage:
 
 import argparse
 import os
+from dotenv import load_dotenv
+load_dotenv()
 import json
 import joblib
 import numpy as np
@@ -113,70 +115,104 @@ def generate_llm_explanation(prediction_result, shap_url_features, shap_fusion):
     Generate natural language explanation using Google Gemini
     """
     try:
-        api_key = os.environ.get("GEMINI_API_KEY")
-        if not api_key:
-            return "Note: Gemini API Key not found. Please set GEMINI_API_KEY environment variable for detailed explanations."
+        # Collect available API keys (1 to 10)
+        available_keys = []
+        for i in range(1, 10):
+            key = os.environ.get(f"GEMINI_API_KEY_{i}")
+            if key:
+                available_keys.append(key)
+                
+        # Also check the default key just in case
+        default_key = os.environ.get("GEMINI_API_KEY")
+        if default_key and default_key not in available_keys:
+            available_keys.append(default_key)
 
-        client = genai.Client(api_key=api_key)
+        if not available_keys:
+            return "Note: Gemini API Keys not found. Please set GEMINI_API_KEY_1 environment variable for detailed explanations."
 
         pred = prediction_result['prediction']
         conf = prediction_result['confidence']
         url = prediction_result['url']
+
+        FEATURE_MAP = {
+            "URLLength": "Abnormally long or short web address",
+            "DomainLength": "Unusual domain name length",
+            "IsDomainIP": "Uses an IP address instead of a domain name",
+            "URLSimilarityIndex": "Web address visually mimics a known brand",
+            "CharContinuationRate": "Suspicious pattern of repeating characters",
+            "TLDLegitimateProb": "Uses a domain extension rarely seen on legitimate sites",
+            "NoOfSubDomain": "Excessive number of subdomains",
+            "HasObfuscation": "Contains hidden or obfuscated text to bypass filters",
+            "ObfuscationRatio": "High amount of hidden/obfuscated text",
+            "NoOfObfuscatedChar": "Contains hidden characters",
+            "LetterRatioInURL": "Suspicious ratio of letters to other characters",
+            "DegitRatioInURL": "Unusually high number of digits in the web address",
+            "NoOfDegitsInURL": "Contains many numbers in the web address",
+            "SpcialCharRatioInURL": "High ratio of special characters",
+            "IsHTTPS": "Lacks a secure HTTPS certificate",
+        }
 
         scores = prediction_result.get('modality_scores', {})
         p_url    = scores.get('url')    or 0.0
         p_dom    = scores.get('dom')    or 0.0
         p_visual = scores.get('visual') or 0.0
 
-        # Build top-5 URL SHAP dict sorted by absolute impact
-        url_shap_top5 = {}
-        if shap_url_features:
-            sorted_feats = sorted(shap_url_features, key=lambda x: abs(x['shap_impact']), reverse=True)[:5]
-            url_shap_top5 = {f['feature']: round(f['shap_impact'], 4) for f in sorted_feats}
+        # Fusion-level SHAP top drivers to find primary modality
+        primary_modality = "URL"
+        modality_breakdown = ""
+        if shap_fusion and 'modality_contributions' in shap_fusion:
+            contribs = shap_fusion['modality_contributions']
+            if contribs:
+                primary_modality = max(contribs, key=contribs.get).upper()
+                modality_breakdown = ", ".join([f"{k.upper()} ({v*100:.1f}%)" for k, v in shap_fusion.get('modality_weights', {}).items()])
 
-        # Fusion-level SHAP top drivers
-        fusion_shap_top = {}
-        if shap_fusion:
-            fusion_shap_top = {
-                k: round(v, 4)
-                for k, v in shap_fusion.get('modality_contributions', {}).items()
-            }
+        # Build human-readable URL red flags
+        url_red_flags = []
+        if shap_url_features:
+            sorted_feats = sorted(shap_url_features, key=lambda x: abs(x['shap_impact']), reverse=True)[:3]
+            for f in sorted_feats:
+                human_name = FEATURE_MAP.get(f['feature'], f['feature'])
+                url_red_flags.append(f"- {human_name}")
+        url_red_flags_str = "\n".join(url_red_flags) if url_red_flags else "None specific."
 
         prompt = f"""
-You are explaining a phishing detection decision.
-You MUST only use evidence from the structured data below.
-Do NOT invent reasons. Do NOT mention features not listed here.
-If a feature is absent from the evidence, do not reference it.
+You are a cybersecurity assistant explaining why a website was flagged as {pred}.
+Explain this to a non-technical user in 3 concise, easy-to-read sentences. 
+Do NOT use technical jargon like "SHAP values", "Modality", or "Machine Learning".
 
-FINAL DECISION: {pred}
-Overall confidence: {conf:.1%}
+EVIDENCE:
+- The system is {conf:.1%} confident in its decision.
+- The most suspicious aspect of this website was its: {primary_modality}
+- Breakdown of suspicion by category: {modality_breakdown}
+- Specific URL red flags detected:
+{url_red_flags_str}
+- URL score: {p_url:.3f}, DOM score: {p_dom:.3f}, Visual score: {p_visual:.3f} (1.0 = certain phishing)
 
-MODALITY SCORES:
-- URL model score: {p_url:.3f} (1.0 = certain phishing)
-- DOM model score: {p_dom:.3f}
-- Visual model score: {p_visual:.3f}
-
-FUSION-LEVEL EVIDENCE (which modality drove the final decision):
-{json.dumps(fusion_shap_top, indent=2)}
-
-URL-LEVEL EVIDENCE (which URL features drove the URL score of {p_url:.3f}):
-{json.dumps(url_shap_top5, indent=2)}
-
-Write exactly 3 sentences. Sentence 1: state the prediction and primary driver.
-Sentence 2: name the specific URL feature with the highest SHAP value and explain what it means.
-Sentence 3: state the confidence level and any conflicting signals if present.
+Sentence 1: State the final decision and the main reason why (e.g., "This site is likely phishing because it visually mimics a login page but has a suspicious web address.")
+Sentence 2: Explain the specific red flags found in plain English based on the evidence provided above. Focus on the primary suspicious aspect ({primary_modality}) and mention if other aspects (DOM/Visual) were also suspicious.
+Sentence 3: Give a final confidence statement or warning.
 """
 
-        response = client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=prompt,
-        )
-        return response.text
-    except Exception as e:
-        error_msg = str(e)
-        print(f"[Gemini] Error generating explanation: {error_msg}")
+        last_error = None
+        for i, api_key in enumerate(available_keys):
+            try:
+                client = genai.Client(api_key=api_key)
+                response = client.models.generate_content(
+                    model='gemini-2.5-flash',
+                    contents=prompt,
+                )
+                return response.text
+            except Exception as e:
+                last_error = str(e)
+                print(f"[Gemini] Key {i+1} failed: {last_error}")
+
+        # If all keys fail, log the last error and return standard message
         with open("gemini_error.log", "a") as f:
-            f.write(f"Gemini API Error: {error_msg}\n")
+            f.write(f"Gemini API Error (All keys failed). Last error: {last_error}\n")
+        return "explanation currently unavailable due to technical connection."
+        
+    except Exception as e:
+        print(f"[Gemini] Outer error generating explanation: {e}")
         return "explanation currently unavailable due to technical connection."
 
 
