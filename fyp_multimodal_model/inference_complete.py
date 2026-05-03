@@ -357,6 +357,30 @@ def predict_complete_pipeline(url, models_dir="models", fetch_timeout=10, device
                 print("      [Rule3-OAuthRedirect] Both DOM and Visual benign despite URL score — overriding to BENIGN")
     # ------------------------------------------------------------------
 
+    # ------------------------------------------------------------------
+    # WHITELIST OVERRIDE (Top 1 Million / Trusted Domains)
+    # ------------------------------------------------------------------
+    is_whitelisted = False
+    try:
+        from urllib.parse import urlparse
+        domain = urlparse(url).netloc.lower()
+        # Remove www.
+        if domain.startswith('www.'):
+            domain = domain[4:]
+            
+        whitelist_path = os.path.join(os.path.dirname(__file__), 'whitelist.txt')
+        if os.path.exists(whitelist_path):
+            with open(whitelist_path, 'r') as f:
+                whitelist = {line.strip().lower() for line in f if line.strip()}
+                
+            if domain in whitelist:
+                is_whitelisted = True
+                prediction = "BENIGN"
+                final_prob = 0.0
+                print(f"      [WHITELIST] Domain '{domain}' is in Top 1 Million Whitelist. Overriding prediction to BENIGN.")
+    except Exception as e:
+        print(f"      [WARN] Whitelist check failed: {e}")
+
     confidence = final_prob if prediction == "PHISHING" else (1.0 - final_prob)
 
     # Build result
@@ -413,6 +437,8 @@ def predict_complete_pipeline(url, models_dir="models", fetch_timeout=10, device
         
         # 3. LLM Explanation
         llm_explanation = generate_llm_explanation(result, shap_url, shap_fusion)
+        
+        
         
         result['explanation'] = llm_explanation
         result['shap_values'] = {

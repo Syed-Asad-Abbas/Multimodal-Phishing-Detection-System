@@ -83,6 +83,11 @@ def extract_url_features_from_string(url_string, feature_names):
     Extract URL features matching the PhiUSIIL dataset format.
     """
     try:
+        # Strip trailing slash to prevent it from artificially inflating URLLength
+        # which acts as a very strict threshold in the LightGBM model.
+        if url_string.endswith('/'):
+            url_string = url_string.rstrip('/')
+            
         url_string = _normalize_url(url_string)
         parsed = urlparse(url_string)
         domain = parsed.netloc

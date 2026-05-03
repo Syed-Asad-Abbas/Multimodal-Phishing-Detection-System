@@ -12,4 +12,6 @@ venv/
 env/
 logs/
 .gemini/
+.claude/
+trash/
 ~$*
