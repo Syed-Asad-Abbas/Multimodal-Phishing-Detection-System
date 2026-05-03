@@ -1,2 +1,6 @@
 screenshots/
 .env
+llm_selection_analysis.md
+output.txt
+PIPELINE_DOCUMENTATION.md
+__pycache__
