@@ -207,7 +207,9 @@ Sentence 3: Give a final confidence statement or warning.
                 print(f"[Gemini] Key {i+1} failed: {last_error}")
 
         # If all keys fail, log the last error and return standard message
-        with open("gemini_error.log", "a") as f:
+        log_dir = os.path.join(os.path.dirname(__file__), "logs")
+        os.makedirs(log_dir, exist_ok=True)
+        with open(os.path.join(log_dir, "gemini_error.log"), "a") as f:
             f.write(f"Gemini API Error (All keys failed). Last error: {last_error}\n")
         return "explanation currently unavailable due to technical connection."
         
