@@ -300,15 +300,32 @@ const Landing = ({ isAuthenticated, onLogout }) => {
       <section className="py-32 md:py-48 bg-transparent relative z-10 border-t border-white/5 overflow-hidden text-center">
         <h2 className="text-3xl md:text-5xl font-normal text-white leading-none mb-16 md:mb-24 px-6 md:px-0">Relied on by global security experts</h2>
 
-        <div className="relative flex items-center h-[400px] md:h-[550px] w-full max-w-6xl mx-auto px-4 overflow-hidden">
-          <div 
-            className="flex w-full transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)]"
-            style={{ transform: `translateX(-${activeIndex * 100}%)` }}
-          >
-            {originalTestimonials.map((item, index) => (
-              <div key={index} className="w-full flex-shrink-0 flex justify-center items-center">
+        <div className="relative flex items-center justify-center h-[400px] md:h-[550px] w-full max-w-6xl mx-auto px-4">
+            {originalTestimonials.map((item, index) => {
+              const length = originalTestimonials.length;
+              const diff = (index - activeIndex + length) % length;
+              
+              let positionClass = "opacity-0 scale-50 z-0 pointer-events-none blur-xl";
+              let blurClass = "blur-[10px]";
+              
+              if (diff === 0) {
+                 positionClass = "translate-x-0 scale-100 opacity-100 z-20";
+                 blurClass = "blur-0";
+              } else if (diff === 1) {
+                 positionClass = "translate-x-[85%] md:translate-x-[80%] scale-[0.8] opacity-70 z-10 pointer-events-none";
+                 blurClass = "blur-sm md:blur-md";
+              } else if (diff === length - 1) {
+                 positionClass = "-translate-x-[85%] md:-translate-x-[80%] scale-[0.8] opacity-70 z-10 pointer-events-none";
+                 blurClass = "blur-sm md:blur-md";
+              }
+
+              return (
+              <div 
+                key={index} 
+                className={`absolute flex justify-center items-center transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] ${positionClass}`}
+              >
                 <div
-                  className={`liquid-glass flex flex-col p-8 md:p-12 rounded-[32px] md:rounded-[48px] border border-white/10 w-[92%] md:w-[600px] min-h-[380px] md:min-h-[440px] bg-gradient-to-br from-indigo-500/5 to-purple-500/5 text-left shadow-2xl glow-cyan`}
+                  className={`liquid-glass flex flex-col p-8 md:p-12 rounded-[32px] md:rounded-[48px] border border-white/10 w-[92%] md:w-[600px] min-h-[380px] md:min-h-[440px] bg-gradient-to-br from-indigo-500/5 to-purple-500/5 text-left shadow-2xl glow-cyan transition-all duration-700 ${blurClass}`}
                 >
                   <div className="flex gap-1.5 mb-6 md:mb-8">
                     {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 md:w-5 md:h-5 fill-[#06b6d4] text-[#06b6d4]" />)}
@@ -327,8 +344,7 @@ const Landing = ({ isAuthenticated, onLogout }) => {
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            )})}
         </div>
 
         <div className="flex justify-center gap-6 md:gap-8 mt-8 md:mt-16 z-50 relative">
