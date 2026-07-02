@@ -14,6 +14,8 @@ import ScanHistory from "./pages/ScanHistory";
 import Profile from "./pages/Profile";
 import Reviews from "./pages/Reviews";
 import Working from "./pages/Working";
+import Pricing from "./pages/Pricing";
+import ApiKeyManager from "./pages/ApiKeyManager";
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -126,6 +128,8 @@ export default function App() {
             <Route path="history" element={<ScanHistory />} />
             <Route path="reviews" element={<Reviews />} />
             <Route path="working" element={<Working />} />
+            <Route path="pricing" element={<Pricing />} />
+            <Route path="api-keys" element={<ApiKeyManager />} />
             <Route path="profile" element={<Profile />} />
           </Route>
           

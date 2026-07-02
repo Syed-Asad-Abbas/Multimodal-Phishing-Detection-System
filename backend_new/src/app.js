@@ -18,7 +18,11 @@ const limiter = rateLimit({
 // Middlewares
 app.use(helmet());
 app.use(cors());
-app.use(express.json());
+app.use(express.json({
+    verify: (req, res, buf) => {
+        req.rawBody = buf;
+    }
+}));
 app.use(express.urlencoded({ extended: true }));
 // Apply Rate Limiter
 app.use(limiter);
@@ -30,6 +34,7 @@ const scanRoutes = require('./routes/scan.routes');
 const reviewRoutes = require('./routes/review.routes');
 const adminRoutes = require('./routes/admin.routes');
 const mlopsRoutes = require('./routes/mlops.routes');
+const paymentRoutes = require('./routes/payment.routes');
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -37,6 +42,7 @@ app.use('/api/scan', scanRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/admin/mlops', mlopsRoutes);
+app.use('/api/payments', paymentRoutes);
 
 // Basic Route
 app.get('/', (req, res) => {

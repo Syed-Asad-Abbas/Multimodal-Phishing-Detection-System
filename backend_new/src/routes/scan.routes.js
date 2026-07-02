@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const scanController = require('../controllers/scan.controller');
 const auth = require('../middlewares/auth');
+const apiKeyAuth = require('../middlewares/apiKeyAuth');
 
 // Optional Auth for submission (Guest vs User)
 // We need a middleware that checks token BUT doesn't block if missing, 
@@ -30,7 +31,7 @@ const softAuth = async (req, res, next) => {
     }
 };
 
-router.post('/submit', softAuth, scanController.submitScan);
+router.post('/submit', apiKeyAuth, scanController.submitScan);
 router.get('/dashboard', auth(), scanController.getDashboardStats);
 router.get('/history', auth(), scanController.getHistory);
 router.get('/:id', softAuth, scanController.getScanById);

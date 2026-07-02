@@ -16,6 +16,14 @@ enum Role {
   @@schema("auth")
 }
 
+enum SubscriptionTier {
+  FREE
+  PRO
+  PRO_MAX
+
+  @@schema("auth")
+}
+
 model User {
   id            String    @id @default(uuid())
   name          String?
@@ -30,6 +38,13 @@ model User {
   last_login    DateTime?
   created_at    DateTime  @default(now())
   updated_at    DateTime  @updatedAt
+
+  subscription_tier      SubscriptionTier  @default(FREE)
+  api_key_hash           String?           @unique
+  api_key_preview        String?
+  api_key_created        DateTime?
+  stripe_customer_id     String?           @unique
+  stripe_subscription_id String?           @unique
 
   sessions              UserSession[]
   email_tokens          EmailVerificationToken[]

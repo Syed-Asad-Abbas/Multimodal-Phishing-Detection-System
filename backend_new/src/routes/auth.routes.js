@@ -14,5 +14,7 @@ router.post('/refresh-token', authController.refreshToken);
 router.post('/logout', authController.logout);
 router.post('/google', authController.googleAuth);
 router.post('/2fa/toggle', auth(), authController.toggle2FA);
+router.get('/me', auth(), authController.getMe);
+router.post('/api-key/generate', auth(), authController.generateApiKey);
 
 module.exports = router;

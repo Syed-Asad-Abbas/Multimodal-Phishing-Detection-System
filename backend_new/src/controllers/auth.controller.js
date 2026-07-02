@@ -465,3 +465,70 @@ exports.googleAuth = async (req, res, next) => {
         next(error);
     }
 };
+
+exports.getMe = async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+            select: {
+                id: true,
+                email: true,
+                name: true,
+                role: true,
+                subscription_tier: true,
+                api_key_preview: true,
+                api_key_created: true,
+                avatar_url: true,
+                provider: true,
+                is_verified: true,
+                is_2fa_enabled: true
+            }
+        });
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.json({ user });
+    } catch (error) {
+        next(error);
+    }
+};
+
+exports.generateApiKey = async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+
+        // Generate a random 32-byte key prefixed with pg_live_
+        const rawKey = 'pg_live_' + crypto.randomBytes(32).toString('hex');
+        
+        // Hash it with sha256 to store securely in the database
+        const hashedKey = crypto.createHash('sha256').update(rawKey).digest('hex');
+
+        // Create a preview representation for the UI (e.g. pg_live_abc...xyz)
+        const preview = `${rawKey.slice(0, 12)}...${rawKey.slice(-4)}`;
+
+        // Update user record
+        const user = await prisma.user.update({
+            where: { id: userId },
+            data: {
+                api_key_hash: hashedKey,
+                api_key_preview: preview,
+                api_key_created: new Date()
+            }
+        });
+
+        logger.info(`[API Key] Generated new API Key for user ID: ${userId}`);
+
+        // Return plain key ONLY once
+        res.json({
+            message: 'API Key generated successfully. Make sure to copy it now; you will not be able to see it again.',
+            apiKey: rawKey,
+            preview: preview,
+            created_at: user.api_key_created
+        });
+    } catch (error) {
+        next(error);
+    }
+};

@@ -12,7 +12,9 @@ import {
   LogOut,
   Network,
   User,
-  ChevronDown
+  ChevronDown,
+  CreditCard,
+  Key
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -57,6 +59,9 @@ export function Navbar({ isAuthenticated, onLogout }) {
               <button onClick={() => navigate("/working")} className="text-sm font-medium text-white/80 hover:text-white hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer">
                 How it Works
               </button>
+              <button onClick={() => navigate("/dashboard/pricing")} className="text-sm font-medium text-white/80 hover:text-white hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer">
+                Pricing
+              </button>
             </div>
           </div>
 
@@ -100,6 +105,7 @@ export function Navbar({ isAuthenticated, onLogout }) {
           <div className="space-y-1 px-4 pb-3 pt-2">
             <Button variant="ghost" className="w-full justify-start text-white/80 font-medium hover:text-white" onClick={scrollToFeatures}>Features</Button>
             <Button variant="ghost" className="w-full justify-start text-white/80 font-medium hover:text-white" onClick={() => { setIsOpen(false); navigate("/working"); }}>How it Works</Button>
+            <Button variant="ghost" className="w-full justify-start text-white/80 font-medium hover:text-white" onClick={() => { setIsOpen(false); navigate("/dashboard/pricing"); }}>Pricing</Button>
             
             <div className="pt-4 mt-4 border-t border-white/5 space-y-4">
               {isAuthenticated ? (
@@ -139,7 +145,7 @@ export function Sidebar({ onLogout }) {
     { id: "scan", label: "Scan URL", icon: ScanLine, path: "/dashboard/scan" },
     { id: "history", label: "Scan History", icon: History, path: "/dashboard/history" },
     { id: "reviews", label: "My Reviews", icon: FileText, path: "/dashboard/reviews" },
-    { id: "working", label: "Working", icon: Network, path: "/dashboard/working" },
+    { id: "api-keys", label: "API Keys", icon: Key, path: "/dashboard/api-keys" },
     { id: "profile", label: "Profile", icon: Settings, path: "/dashboard/profile" },
   ];
 
