@@ -288,3 +288,38 @@ exports.getDashboardStats = async (req, res, next) => {
         next(error);
     }
 };
+
+exports.getUserThreatMap = async (req, res, next) => {
+    try {
+        if (!req.user) {
+            return res.status(401).json({ message: 'Login required for threat map' });
+        }
+
+        const ips = await prisma.maliciousIpObservation.findMany({
+            where: {
+                scan: {
+                    user_id: req.user.id,
+                    is_deleted: false
+                }
+            },
+            select: {
+                ip_address: true,
+                geo_lat: true,
+                geo_long: true,
+                country: true,
+                timestamp: true,
+                scan: {
+                    select: {
+                        url: true
+                    }
+                }
+            },
+            orderBy: { timestamp: 'desc' },
+            take: 500
+        });
+
+        res.json(ips);
+    } catch (error) {
+        next(error);
+    }
+};

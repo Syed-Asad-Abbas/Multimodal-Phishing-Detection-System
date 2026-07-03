@@ -11,6 +11,7 @@ import DashboardLayout from "./components/layout/DashboardLayout";
 import DashboardHome from "./pages/DashboardHome";
 import ScanPage from "./pages/Scan";
 import ScanHistory from "./pages/ScanHistory";
+import ThreatMap from "./pages/ThreatMap";
 import Profile from "./pages/Profile";
 import Reviews from "./pages/Reviews";
 import Working from "./pages/Working";
@@ -126,6 +127,7 @@ export default function App() {
                 The previous design had sidebar on scan page. So it should be nested. */}
             <Route path="scan" element={<ScanPage />} /> 
             <Route path="history" element={<ScanHistory />} />
+            <Route path="threat-map" element={<ThreatMap />} />
             <Route path="reviews" element={<Reviews />} />
             <Route path="working" element={<Working />} />
             <Route path="pricing" element={<Pricing />} />

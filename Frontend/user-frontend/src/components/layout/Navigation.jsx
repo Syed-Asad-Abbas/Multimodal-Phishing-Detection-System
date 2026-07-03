@@ -14,7 +14,8 @@ import {
   User,
   ChevronDown,
   CreditCard,
-  Key
+  Key,
+  Globe
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -144,6 +145,7 @@ export function Sidebar({ onLogout }) {
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
     { id: "scan", label: "Scan URL", icon: ScanLine, path: "/dashboard/scan" },
     { id: "history", label: "Scan History", icon: History, path: "/dashboard/history" },
+    { id: "threat-map", label: "Threat Map", icon: Globe, path: "/dashboard/threat-map" },
     { id: "reviews", label: "My Reviews", icon: FileText, path: "/dashboard/reviews" },
     { id: "api-keys", label: "API Keys", icon: Key, path: "/dashboard/api-keys" },
     { id: "profile", label: "Profile", icon: Settings, path: "/dashboard/profile" },

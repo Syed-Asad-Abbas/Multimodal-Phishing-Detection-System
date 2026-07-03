@@ -34,6 +34,7 @@ const softAuth = async (req, res, next) => {
 router.post('/submit', apiKeyAuth, scanController.submitScan);
 router.get('/dashboard', auth(), scanController.getDashboardStats);
 router.get('/history', auth(), scanController.getHistory);
+router.get('/threat-map', auth(), scanController.getUserThreatMap);
 router.get('/:id', softAuth, scanController.getScanById);
 
 module.exports = router;
